@@ -17,14 +17,22 @@
 		include "basedatos.php";
 		$conex=new Conexion("root","","frikily");
 		$conex->connect();
-		
+
+		if(!isset($_POST['categoria']))
+		{
+			$_POST['categoria'] = "";
+		}
+		if(!isset($_POST['pref']))
+		{
+			$_POST['pref'] = "";
+		}
 		$consulta = $conex->consultaDinamica($_POST['ver'],$_POST['categoria'],$_POST['pref']);
-		
+
 		$list=$conex->consult($consulta);
 
 		if(isset($_POST['search'])){
 			if ($_POST['search'] != null){
-				$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");	
+				$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
 			}
 		}
 
@@ -73,7 +81,7 @@
 							else
 							{
 								echo "<li><a href='modificarDatos.php'>";
-								echo "<img class='img-responsive img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
+								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
 								echo $_SESSION['usuario']."</a></li>";
 								echo "<form action='index.php' method='post'><input type='submit' name='action' value='Cerrar sesión'></form>";
 							}
@@ -87,13 +95,13 @@
 			<div class="row">
 				<div class="list-group secciones" id="secciones">
 					Categorias
-					<?php		
+					<?php
 					$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo");
-					
-					echo "<form action='lista.php' method='post'>";			
+
+					echo "<form action='lista.php' method='post'>";
 						foreach ($categorias as $fila){
-							echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';					
-						}			
+							echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
+						}
 					echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
 					echo "Preferencias";
 					echo '<button type="submit" name="pref" value="valorado" class="list-group-item">Más valorados</button>';
@@ -101,12 +109,12 @@
 						echo '<button type="submit" name="pref" value="lista" class="list-group-item">Mi Lista</button>';
 					}
 					echo '<button type="submit" name="pref" value="recientes" class="list-group-item">Más recientes</button>';
-					echo "</form>";				
+					echo "</form>";
 					?>
 				</div>
 				<?php
-				echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
-				
+					echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
+
 					foreach($list as $array)
 					{
 						echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
