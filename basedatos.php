@@ -45,7 +45,7 @@ class Conexion{
 			return false;
 		}
 	}
-	
+
 	public function insertar($nombre,$pass,$mail,$imagen){
 		$comprobacion = "select * from usuarios where Nombre = $nombre";
 		$resultadoComprobacion = mysqli_query($this->conection,$comprobacion);
@@ -58,7 +58,7 @@ class Conexion{
 
 	        if ($resultado != null){
 	            echo "<div>Usuario registrado correctamente.</div>";
-	        } 
+	        }
 		}
 	}
 
@@ -70,26 +70,26 @@ class Conexion{
 
 	public function consultaDinamica($seccion, $categoria, $preferencia){
 		$consulta = "SELECT  DISTINCT g.codigo,g.nombre,g.nota,g.imagen,g.nota FROM general g, ".$seccion." t, visto v WHERE g.codigo = t.codigo";
-		
+
 		if($categoria!=""){
 			$consulta = $consulta." AND g.genero LIKE '".$categoria."'";
 		}
 
 		if($preferencia!=""){
-			
+
 			if($preferencia=="valorado"){
-				$consulta = $consulta." ORDER BY g.nota Desc";	
+				$consulta = $consulta." ORDER BY g.nota Desc";
 			}
-			
+
 			if($preferencia=="lista"){
 					$consulta = $consulta." AND g.codigo = v.codigo AND v.codigousuario = ".$_SESSION['codigo'];
 			}
-			
+
 			if($preferencia=="recientes"){
-				$consulta = $consulta." ORDER BY g.codigo Desc";	
-			}		
+				$consulta = $consulta." ORDER BY g.codigo Desc";
+			}
 		}
-		
+
 		echo $consulta;
 		return $consulta;
 	}

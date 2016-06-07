@@ -8,7 +8,7 @@ session_start();
      <meta http-equiv="content-type" content="text/html;charset=utf-8" />
      <link rel="stylesheet" type="text/css" href="registrar.css"/>
 </HEAD>
-  <BODY>  
+  <BODY>
   	<div class="registro">
   	<h1>REGISTRO DE USUARIOS<h1>
 
@@ -25,9 +25,9 @@ session_start();
 
 			      $imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
 
-            $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes 
-            $archivo_temporal = $_FILES['imagen_usuario']['tmp_name']; 
-            $archivo_nombre = $ruta.$usuario.".jpg"; 
+            $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes
+            $archivo_temporal = $_FILES['imagen_usuario']['tmp_name'];
+            $archivo_nombre = $ruta.$usuario.".jpg";
 
             $tamanio = getimagesize($_FILES['imagen_usuario']['tmp_name']);
             list($ancho, $alto) = $tamanio;
@@ -35,17 +35,17 @@ session_start();
             if ($tamanio){
                 if(in_array($tamanio['mime'], $imagenes_permitidas)){
                   if ($ancho < 500 && $alto < 500){
-                    if (is_uploaded_file($archivo_temporal)){ 
+                    if (is_uploaded_file($archivo_temporal)){
                       if ($_FILES['imagen_usuario']['size'] < 6291456){
-                        move_uploaded_file($archivo_temporal,$archivo_nombre); 
+                        move_uploaded_file($archivo_temporal,$archivo_nombre);
                         $imagen = $usuario.".jpg";
                         $conex->insertar($usuario,$passM,$mail,$imagen);
                       }else{
                         echo "<div>El tamaño excede el permitido.</div>";
                       }
-                    }else{ 
-                      echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
-                    } 
+                    }else{
+                      echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+                    }
                   }else{
                     echo "<div>La dimensión excede el permitido (500x500 px).</div>";
                   }
@@ -54,8 +54,8 @@ session_start();
                 }
               }
             }
-			?> 
-  	
+			?>
+
   		<form action="registrar.php" method="POST" id="usuario" enctype="multipart/form-data">
 
   		<div>

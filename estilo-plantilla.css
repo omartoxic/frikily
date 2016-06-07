@@ -1,3 +1,15 @@
+.visto
+{
+  color:forestgreen;
+}
+.hidden
+{
+  visibility: hidden;
+}
+.visto:hover,.visto:focus
+{
+  color:darkgreen;
+}
 .secciones
 {
   margin-left:-50px;
