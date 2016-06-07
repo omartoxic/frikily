@@ -115,22 +115,16 @@
 						<?php
 							if(isset($_SESSION['usuario']))
 							{
-								$vistos = $conex->consult('SELECT * FROM visto');
-								$visto = false;
-								foreach($vistos as $dato)
-								{
-									if($dato[0] == $_SESSION['codigo'] && $dato[1] == $general[0] && $dato[2] == 0)
-									{
-										$visto = true;
-									}
-								}
+								$vistos = count($conex->consult("SELECT * FROM visto WHERE CodigoUsuario = '".$_SESSION['codigo']."' AND Codigo = '".$general[0]."'"));
+								$episodios = count($conex->consult("SELECT * FROM episodios WHERE codigo =".$codigo));
+								$visto = $episodios == $vistos;
 								if($visto)
 								{
-									echo "<button id='visto' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i></button>";
+									echo "<button id='vistos' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i></button>";
 								}
 								else
 								{
-									echo "<button id='visto' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i></button>";
+									echo "<button id='vistos' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i></button>";
 								}
 								echo "<input type='hidden' id='cod' value='".$general[0]."'>";
 								echo "<input type='hidden' id='cod-usu' value='".$_SESSION['codigo']."'>";
@@ -154,7 +148,7 @@
 									$visto = false;
 									foreach($vistos as $dato)
 									{
-										if($dato[0] == $_SESSION['codigo'] && $dato[1] == $general[0] && $dato[2] == $capitulo[0])
+										if($dato[1] == $_SESSION['codigo'] && $dato[2] == $general[0] && $dato[3] == $capitulo[0])
 										{
 											$visto = true;
 										}

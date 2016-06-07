@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	session_start();
 	if(!(isset($_POST['categoria']))) {$_POST['categoria']="";}
 	if(!(isset($_POST['pref']))){ $_POST['pref']="";}
@@ -103,8 +103,6 @@
 							echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
 						}
 					echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-
-					
 					echo "Preferencias";
 					echo '<button type="submit" name="pref" value="valorado" class="list-group-item">Más valorados</button>';
 					if(isset($_SESSION['codigo'])){

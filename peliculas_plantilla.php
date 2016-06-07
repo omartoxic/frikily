@@ -115,7 +115,7 @@
 										$visto = false;
 										foreach($vistos as $dato)
 										{
-											if($dato[0] == $_SESSION['codigo'] && $dato[1] == $general[0] && $dato[2] == 0)
+											if($dato[1] == $_SESSION['codigo'] && $dato[2] == $general[0] && $dato[3] == 0)
 											{
 												$visto = true;
 											}
