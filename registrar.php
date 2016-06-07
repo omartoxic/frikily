@@ -80,7 +80,7 @@ session_start();
             </div>
 
             <input type = 'submit' value = 'Registrar' id = "boton"/>
-            <a href="plantilla.php">Volver al inicio</a>
+            <a href="index.php">Volver al inicio</a>
 </form>
 
     </div>
