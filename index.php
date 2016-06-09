@@ -74,6 +74,7 @@
 							}
 							else
 							{
+								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
 								echo $_SESSION['usuario'];
