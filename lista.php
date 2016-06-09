@@ -65,13 +65,7 @@
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<form action='lista.php' method='post'>
-								<?php
-									echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-								?>
-								<input type='text' name='search'>
-								<button type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
-							</form>
+
 						</li>
 						<?php
 							if(!isset($_SESSION['usuario']))
@@ -80,10 +74,10 @@
 							}
 							else
 							{
-								echo "<li><a href='modificarDatos.php'>";
+								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
-								echo $_SESSION['usuario']."</a></li>";
-								echo "<form action='index.php' method='post'><input type='submit' name='action' value='Cerrar sesión'></form>";
+								echo $_SESSION['usuario'];
+								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}
 						?>
 					</ul>
@@ -104,7 +98,7 @@
 						}
 					echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
 
-					
+
 					echo "Preferencias";
 					echo '<button type="submit" name="pref" value="valorado" class="list-group-item">Más valorados</button>';
 					if(isset($_SESSION['codigo'])){
@@ -114,6 +108,21 @@
 					echo "</form>";
 					?>
 				</div>
+
+				<form action='lista.php' method='post'>
+					<?php
+						echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
+					?>
+					<span class=''>
+						<span class='col-md-4'>
+							<input type='text' class='form-control' name='search'>
+						</span>
+						<button class='col-md-1 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
+					</span>
+				</form>
+				<br>
+				<br>
+
 				<?php
 					echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
 

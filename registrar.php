@@ -1,16 +1,48 @@
 <?php
-session_start();
+  session_start();
   session_destroy();
 ?>
 <HTML>
   <HEAD>
     <TITLE>Registrar Usuario</TITLE>
-     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-     <link rel="stylesheet" type="text/css" href="registrar.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="estilo-plantilla.css">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 </HEAD>
   <BODY>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<span class="navbar-brand">Friki.ly</span>
+				</div>
+				<div class="navbar-collapse collapse navbar-ex1-collapse">
+
+
+					<form action="lista.php" method="post">
+						<ul id="paginacion" class="nav navbar-nav">
+							<li><a href="index.php">Página principal</a></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="navbar navbar-default arriba"></div>
   	<div class="registro">
-  	<h1>REGISTRO DE USUARIOS<h1>
+  	<h1 class='titulo'>Registrar de usuario</h1>
 
       <?php
           include "basedatos.php";
@@ -56,31 +88,41 @@ session_start();
             }
 			?>
 
-  		<form action="registrar.php" method="POST" id="usuario" enctype="multipart/form-data">
+  		<form action="registrar.php" method="POST" id="usuario" class='container' enctype="multipart/form-data">
 
-  		<div>
-              <label>Usuario:</label>
-              <input type = 'text' name='usuario' id='id_usuario'/>
+  		      <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Usuario:</label>
+              <div class='col-md-5'>
+                <input type = 'text' class='form-control' name='usuario' id='id_usuario'/>
+              </div>
             </div>
 
-            <div>
-              <label>Contraseña:</label>
-              <input type = 'password' name='pass' id='id_pass'/>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Contraseña:</label>
+              <div class='col-md-5'>
+                <input class='form-control' type = 'password' name='pass' id='id_pass'/>
+              </div>
             </div>
 
-            <div>
-              <label>Mail:</label>
-              <input type = 'text' name='mail' id='id_mail'/>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Mail:</label>
+              <div class='col-md-5'>
+                <input class='form-control' type = 'text' name='mail' id='id_mail'/>
+              </div>
             </div>
 
-            <div>
-              <label for="imagen">Subir imagen:</label>
+            <div class='row'>
+              <label for="imagen" class='col-md-2 col-md-offset-2'>Subir imagen:</label>
               <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-              <input type="file" name="imagen_usuario" id="imagen" />
+              <div class='col-md-5'>
+                <input type="file" name="imagen_usuario" id="imagen" />
+              </div>
             </div>
 
-            <input type = 'submit' value = 'Registrar' id = "boton"/>
-            <a href="index.php">Volver al inicio</a>
+            <div class='row'>
+              <input class='col-md-offset-2 btn btn-success' type = 'submit' value = 'Registrar' id = "boton"/>
+              <a class='col-md-offset-5' href="index.php">Volver al inicio</a>
+          </div>
 </form>
 
     </div>

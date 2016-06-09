@@ -67,10 +67,10 @@
 							}
 							else
 							{
-								echo "<li><a href='modificarDatos.php'>";
+								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
-								echo $_SESSION['usuario']."</a></li>";
-								echo "<form action='index.php' method='post'><input type='submit' name='action' value='Cerrar sesión'></form>";
+								echo $_SESSION['usuario'];
+								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}
 						?>
 					</ul>
