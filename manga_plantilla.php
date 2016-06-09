@@ -95,18 +95,28 @@
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
 						</span>
 						<span class="datos col-xs-9">
-							<span class="bold col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2 col-xs-offset-1"><?php echo $general[3] ?></span>
+							<span class="col-xs-9"><?php echo $general[1] ?></span>
+							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
 							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
 							<span class="col-xs-5">Año de comienzo: <?php echo $general[6] ?></span>
-							<span class="col-xs-5">Año de finalización: <?php echo $manga[1] ?></span>
+							<span class="col-xs-5">Año de finalización: <?php
+								if($manga[1]==0){
+									echo "En publicación";
+								}
+								else{
+									echo $manga[1];
+								}
+							?></span>
 							<span class="col-xs-5">Revista: <?php echo $manga[2] ?></span>
 							<span class="col-xs-5">Tomos: <?php echo $manga[3] ?></span>
-							<span class="col-xs-10">Actores: <br><?php
-								foreach ($actores as $actor)
-								{
-									echo 'Nombre y apellidos: '.$actor[1].' '. $actor[2].' Rol: '. $actor[4].'<br>';
-								}
+							<?php
+							if(!(empty($actores))){
+								echo "<span class='col-xs-10'>Autor: ";
+									foreach ($actores as $actor){
+										echo $actor[1].' '.$actor[2].'<br>';
+									}
+								echo "</span>";
+							}		
 							?>
 							</span>
 						</span>

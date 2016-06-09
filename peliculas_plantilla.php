@@ -20,8 +20,10 @@
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM peliculas WHERE codigo =".$codigo);
 	$peliculas = $list1[0];
-	$list2=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
+	$list2=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo." AND rol.rol LIKE 'Actor'");
 	$actores = $list2;
+	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo." AND rol.rol LIKE 'Director'");
+	$director = $list3[0];
 ?>
 <html>
 	<head>
@@ -93,19 +95,23 @@
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
 						</span>
 						<span class="datos col-xs-9">
-							<span class="bold col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2 col-xs-offset-1"><?php echo $general[3] ?></span>
-							<span class="col-xs-10">Director: </span>
+							<span class="col-xs-9"><?php echo $general[1] ?></span>
+							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
+							<span class="col-xs-10">Director: <?php echo $director[1].' '.$director[2]; ?></span>
 							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
 							<span class="col-xs-5">Año: <?php echo $general[6] ?></span>
 							<span class="col-xs-5">Duración: <?php echo $peliculas[1] ?></span>
 							<span class="col-xs-5">Productora: <?php echo $general[2] ?></span>
-							<span class="col-xs-10">Actores: <br>
 							<?php
-								foreach ($actores as $actor)
-								{
-									echo 'Nombre y apellidos: '.$actor[1].' '. $actor[2].' Rol: '. $actor[4].'<br>';
-								}
+							if(!(empty($actores))){
+								echo "<span class='col-xs-10'>Actores: <br>";
+								echo "<div class='col xs-6'>";
+									foreach ($actores as $actor){
+										echo ''.$actor[1].' '.$actor[2].'<br>';
+									}
+								echo "</div>";
+								echo "</span>";
+							}		
 							?>
 							<div class="row">
 								<?php

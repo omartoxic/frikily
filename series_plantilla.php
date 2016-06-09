@@ -21,7 +21,7 @@
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM series WHERE codigo =".$codigo);
 	$series = $list1[0];
-	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
+	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo." AND rol.rol LIKE 'Actor'");
 	$actores = $list3;
 	$temporadas=$conex->consult("SELECT DISTINCT contenedor FROM episodios WHERE codigo =".$codigo." ORDER BY contenedor");
 ?>
@@ -95,20 +95,24 @@
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
 						</span>
 						<span class="datos col-xs-9">
-							<span class="bold col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2 col-xs-offset-1"><?php echo $general[3] ?></span>
-							<span class="col-xs-10">Director: </span>
+							<span class="col-xs-9"><?php echo $general[1] ?></span>
+							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
 							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
 							<span class="col-xs-5">Año de comienzo: <?php echo $general[6] ?></span>
 							<span class="col-xs-5">Año de finalización: <?php echo $series[1] ?></span>
 							<span class="col-xs-5">Temporadas: <?php echo $series[2] ?></span>
 							<span class="col-xs-5">Capítulos: <?php echo $series[3] ?></span>
 							<span class="col-xs-5">Canal: <?php echo $series[4] ?></span>
-							<span class="col-xs-10">Actores: <br><?php
-								foreach ($actores as $actor)
-								{
-									echo 'Nombre y Apellidos: '.$actor[1].' '. $actor[2].' Rol: '. $actor[4].'<br>';
-								}
+							<?php
+							if(!(empty($actores))){
+								echo "<span class='col-xs-10'>Actores: <br>";
+								echo "<div class='col xs-6'>";
+									foreach ($actores as $actor){
+										echo ''.$actor[1].' '.$actor[2].'<br>';
+									}
+								echo "</div>";
+								echo "</span>";
+							}		
 							?>
 							</span>
 						</span>

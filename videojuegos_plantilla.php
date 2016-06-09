@@ -91,13 +91,20 @@
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
 						</span>
 						<span class="datos col-xs-9">
-							<span class="bold col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2 col-xs-offset-1"><?php echo $general[3] ?></span>
+							<span class="col-xs-9"><?php echo $general[1] ?></span>
+							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
 							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
-							<span class="col-xs-5">Año: <?php echo $general[6] ?></span>
+							<span class="col-xs-5">Año de lanzamiento: <?php echo $general[6] ?></span>
 							<span class="col-xs-5">Desarrolladora: <?php echo $videojuegos[1] ?></span>
 							<span class="col-xs-5">Número de jugadores: <?php echo $videojuegos[2] ?></span>
-							<span class="col-xs-5">Online: <?php echo $videojuegos[3] ?></span>
+							<span class="col-xs-5">Online: <?php
+							if($videojuegos[3]==1){
+								echo "Si";
+							}
+							else{
+								echo "No";
+							}
+							?></span>
 							<span class="col-xs-5">Plataformas: <?php
 								foreach ($plataformas as $plataforma)
 								{
@@ -105,13 +112,17 @@
 								}
 							?>
 							</span>
-							<span class="col-xs-10">Actores: <br>
 							<?php
-								foreach ($actores as $actor){
-									echo 'Nombre y apellidos: '.$actor[1].' '. $actor[2].' Rol: '. $actor[4].'<br>';
-								}
+							if(!(empty($actores))){
+								echo "<span class='col-xs-10'>Creadores y Dobladores: <br>";
+								echo "<div class='col xs-6'>";
+									foreach ($actores as $actor){
+										echo ''.$actor[1].' '.$actor[2].' | '.$actor[4].'<br>';
+									}
+								echo "</div>";
+								echo "</span>";
+							}		
 							?>
-							</span>
 						</span>
 					</div>
 					<div class="row">
