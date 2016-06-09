@@ -2,41 +2,42 @@
 	session_start();
 	if(!(isset($_POST['categoria']))) {$_POST['categoria']="";}
 	if(!(isset($_POST['pref']))){ $_POST['pref']="";}
+	include "basedatos.php";
+	$conex=new Conexion("root","","frikily");
+	$conex->connect();
+
+	if(!isset($_POST['categoria']))
+	{
+		$_POST['categoria'] = "";
+	}
+	if(!isset($_POST['pref']))
+	{
+		$_POST['pref'] = "";
+	}
+	$consulta = $conex->consultaDinamica($_POST['ver'],$_POST['categoria'],$_POST['pref']);
+
+	$list=$conex->consult($consulta);
+
+	if(isset($_POST['search'])){
+		if ($_POST['search'] != null){
+			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
+		}
+	}
 ?>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>plantilla</title>
+		<title>
+			<?php
+				echo ucwords($_POST['ver']);
+			?>
+		</title>
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
 	</head>
-	<?php
-		include "basedatos.php";
-		$conex=new Conexion("root","","frikily");
-		$conex->connect();
-
-		if(!isset($_POST['categoria']))
-		{
-			$_POST['categoria'] = "";
-		}
-		if(!isset($_POST['pref']))
-		{
-			$_POST['pref'] = "";
-		}
-		$consulta = $conex->consultaDinamica($_POST['ver'],$_POST['categoria'],$_POST['pref']);
-
-		$list=$conex->consult($consulta);
-
-		if(isset($_POST['search'])){
-			if ($_POST['search'] != null){
-				$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
-			}
-		}
-
-	?>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">

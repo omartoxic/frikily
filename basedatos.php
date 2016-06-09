@@ -4,11 +4,21 @@ class Conexion{
 	private $password;
 	private $db;
 	private $conection;
+	private $tipos;
 	function __construct($user,$password,$db)
 	{
 		$this->user=$user;
 		$this->password=$password;
 		$this->db=$db;
+		$this->tipos = [
+			'videojuegos',
+			'anime',
+			'manga',
+			'comics',
+			'libros',
+			'peliculas',
+			'series'
+		];
 	}
 	public function connect()
 	{
@@ -92,6 +102,20 @@ class Conexion{
 
 		echo $consulta;
 		return $consulta;
+	}
+
+	public function sacarTipo($codigo)
+	{
+		$tipoObjeto = '';
+		foreach($this->tipos as $tipo)
+		{
+			$list = $this->consult('SELECT * FROM `'.$tipo.'` WHERE codigo = '.$codigo);
+			if(count($list)>0)
+			{
+				$tipoObjeto = $tipo;
+			}
+		}
+		return $tipoObjeto;
 	}
 
 
