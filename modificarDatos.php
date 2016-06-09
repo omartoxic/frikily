@@ -4,13 +4,48 @@
 
 <HTML>
   <HEAD>
-    <TITLE>Registrar Usuario</TITLE>
-     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-     <link rel="stylesheet" type="text/css" href="registrar.css"/>
+		<meta charset="UTF-8">
+		<title>Modificar usuario</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+		<link rel="stylesheet" href="estilo-plantilla.css">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="estilojq.js"></script>
 </HEAD>
-  <BODY>  
+  <BODY>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<span class="navbar-brand">Friki.ly</span>
+				</div>
+				<div class="navbar-collapse collapse navbar-ex1-collapse">
+
+
+					<form action="lista.php" method="post">
+						<ul id="paginacion" class="nav navbar-nav">
+							<li><a href="index.php">Página principal</a></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="navbar navbar-default arriba"></div>
+		<div class="container">
+			<div class="row">
   	<div class="registro">
-  	<h1>REGISTRO DE USUARIOS<h1>
+  	<h1 class='titulo'>Modificar datos de usuario</h1>
 
       <?php
           include "basedatos.php";
@@ -22,8 +57,8 @@
 
           $usuario = $_SESSION['usuario'];
           $imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
-          $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes 
-          
+          $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes
+
 
           if(isset($_POST["pass"])){
             $passGuardada = $conex->consult("SELECT Pass FROM usuarios WHERE CodUsuario =".$codigo);
@@ -47,17 +82,17 @@
 
                 if (isset($_FILES['imagen_usuario'])){
                   if ($_FILES["imagen_usuario"]["name"] != "") {
-                  $archivo_temporal = $_FILES['imagen_usuario']['tmp_name']; 
-                  $archivo_nombre = $ruta.$usuario.".jpg"; 
+                  $archivo_temporal = $_FILES['imagen_usuario']['tmp_name'];
+                  $archivo_nombre = $ruta.$usuario.".jpg";
                   $tamanio = getimagesize($_FILES['imagen_usuario']['tmp_name']);
                   list($ancho, $alto) = $tamanio;
 
                     if ($tamanio){
                       if(in_array($tamanio['mime'], $imagenes_permitidas)){
                         if ($ancho < 500 && $alto < 500){
-                          if (is_uploaded_file($archivo_temporal)){ 
+                          if (is_uploaded_file($archivo_temporal)){
                             if ($_FILES['imagen_usuario']['size'] < 6291456){
-                              move_uploaded_file($archivo_temporal,$archivo_nombre); 
+                              move_uploaded_file($archivo_temporal,$archivo_nombre);
                               $imagen = $usuario.".jpg";
                               array_push($campos, "Imagen = '".$imagen."' ");
                               $_SESSION['imgusu'] = $imagen;
@@ -65,9 +100,9 @@
                             }else{
                               echo "<div>El tamaño excede el permitido.</div>";
                             }
-                          }else{ 
-                            echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
-                          } 
+                          }else{
+                            echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+                          }
                         }else{
                           echo "<div>La dimensión excede el permitido (500x500 px).</div>";
                         }
@@ -78,7 +113,7 @@
                  }
                }
              }
-           
+
               $separado_por_comas = implode(",", $campos);
 
               $sql .= $separado_por_comas;
@@ -89,41 +124,50 @@
 
             }else{
               echo "<div>La contraseña no coincide con la guardada. Inténtelo de nuevo.</div>";
-            }  
+            }
           }
-			?> 
-  	
-      Modificar datos de usuario
-  		<form action="modificarDatos.php" method="POST" id="usuario" enctype="multipart/form-data">
+			?>
+  		<form action="modificarDatos.php" method="POST" class='container' id="usuario" enctype="multipart/form-data">
 
-            <div>
-              <label>Contraseña original:</label>
-              <input type = 'password' name='pass' id='pass'/>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Contraseña original:</label>
+              <div class='col-md-5'>
+                <input class='form-control' type = 'password' name='pass' id='pass'/>
+              </div>
             </div>
 
-            <div>
-              <label>Nueva Contraseña:</label>
-              <input type = 'password' name='nueva_pass' id='nueva_id_pass'/>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Nueva Contraseña:</label>
+              <div class='col-md-5'>
+                <input class='form-control' type = 'password' name='nueva_pass' id='nueva_id_pass'/>
+              </div>
             </div>
 
-            <div>
-              <label>Repite tu nueva Contraseña:</label>
-              <input type = 'password' name='nueva_pass2' id='nueva_id_pass2'/>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Repite tu nueva Contraseña:</label>
+              <div class='col-md-5'>
+                <input class='form-control' type = 'password' name='nueva_pass2' id='nueva_id_pass2'/>
+              </div>
             </div>
 
-            <div>
-              <label>Mail:</label>
-              <input type = 'text' name='mail' id='id_mail'/>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2'>Mail:</label>
+              <div class='col-md-5'>
+                <input class='form-control' type = 'text' name='mail' id='id_mail'/>
+              </div>
             </div>
 
-            <div>
-              <label for="imagen">Subir imagen:</label>
+            <div class='row'>
+              <label class='col-md-2 col-md-offset-2' for="imagen">Subir imagen:</label>
               <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-              <input type="file" name="imagen_usuario" id="imagen" />
+              <div class='col-md-5'>
+                <input type="file" name="imagen_usuario" id="imagen" />
+              </div>
             </div>
-
-            <input type = 'submit' value = 'Modifcar' id = "boton"/>
-            <a href="index.php">Volver al inicio</a>
+            <div class='row'>
+              <input class='col-md-offset-2 btn btn-success' type = 'submit' value = 'Modifcar' id = "boton"/>
+              <a class='col-md-offset-5' href="index.php">Volver al inicio</a>
+            </div>
       </form>
 
     </div>

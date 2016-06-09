@@ -15,7 +15,7 @@
   $vistos = $conex->consult("SELECT * FROM `visto`");
   foreach($vistos as $visto)
   {
-    if($visto[0] == $usuario && $visto[1] == $codigo && $visto[2] == $codigoCap)
+    if($visto[1] == $usuario && $visto[2] == $codigo && $visto[3] == $codigoCap)
     {
       $exists = true;
     }
@@ -26,7 +26,7 @@
   }
   else
   {
-    $todoCorrecto = $conex->refresh("INSERT INTO visto VALUES ('".$usuario."','".$codigo."','".$codigoCap."')");
+    $todoCorrecto = $conex->refresh("INSERT INTO visto (`CodigoUsuario`, `Codigo`, `CodigoEpisodio`) VALUES ('".$usuario."','".$codigo."','".$codigoCap."')");
   }
   echo $todoCorrecto;
 ?>

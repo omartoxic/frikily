@@ -70,10 +70,10 @@
 							}
 							else
 							{
-								echo "<li><a href='modificarDatos.php'>";
+								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
-								echo $_SESSION['usuario']."</a></li>";
-								echo "<form action='index.php' method='post'><input type='submit' name='action' value='Cerrar sesión'></form>";
+								echo $_SESSION['usuario'];
+								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}
 						?>
 					</ul>
@@ -125,22 +125,16 @@
 						<?php
 							if(isset($_SESSION['usuario']))
 							{
-								$vistos = $conex->consult('SELECT * FROM visto');
-								$visto = false;
-								foreach($vistos as $dato)
-								{
-									if($dato[0] == $_SESSION['codigo'] && $dato[1] == $general[0] && $dato[2] == 0)
-									{
-										$visto = true;
-									}
-								}
+								$vistos = count($conex->consult("SELECT * FROM visto WHERE CodigoUsuario = '".$_SESSION['codigo']."' AND Codigo = '".$general[0]."'"));
+								$episodios = count($conex->consult("SELECT * FROM episodios WHERE codigo =".$codigo));
+								$visto = $episodios == $vistos;
 								if($visto)
 								{
-									echo "<button id='visto' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i></button>";
+									echo "<button id='vistos' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i></button>";
 								}
 								else
 								{
-									echo "<button id='visto' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i></button>";
+									echo "<button id='vistos' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i></button>";
 								}
 								echo "<input type='hidden' id='cod' value='".$general[0]."'>";
 								echo "<input type='hidden' id='cod-usu' value='".$_SESSION['codigo']."'>";
@@ -164,7 +158,7 @@
 									$visto = false;
 									foreach($vistos as $dato)
 									{
-										if($dato[0] == $_SESSION['codigo'] && $dato[1] == $general[0] && $dato[2] == $capitulo[0])
+										if($dato[1] == $_SESSION['codigo'] && $dato[2] == $general[0] && $dato[3] == $capitulo[0])
 										{
 											$visto = true;
 										}

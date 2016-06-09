@@ -39,8 +39,23 @@ function enviarDatos()
 
 }
 
+function serieVista()
+{
+  $('.ver').click();
+  console.log('serieVista')
+  if($('#vistos').hasClass('visto'))
+  {
+    $('#vistos').removeClass('visto');
+  }
+  else
+  {
+    $('#vistos').addClass('visto');
+  }
+}
+
 $(document).ready(function()
 {
   $('#visto').click(enviarDatos);
   $('.ver').click(enviarDatos);
+  $('#vistos').click(serieVista)
 });
