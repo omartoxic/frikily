@@ -27,7 +27,24 @@
 }
 .articulos
 {
-  margin-left: 180px;
+  margin-left: -10%;
+  width:120%;
+}
+.objeto
+{
+  margin-right:2%;
+}
+.objetos
+{
+  margin-top:-54%;
+}
+.objetosbis
+{
+  margin-top:-25%;
+}
+.preferencias
+{
+  margin-top:12%;
 }
 .navbar,.navbar-nav>li
 {
@@ -89,6 +106,10 @@ pre
   overflow-y:hidden;
   word-break: keep-all;
   word-wrap: break-word;
+}
+.navbar,.navbar-default
+{
+  height:70px;
 }
 .item
 {

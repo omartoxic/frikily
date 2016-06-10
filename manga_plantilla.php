@@ -52,7 +52,7 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="index.php">Página principal</a></li>
+							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
@@ -60,18 +60,23 @@
 							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><a class='barra btn btn-link' href="introducirDatos.php">Añadir</a></li>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+
+						</li>
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='iniciosesion btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
 							}
 							else
 							{
+								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
-								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
+								echo "<img class='imagen-usu img-rounded' comodin=".rand(1,1000)." src=imagenesusuarios/".$_SESSION['imgusu'].">";
 								echo $_SESSION['usuario'];
 								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}
