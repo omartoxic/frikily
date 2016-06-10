@@ -26,13 +26,12 @@
 		<meta charset="UTF-8">
 		<title><?php echo $general[1] ?></title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link href="css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome-animation.css" rel="stylesheet">
 		<link rel="stylesheet" href="estilo-plantilla.css">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
-		<script type='text/javascript' src='visto.js'></script>
 	</head>
-
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -57,7 +56,12 @@
 							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
-							<li><a class='barra btn btn-link' href="introducirDatos.php">Añadir</a></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a class='barra btn btn-link' href='introducirDatos.php'>Añadir</a></li>";
+								}
+							?>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
@@ -73,7 +77,7 @@
 							{
 								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
-								echo "<img class='imagen-usu img-rounded' comodin=".rand(1,1000)." src=imagenesusuarios/".$_SESSION['imgusu'].">";
+								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
 								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}

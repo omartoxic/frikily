@@ -30,7 +30,7 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="index.php">Página principal</a></li>
+							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>

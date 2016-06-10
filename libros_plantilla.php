@@ -29,11 +29,11 @@
 		<meta charset="UTF-8">
 		<title><?php echo $general[1] ?></title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link href="css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome-animation.css" rel="stylesheet">
 		<link rel="stylesheet" href="estilo-plantilla.css">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
-		<script type='text/javascript' src='visto.js'></script>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -59,7 +59,12 @@
 							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
-							<li><a class='barra btn btn-link' href="introducirDatos.php">Añadir</a></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a class='barra btn btn-link' href='introducirDatos.php'>Añadir</a></li>";
+								}
+							?>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
