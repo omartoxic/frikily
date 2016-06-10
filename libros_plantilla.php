@@ -29,11 +29,11 @@
 		<meta charset="UTF-8">
 		<title><?php echo $general[1] ?></title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link href="css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome-animation.css" rel="stylesheet">
 		<link rel="stylesheet" href="estilo-plantilla.css">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
-		<script type='text/javascript' src='visto.js'></script>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -51,7 +51,7 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="index.php">Página principal</a></li>
+							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
@@ -59,18 +59,28 @@
 							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a class='barra btn btn-link' href='introducirDatos.php'>Añadir</a></li>";
+								}
+							?>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+
+						</li>
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='iniciosesion btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
 							}
 							else
 							{
+								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
-								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
+								echo "<img class='imagen-usu img-rounded' comodin=".rand(1,1000)." src=imagenesusuarios/".$_SESSION['imgusu'].">";
 								echo $_SESSION['usuario'];
 								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}
@@ -81,14 +91,7 @@
 		</div>
 		<div class="container">
 			<div class="navbar navbar-default arriba"></div>
-			<div class="row">
-				<div class="list-group secciones" id="secciones">
-					<a href="#" class="list-group-item">Sección 1</a>
-					<a href="#" class="list-group-item">Sección 2</a>
-					<a href="#" class="list-group-item">Sección 3</a>
-					<a href="#" class="list-group-item">Sección 4</a>
-				</div>
-				<pre class="col-xs-10">
+				<pre class="col-xs-12">
 					<div class="objeto row">
 						<span class="imagen col-xs-3">
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
@@ -108,7 +111,7 @@
 										echo $actor[1].' '.$actor[2].'<br>';
 									}
 								echo "</span>";
-							}		
+							}
 							?>
 								<div class="row">
 									<?php
@@ -139,39 +142,42 @@
 								<div class="sinopsis row"><?php echo $general[2] ?></div>
 							<?php
 
-								echo "<br>";
-								echo "<br>";
-								echo "<br>";
-								echo "<br>";
-								echo "Comentarios:";
 
-								if (isset($_SESSION['usuario'])){
-									echo "<form method='post' action = ''>";
-									echo "<textarea name='comentario' rows='10' cols='40'>Escribe aquí tus comentarios</textarea>";
-									echo "<br>";
-									echo "<button type='submit' name='item' value='".$codigo."'>Guardar comentario</button>";
-									echo "</form>";
-								}
+						echo "<br>";
+						echo "<br>";
+						echo "<br>";
+						echo "<br>";
+						echo "Comentarios:";
 
-								echo "<br>";
-								echo "<br>";
+						if (isset($_SESSION['usuario'])){
+							echo "<form method='post' action = ''>";
+							echo "<textarea name='comentario' rows='10' cols='40'>Escribe aquí tus comentarios</textarea>";
+							echo "<br>";
+							echo "<button type='submit' name='item' value='".$codigo."'>Guardar comentario</button>";
+							echo "</form>";
+						}
 
-								$listaComentarios=$conex->consult("SELECT * FROM comentarios WHERE codigo =".$codigo);
+						echo "<br>";
+						echo "<br>";
 
-								foreach ($listaComentarios as $key) {
-									$time = strtotime($key[4]);
-									$myFormatForView = date("d-n-Y H:i ", $time);
+						$listaComentarios=$conex->consult("SELECT * FROM comentarios WHERE codigo ='". $codigo."'");
 
-									echo "<div class = 'comentario'>";
-									echo $_SESSION['usuario'];
-									echo "<img src = 'imagenesusuarios/".$_SESSION['imgusu']."' />";
-									echo "<br>";
-									echo $key[3];
-									echo "<br>";
-									echo "Escrito el ".$myFormatForView;
-									echo "</div>";
-									echo "<br>";
-								}
+						foreach ($listaComentarios as $key) {
+							$time = strtotime($key[4]);
+							$myFormatForView = date("d-n-Y H:i ", $time);
+							$nombre = $conex->consult("SELECT Nombre FROM usuarios WHERE CodUsuario = '". $key[2]."'");
+						
+
+							echo "<div class = 'comentario'>";
+							echo $nombre[0][0];
+							echo "<img src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
+							echo "<br>";
+							echo $key[3];
+							echo "<br>";
+							echo "Escrito el ".$myFormatForView;
+							echo "</div>";
+							echo "<br>";
+						}
 							?>
 							</span>
 						</span>

@@ -54,7 +54,7 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="#">Página principal</a></li>
+							<li><a class='barra btn btn-link' href="#">Página principal</a></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
@@ -62,6 +62,12 @@
 							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a class='barra btn btn-link' href='introducirDatos.php'>Añadir</a></li>";
+								}
+							?>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
@@ -71,13 +77,13 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='iniciosesion btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
 							}
 							else
 							{
 								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
-								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
+								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
 								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
 							}
@@ -88,58 +94,63 @@
 		</div>
 		<div class="navbar navbar-default arriba"></div>
 		<div class="container">
-			<div class="row">
+			<div class="col-md-2">
 				<div class="list-group secciones" id="secciones">
-					Categorias
-					<?php
-					$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g");
+					<form action='lista.php' method='post'>
+						<?php
+							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo");
+							echo "<div>Categorias";
+								foreach ($categorias as $fila){
+									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
+								}
+							echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
 
-					echo "<form action='index.php' method='post'>";
-						foreach ($categorias as $fila){
-							echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
-						}
-					echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-
-
-					echo "Preferencias";
-					echo '<button type="submit" name="pref" value="valorado" class="list-group-item">Más valorados</button>';
-					if(isset($_SESSION['codigo'])){
-						echo '<button type="submit" name="pref" value="lista" class="list-group-item">Mi Lista</button>';
-					}
-					echo '<button type="submit" name="pref" value="recientes" class="list-group-item">Más recientes</button>';
-					echo "</form>";
-					?>
+							echo "</div><div class='preferencias'>";
+							echo "Preferencias";
+							echo '<button type="submit" name="pref" value="valorado" class="list-group-item">Más valorados</button>';
+							if(isset($_SESSION['codigo'])){
+								echo '<button type="submit" name="pref" value="lista" class="list-group-item">Mi Lista</button>';
+							}
+							echo '<button type="submit" name="pref" value="recientes" class="list-group-item">Más recientes</button>';
+							echo "</div>";
+						?>
+					</form>
 				</div>
-
-				<form action='index.php' method='post'>
-					<?php
-						echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-					?>
-					<span class=''>
-						<span class='col-md-4'>
-							<input type='text' class='form-control' name='search'>
-						</span>
-						<button class='col-md-1 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
-					</span>
-				</form>
-				<br>
-				<br>
-				<div class='row'>
-					<?php
-						foreach($list as $array)
-						{
-							$tipo = $conex->sacarTipo($array[0]);
-							echo '<form action="'.$tipo.'_plantilla.php" method="post" id="items">';
-							echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
-							echo "<p class='item'>";
-							echo "<img class='img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
-							echo "<span class='bold'>".$array[1]."</span>";
-							echo "</p>";
-							echo "</button>";
-							echo "</form>";
-						}
-						$conex->close();
-					?>
+			</div>
+			<div class='col-md-10'>
+				<div class='articulos container'>
+					<div class='row'>
+						<form action='index.php' method='post'>
+							<?php
+								echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
+							?>
+							<span class='col-md-10'>
+								<span class='col-md-8 col-md-offset-2'>
+									<input type='text' class='form-control' name='search'>
+								</span>
+								<button class='col-md-2 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
+							</span>
+						</form>
+					</div>
+					<div class='row objetos'>
+						<?php
+							foreach($list as $array)
+							{
+								$tipo = $conex->sacarTipo($array[0]);
+								echo '<div class="col-md-2  objeto">';
+								echo '<form action="'.$tipo.'_plantilla.php" method="post" id="items">';
+								echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
+								echo "<p class='item'>";
+								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'>";
+								echo "<span class='bold'>".$array[1]."</span>";
+								echo "</p>";
+								echo "</button>";
+								echo "</form>";
+								echo '</div>';
+							}
+							$conex->close();
+						?>
+					</div>
 				</div>
 			</div>
 		</div>
