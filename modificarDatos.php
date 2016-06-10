@@ -87,46 +87,57 @@
                }
 
                 if (isset($_FILES['imagen_usuario'])){
-                  if(!$_FILES['imagen_usuario']["error"]){
-                  
-                   //por si supera el tamaño permitido
-               
-                  $archivo_temporal = $_FILES['imagen_usuario']['tmp_name']; 
-                  $archivo_nombre = $ruta.$usuario.".jpg"; 
+                  if ($_FILES["imagen_usuario"]["name"] != "") {
+                    $size = ($_FILES['imagen_usuario']['size']);
+                    echo $size;
+                    if($size <= 2000000 && $size > 0){ //por si supera el tamaño permitido
+                      $nombre = $_FILES["imagen_usuario"]["name"];
+                      $extension = end(explode('.', $nombre));
+ 
+                      if ($extension == 'jpg' || $extension == 'png'){
+                    //if (end( explode('.', $_FILES["imagen_usuario"]["name"]) != ".jpg" || end( explode('.', $_FILES["imagen_usuario"]["name"]) != ".jpg"){
+                      
+                        $archivo_temporal = $_FILES['imagen_usuario']['tmp_name']; 
+                        $archivo_nombre = $ruta.$usuario.".jpg"; 
 
-                  $tamanio = getimagesize($archivo_temporal);
-                  list($ancho, $alto) = $tamanio;
+                        $tamanio = getimagesize($archivo_temporal);
+                        list($ancho, $alto) = $tamanio;
 
-                    if ($tamanio){
-                      if(in_array($tamanio['mime'], $imagenes_permitidas)){
-                        if ($ancho < 500 && $alto < 500){
-                          if (is_uploaded_file($archivo_temporal)){ 
-                            if ($_FILES['imagen_usuario']['size'] < 6291456){
-                              move_uploaded_file($archivo_temporal,$archivo_nombre); 
-                              $imagen = $usuario.".jpg";
-                              array_push($campos, "Imagen = '".$imagen."' ");
-                              $_SESSION['imgusu'] = $imagen;
-                              echo $_SESSION['imgusu'];
+                          if ($tamanio){
+                            if(in_array($tamanio['mime'], $imagenes_permitidas)){
+                              if ($ancho < 500 && $alto < 500){
+                                if (is_uploaded_file($archivo_temporal)){ 
+                                  if ($_FILES['imagen_usuario']['size'] < 2000000){
+                                    move_uploaded_file($archivo_temporal,$archivo_nombre); 
+                                    $imagen = $usuario.".jpg";
+                                    array_push($campos, "Imagen = '".$imagen."' ");
+                                    $_SESSION['imgusu'] = $imagen;
+                                  
+                                  }else{
+                                    $fallido = true;
+                                    echo "<div>El tamaño excede el permitido.</div>";
+                                  }
+                                }else{ 
+                                  $fallido = true;
+                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
+                                } 
+                              }else{
+                                $fallido = true;
+                                echo "<div>La dimensión excede el permitido (500x500 px).</div>";
+                              }
                             }else{
                               $fallido = true;
-                              echo "<div>El tamaño excede el permitido.</div>";
+                              echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
                             }
-                          }else{ 
-                            $fallido = true;
-                            echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
-                          } 
-                        }else{
-                          $fallido = true;
-                          echo "<div>La dimensión excede el permitido (500x500 px).</div>";
-                        }
+                          }
                       }else{
                         $fallido = true;
-                        echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
+                        echo "<div>Formato no válido.</div>";
                       }
+                    }else{
+                      $fallido = true;
+                      echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen</div>";
                     }
-                  }else{
-                    $fallido = true;
-                    echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen</div>";
                   }
                 }
 
@@ -180,8 +191,8 @@
 
             <div class='row'>
               <label class='col-md-2 col-md-offset-2' for="imagen">Subir imagen:</label>
-              
-              <div class='col-md-5'>
+               <div class='col-md-5'>
+                <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
                 <input type="file" name="imagen_usuario" id="imagen" />
               </div>
             </div>

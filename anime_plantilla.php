@@ -186,15 +186,17 @@
 						echo "<br>";
 						echo "<br>";
 
-						$listaComentarios=$conex->consult("SELECT * FROM comentarios WHERE codigo =".$codigo);
+						$listaComentarios=$conex->consult("SELECT * FROM comentarios WHERE codigo ='". $codigo."'");
 
 						foreach ($listaComentarios as $key) {
 							$time = strtotime($key[4]);
 							$myFormatForView = date("d-n-Y H:i ", $time);
+							$nombre = $conex->consult("SELECT Nombre FROM usuarios WHERE CodUsuario = '". $key[2]."'");
+							print_r($nombre);
 
 							echo "<div class = 'comentario'>";
-							echo $_SESSION['usuario'];
-							echo "<img src = 'imagenesusuarios/".$_SESSION['imgusu']."' />";
+							echo $nombre[0];
+							echo "<img src = 'imagenesusuarios/".$nombre[0]."' />";
 							echo "<br>";
 							echo $key[3];
 							echo "<br>";

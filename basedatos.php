@@ -29,6 +29,8 @@ class Conexion{
 	public function consult($sql)
 	{
 		$returned=[];
+		echo $sql;
+		echo "<br>";
 		$search=mysqli_query($this->conection, $sql) or die("ha habido un error en la consulta ".mysqli_error($this->conection));
 		$i=0;
 		while ($line=mysqli_fetch_array($search, MYSQLI_ASSOC))
