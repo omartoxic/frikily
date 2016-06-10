@@ -16,7 +16,7 @@
 		header("location: libros_plantilla.php");
 	}
 
-	$codigo= $_POST['item'];
+
 	$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM libros WHERE codigo =".$codigo);

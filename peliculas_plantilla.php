@@ -15,7 +15,7 @@
 		header("location: peliculas_plantilla.php");
 	}
 
-	$codigo= $_POST['item'];
+
 	$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM peliculas WHERE codigo =".$codigo);

@@ -14,7 +14,7 @@
 		$_SESSION['cod'] = $codigo;
 		header("location: comics_plantilla.php");
 	}
-	$codigo= $_POST['item'];
+
 	$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM comics WHERE codigo =".$codigo);

@@ -12,6 +12,7 @@
 		$_SESSION['cod'] = $codigo;
 		header("location: videojuegos_plantilla.php");
 	}
+	
 	$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM videojuegos WHERE codigo =".$codigo);
