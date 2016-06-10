@@ -47,6 +47,7 @@
   	<div class="registro">
   	<h1 class='titulo'>Modificar datos de usuario</h1>
 
+      
       <?php
           include "basedatos.php";
           $conex=new Conexion("root","","frikily");
@@ -54,11 +55,11 @@
           $sql = "UPDATE usuarios SET ";
           $campos = [];
           $codigo = $_SESSION['codigo'];
-
+          $fallido = false;
           $usuario = $_SESSION['usuario'];
           $imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
-          $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes
-
+          $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes 
+          
 
           if(isset($_POST["pass"])){
             $passGuardada = $conex->consult("SELECT Pass FROM usuarios WHERE CodUsuario =".$codigo);
@@ -80,53 +81,73 @@
                   }
                 }
 
+              }else{
+                echo "<div>Las nuevas contraseñas no coinciden. Inténtalo de nuevo</div>";
+                $fallido = true;
+               }
+
                 if (isset($_FILES['imagen_usuario'])){
-                  if ($_FILES["imagen_usuario"]["name"] != "") {
-                  $archivo_temporal = $_FILES['imagen_usuario']['tmp_name'];
-                  $archivo_nombre = $ruta.$usuario.".jpg";
-                  $tamanio = getimagesize($_FILES['imagen_usuario']['tmp_name']);
+                  if(!$_FILES['imagen_usuario']["error"]){
+                  
+                   //por si supera el tamaño permitido
+               
+                  $archivo_temporal = $_FILES['imagen_usuario']['tmp_name']; 
+                  $archivo_nombre = $ruta.$usuario.".jpg"; 
+
+                  $tamanio = getimagesize($archivo_temporal);
                   list($ancho, $alto) = $tamanio;
 
                     if ($tamanio){
                       if(in_array($tamanio['mime'], $imagenes_permitidas)){
                         if ($ancho < 500 && $alto < 500){
-                          if (is_uploaded_file($archivo_temporal)){
+                          if (is_uploaded_file($archivo_temporal)){ 
                             if ($_FILES['imagen_usuario']['size'] < 6291456){
-                              move_uploaded_file($archivo_temporal,$archivo_nombre);
+                              move_uploaded_file($archivo_temporal,$archivo_nombre); 
                               $imagen = $usuario.".jpg";
                               array_push($campos, "Imagen = '".$imagen."' ");
                               $_SESSION['imgusu'] = $imagen;
                               echo $_SESSION['imgusu'];
                             }else{
+                              $fallido = true;
                               echo "<div>El tamaño excede el permitido.</div>";
                             }
-                          }else{
-                            echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
-                          }
+                          }else{ 
+                            $fallido = true;
+                            echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
+                          } 
                         }else{
+                          $fallido = true;
                           echo "<div>La dimensión excede el permitido (500x500 px).</div>";
                         }
                       }else{
+                        $fallido = true;
                         echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
                       }
                     }
-                 }
-               }
-             }
+                  }else{
+                    $fallido = true;
+                    echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen</div>";
+                  }
+                }
 
+           
+            if (!$fallido){
               $separado_por_comas = implode(",", $campos);
 
               $sql .= $separado_por_comas;
 
-              $sql .= " WHERE CodUsuario = '".$codigo."' ";
+              $sql .= " WHERE CodUsuario = '" . $codigo . "'";
+
               $conex->refresh($sql);
               echo "<div>Usuario Modifcado</div>";
+            }
+
 
             }else{
               echo "<div>La contraseña no coincide con la guardada. Inténtelo de nuevo.</div>";
-            }
+            }  
           }
-			?>
+      ?> 
   		<form action="modificarDatos.php" method="POST" class='container' id="usuario" enctype="multipart/form-data">
 
             <div class='row'>
@@ -159,7 +180,7 @@
 
             <div class='row'>
               <label class='col-md-2 col-md-offset-2' for="imagen">Subir imagen:</label>
-              <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+              
               <div class='col-md-5'>
                 <input type="file" name="imagen_usuario" id="imagen" />
               </div>
