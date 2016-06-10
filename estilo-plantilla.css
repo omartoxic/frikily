@@ -83,6 +83,13 @@ p.item
   overflow-y:hidden;
   width:160px;
 }
+pre
+{
+  white-space:pre-wrap;
+  overflow-y:hidden;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
 .item
 {
 	margin:0px 0px;

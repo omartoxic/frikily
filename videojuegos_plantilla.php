@@ -78,14 +78,7 @@
 		</div>
 		<div class="container">
 			<div class="navbar navbar-default arriba"></div>
-			<div class="row">
-				<div class="list-group secciones" id="secciones">
-					<a href="#" class="list-group-item">Sección 1</a>
-					<a href="#" class="list-group-item">Sección 2</a>
-					<a href="#" class="list-group-item">Sección 3</a>
-					<a href="#" class="list-group-item">Sección 4</a>
-				</div>
-				<pre class="col-xs-10">
+				<pre class="col-xs-12">
 					<div class="objeto row">
 						<span class="imagen col-xs-3">
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
@@ -121,7 +114,7 @@
 									}
 								echo "</div>";
 								echo "</span>";
-							}		
+							}
 							?>
 						</span>
 					</div>
