@@ -25,6 +25,10 @@
   padding-right: 61px;
   float:left;
 }
+.articulos
+{
+  margin-left: 180px;
+}
 .navbar,.navbar-nav>li
 {
   max-height:70px;
@@ -52,7 +56,11 @@ span.bold
   margin-top:-20;
   visibility: hidden;
 }
-
+.imagen-articulo
+{
+  height: 300px;
+  width: 130px;
+}
 p.item
 {
   font-family: monospace, monospace;
@@ -73,6 +81,7 @@ p.item
   border-radius: 4px;
   white-space:pre-wrap;
   overflow-y:hidden;
+  width:160px;
 }
 .item
 {
@@ -83,6 +92,14 @@ p.item
 {
   max-height:80%;
   margin:0 auto;
+}
+.barra
+{
+  margin-top:-10px;
+}
+.iniciosesion
+{
+  margin-top:-25px;
 }
 .titulo
 {

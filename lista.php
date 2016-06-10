@@ -32,8 +32,8 @@
 				echo ucwords($_POST['ver']);
 			?>
 		</title>
-		<link rel="stylesheet" href="estilo-plantilla.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="estilo-plantilla.css">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
@@ -54,7 +54,7 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="index.php">Página principal</a></li>
+							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
@@ -62,6 +62,7 @@
 							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><a class='barra btn btn-link' href="introducirDatos.php">Añadir</a></li>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
@@ -71,10 +72,11 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='iniciosesion btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
 							}
 							else
 							{
+								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src=imagenesusuarios/".$_SESSION['imgusu'].">";
 								echo $_SESSION['usuario'];
@@ -109,36 +111,37 @@
 					echo "</form>";
 					?>
 				</div>
-
-				<form action='lista.php' method='post'>
-					<?php
-						echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-					?>
-					<span class=''>
-						<span class='col-md-4'>
-							<input type='text' class='form-control' name='search'>
+				<div class='articulos'>
+					<form action='lista.php' method='post'>
+						<?php
+							echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
+						?>
+						<span class=''>
+							<span class='col-md-4'>
+								<input type='text' class='form-control' name='search'>
+							</span>
+							<button class='col-md-1 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
 						</span>
-						<button class='col-md-1 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
-					</span>
-				</form>
-				<br>
-				<br>
+					</form>
+					<br>
+					<br>
 
-				<?php
-					echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
+					<?php
+						echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
 
-					foreach($list as $array)
-					{
-						echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
-						echo "<p class='item'>";
-						echo "<img class='img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
-						echo "<span class='bold'>".$array[1]."</span>";
-						echo "</p>";
-						echo "</button>";
-					}
-					$conex->close();
-				?>
-				</form>
+						foreach($list as $array)
+						{
+							echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
+							echo "<p class='item'>";
+							echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
+							echo "<span class='bold'>".$array[1]."</span>";
+							echo "</p>";
+							echo "</button>";
+						}
+						$conex->close();
+					?>
+					</form>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

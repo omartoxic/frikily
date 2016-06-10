@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>plantilla</title>
+		<title>Introducir nuevo artículo</title>
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -34,7 +34,7 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="plantilla.php">Página principal</a></li>
+							<li><a href="index.php">Página principal</a></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
 							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
@@ -60,7 +60,7 @@
 					</ul>
 				</div>
 			</div>
-		</div>		
+		</div>
 		<div class="navbar navbar-default arriba"></div>
 		<div class="container">
 			<div class="row">
@@ -96,7 +96,7 @@
 				        <div id = 'tipo'>
 				            <label>Tipo:</label>
 				            <select name="tipo" select = 'Seleciona'>
-							  <option value="Anime">Anime</option> 
+							  <option value="Anime">Anime</option>
 							  <option value="Comic">Comics</option>
 							  <option value="Libro">Libro</option>
 							  <option value="Manga">Manga</option>
@@ -106,7 +106,7 @@
 							</select>
 				        </div>
 
-				        <div id = 'annioFin' class = "anime manga serie"> 
+				        <div id = 'annioFin' class = "anime manga serie">
 				            <label>Año de finalización (0 si no ha acabado):</label>
 				            <input type = 'number' name='annioFin' id='id_annioFin' max = '2099' value= '0' />
 				        </div>
@@ -217,14 +217,14 @@
 						<div id = 'online' class = "videojuego">
 				            <label>Funciones online:</label>
 				            <select name="selectOnline">
-							  <option value="si">Sí</option> 
+							  <option value="si">Sí</option>
 							  <option value="no" selected>No</option>
 							</select>
 				        </div>
 
 				        <input type = 'submit' value = 'Añadir' id = "boton"/>
 				        <a href="index.php">Volver al inicio</a>
-					</form>		
+					</form>
 				</div>
 			</div>
 		</div>
