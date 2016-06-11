@@ -54,6 +54,11 @@
 {
   margin-top: -15px;
   max-height: 50px;
+  max-width: 50px;
+}
+.texto-articulo
+{
+  vertical-align:sub;
 }
 .cuadrado
 {
