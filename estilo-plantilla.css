@@ -56,10 +56,6 @@
   max-height: 50px;
   max-width: 50px;
 }
-.texto-articulo
-{
-  vertical-align:sub;
-}
 .cuadrado
 {
   border:1px solid black;
@@ -70,8 +66,15 @@
 }
 span.bold
 {
-  max-height:10;
+  height:50px;
   overflow:hidden;
+}
+.texto-articulo
+{
+  width:140px;
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
 }
 .arriba
 {
@@ -149,7 +152,7 @@ form .row
 	padding: 5px;
 	border-radius: 25px;
     background: #58ACFA;
-	
+
 }
 .resumen{
 	float:left;
