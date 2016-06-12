@@ -100,7 +100,6 @@ class Conexion{
 			}
 		}
 
-		echo $consulta;
 		return $consulta;
 	}
 

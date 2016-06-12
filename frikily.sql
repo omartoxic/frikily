@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2016 a las 21:02:09
+-- Tiempo de generación: 12-06-2016 a las 20:45:21
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -54,25 +54,29 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   `CodUsuario` int(4) NOT NULL,
   `Comentario` varchar(500) NOT NULL,
   `Fecha` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Volcado de datos para la tabla `comentarios`
 --
 
 INSERT INTO `comentarios` (`CodigoComentario`, `Codigo`, `CodUsuario`, `Comentario`, `Fecha`) VALUES
-(1, 5, 10, 'Escribe aquí tus comentarios', '2016-05-29 17:28:00'),
-(2, 5, 10, 'Escribe aquí tus comentarios', '2016-05-29 17:28:00'),
-(3, 5, 10, 'a', '2016-05-29 17:36:00'),
-(4, 5, 10, 's', '2016-05-29 17:37:00'),
-(5, 0, 10, 'Y', '2016-05-29 17:37:00'),
-(6, 0, 10, 'Escribe aquí tus comentarios', '2016-05-29 17:37:00'),
-(7, 5, 10, 'X', '2016-05-29 17:38:00'),
-(8, 0, 10, 'c', '2016-05-29 17:58:00'),
-(9, 5, 10, 'P', '2016-05-29 18:01:00'),
-(10, 13, 10, 'Escribe aquí tus comentarios', '2016-05-29 18:01:00'),
-(11, 13, 10, 'x', '2016-05-29 18:02:00'),
-(12, 14, 13, 'Escribe aquí tus comentarios', '2016-06-03 21:41:00');
+(1, 5, 13, 'Escribe aquí tus comentarios', '2016-05-29 17:28:00'),
+(2, 5, 13, 'Escribe aquí tus comentarios', '2016-05-29 17:28:00'),
+(3, 5, 13, 'a', '2016-05-29 17:36:00'),
+(10, 13, 1, 'Escribe aquí tus comentarios', '2016-05-29 18:01:00'),
+(12, 14, 13, 'Escribe aquí tus comentarios', '2016-06-03 21:41:00'),
+(14, 5, 1, 'aaa', '2016-06-15 13:00:00'),
+(15, 13, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:21:00'),
+(16, 11, 13, 'Es mora\r\n', '2016-06-10 21:27:00'),
+(17, 2, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:28:00'),
+(18, 5, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:29:00'),
+(19, 5, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:32:00'),
+(20, 3, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:32:00'),
+(21, 2, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:34:00'),
+(22, 1, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:34:00'),
+(23, 6, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:34:00'),
+(24, 4, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:35:00');
 
 -- --------------------------------------------------------
 
@@ -108,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `episodios` (
   `Numero` int(4) NOT NULL,
   `Contenedor` int(3) NOT NULL,
   `Titulo` varchar(60) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Volcado de datos para la tabla `episodios`
@@ -120,7 +124,10 @@ INSERT INTO `episodios` (`CodigoCapitulo`, `Codigo`, `Numero`, `Contenedor`, `Ti
 (3, 11, 1, 1, 'Fuera de lo normal Parte 1: Metamorfosis '),
 (4, 11, 2, 1, 'Fuera de lo normal Parte 2: Toda la humanidad'),
 (5, 13, 1, 1, 'Sigue la corriente, nena'),
-(6, 15, 1, 1, 'Piloto');
+(6, 15, 1, 1, 'Piloto'),
+(7, 1, 0, 0, '0'),
+(8, 16, 0, 0, '0'),
+(9, 8, 0, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -129,10 +136,20 @@ INSERT INTO `episodios` (`CodigoCapitulo`, `Codigo`, `Numero`, `Contenedor`, `Ti
 --
 
 CREATE TABLE IF NOT EXISTS `estrenos` (
+`CodEstreno` int(3) NOT NULL,
   `Codigo` int(4) NOT NULL,
-  `Fecha` datetime NOT NULL,
+  `Fecha` date NOT NULL,
   `CodCapitulo` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `estrenos`
+--
+
+INSERT INTO `estrenos` (`CodEstreno`, `Codigo`, `Fecha`, `CodCapitulo`) VALUES
+(4, 1, '2016-06-22', 7),
+(5, 16, '2016-06-08', 8),
+(6, 8, '2016-06-16', 9);
 
 -- --------------------------------------------------------
 
@@ -390,10 +407,10 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`CodUsuario`, `Nombre`, `Pass`, `Imagen`, `Mail`, `Tipo`) VALUES
-(1, 'omar', 'a16656a039d8b23731b3e933914f8bd7', '1', 'omar', 'usu'),
+(1, 'omar', 'a16656a039d8b23731b3e933914f8bd7', 'omar', 'omar', 'usu'),
 (2, 'ivan', '81dc9bdb52d04dc20036dbd8313ed055', 'ivan', 'ivan', 'usu'),
 (3, 'pipo', '0cc175b9c0f1b6a831c399e269772661', 'pipo', 'a', 'usu'),
-(13, 'u', '7b774effe4a349c6dd82ad4f4f21d34c', 'u.jpg', 'g', 'usu');
+(13, 'u', '7b774effe4a349c6dd82ad4f4f21d34c', 'u.jpg', 'jio', 'usu');
 
 -- --------------------------------------------------------
 
@@ -428,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `visto` (
   `CodigoUsuario` int(3) NOT NULL,
   `Codigo` int(4) NOT NULL,
   `CodigoEpisodio` int(3) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Volcado de datos para la tabla `visto`
@@ -436,7 +453,13 @@ CREATE TABLE IF NOT EXISTS `visto` (
 
 INSERT INTO `visto` (`CodigoVisto`, `CodigoUsuario`, `Codigo`, `CodigoEpisodio`) VALUES
 (1, 2, 4, 2),
-(4, 13, 7, 2);
+(4, 13, 7, 2),
+(5, 13, 6, 1),
+(6, 13, 1, 0),
+(7, 13, 16, 0),
+(8, 13, 17, 0),
+(9, 13, 8, 0),
+(10, 13, 8, 0);
 
 --
 -- Índices para tablas volcadas
@@ -470,7 +493,7 @@ ALTER TABLE `episodios`
 -- Indices de la tabla `estrenos`
 --
 ALTER TABLE `estrenos`
- ADD PRIMARY KEY (`Codigo`);
+ ADD PRIMARY KEY (`CodEstreno`), ADD KEY `CodEstreno` (`CodEstreno`);
 
 --
 -- Indices de la tabla `general`
@@ -546,12 +569,17 @@ ALTER TABLE `visto`
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
-MODIFY `CodigoComentario` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `CodigoComentario` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT de la tabla `episodios`
 --
 ALTER TABLE `episodios`
-MODIFY `CodigoCapitulo` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `CodigoCapitulo` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT de la tabla `estrenos`
+--
+ALTER TABLE `estrenos`
+MODIFY `CodEstreno` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `general`
 --
@@ -576,7 +604,7 @@ MODIFY `CodUsuario` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 -- AUTO_INCREMENT de la tabla `visto`
 --
 ALTER TABLE `visto`
-MODIFY `CodigoVisto` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `CodigoVisto` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- Restricciones para tablas volcadas
 --
@@ -592,12 +620,6 @@ ADD CONSTRAINT `anime_ibfk_1` FOREIGN KEY (`Codigo`) REFERENCES `general` (`Codi
 --
 ALTER TABLE `comics`
 ADD CONSTRAINT `comics_ibfk_1` FOREIGN KEY (`Codigo`) REFERENCES `general` (`Codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `estrenos`
---
-ALTER TABLE `estrenos`
-ADD CONSTRAINT `estrenos_ibfk_1` FOREIGN KEY (`Codigo`) REFERENCES `general` (`Codigo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `libros`
