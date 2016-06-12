@@ -38,6 +38,7 @@
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
+		<script type="text/javascript" src="texto-articulo.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -99,7 +100,7 @@
 				<div class="list-group secciones" id="secciones">
 					<form action='lista.php' method='post'>
 						<?php
-							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo");
+							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo ORDER BY g.genero");
 							echo "<div>Categorias";
 								foreach ($categorias as $fila){
 									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
@@ -142,7 +143,7 @@
 							echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
 							echo "<p class='item'>";
 							echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
-							echo "<span class='bold'>".$array[1]."</span>";
+							echo "<span class='texto-articulo bold'>".$array[1]."</span>";
 							echo "</p>";
 							echo "</button>";
 							echo "</form>";

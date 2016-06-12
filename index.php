@@ -26,6 +26,10 @@
 			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
 		}
 	}
+	
+	$notifi = $conex->notificaciones();
+	$notifi = $conex->consult($notifi);
+	$notifi= count($notifi);
 ?>
 <html>
 	<head>
@@ -37,6 +41,7 @@
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
+		<script type="text/javascript" src="texto-articulo.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +86,7 @@
 							}
 							else
 							{
-								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
+								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
 								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
@@ -98,7 +103,7 @@
 				<div class="list-group secciones" id="secciones">
 					<form action='lista.php' method='post'>
 						<?php
-							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo");
+							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo ORDER BY g.genero");
 							echo "<div>Categorias";
 								foreach ($categorias as $fila){
 									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
@@ -141,8 +146,8 @@
 								echo '<form action="'.$tipo.'_plantilla.php" method="post" id="items">';
 								echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
 								echo "<p class='item'>";
-								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'>";
-								echo "<span class='bold'>".$array[1]."</span>";
+								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'></img>";
+								echo "<span class='texto-articulo bold'>".$array[1]."</span>";
 								echo "</p>";
 								echo "</button>";
 								echo "</form>";

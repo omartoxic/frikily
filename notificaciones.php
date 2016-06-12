@@ -5,17 +5,16 @@
 	$conex->connect();
 	
 	$consulta= "SELECT DISTINCT g.codigo,g.nombre,g.nota,g.imagen,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e";
-		
+
 	$now = new DateTime();
 	$now = $now->format('Y-m-d'); 
 		
 		if(isset($_POST['seccion'])){
 			$seccion=", ".$_POST['seccion']." t WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo and e.codigo = g.codigo AND e.fecha >= '".$now."' AND t.codigo = g.codigo ";
 			$consulta= $consulta.$seccion;	
-
 		}
 		else{
-			$consulta=$consulta." WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."'";
+			$consulta=$consulta." WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo";
 		}
 		
 		if(isset($_POST['search'])){
@@ -126,19 +125,34 @@
 						foreach($list as $array)
 						{
 							echo '<div class="col-md-2  objeto">';
-								echo '<div id="items" class="row">';
-									echo "<div class='estreno'>";
-									echo "Estreno: ".$array[4];
-									echo "</div>";
-										echo "<p class='item'>";
-											echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
-											echo "<span class='bold'>".$array[1]."</span>";
-										echo "</p>";
-									echo "</div>";
+								echo '<div id="items">';
+								echo "<div class='estreno'>";
+								echo "Estreno: ".$array[4];
 								echo "</div>";
-							echo "</div>";
-							echo '<div class="col-md-10">';
-							echo '<div id="items" class="row">';
+								
+								echo "<p class='item'>";
+								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[2].".jpg'></img>";
+								echo "<span class='texto-articulo bold'>".$array[1]."</span>";
+								echo "</p>";
+								
+								echo "</div>";
+							echo '</div>';
+							
+							
+							// echo '<div class="col-md-2  objeto">';
+								// echo '<div id="items" class="row">';
+									// echo "<div class='estreno'>";
+									// echo "Estreno: ".$array[4];
+									// echo "</div>";
+										// echo "<p class='item'>";
+											// echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[2].".jpg'>";
+											// echo "<span class='bold'>".$array[1]."</span>";
+										// echo "</p>";
+									// echo "</div>";
+								// echo "</div>";
+							// echo "</div>";
+							// echo '<div class="col-md-10">';
+							// echo '<div id="items" class="row">';
 								
 						}
 						$conex->close();
