@@ -100,7 +100,7 @@
 				<div class="list-group secciones" id="secciones">
 					<form action='lista.php' method='post'>
 						<?php
-							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo");
+							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo ORDER BY g.genero");
 							echo "<div>Categorias";
 								foreach ($categorias as $fila){
 									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
