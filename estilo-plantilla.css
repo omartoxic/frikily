@@ -152,7 +152,8 @@ form .row
 	padding: 5px;
 	border-radius: 25px;
     background: #58ACFA;
-
+	margin-top:10px;
+	margin-bottom:6px;
 }
 .resumen{
 	float:left;
