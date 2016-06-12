@@ -36,8 +36,10 @@
 		<link href="css/font-awesome-animation.css" rel="stylesheet">
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" href="hover.css">
 		<script type="text/javascript" src="estilojq.js"></script>
 		<script type="text/javascript" src="texto-articulo.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -55,18 +57,17 @@
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a class='barra btn btn-link' href="#">Página principal</a></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
 							<?php
 								if(isset($_SESSION['usuario']))
 								{
-									echo "<li><a class='barra btn btn-link' href='introducirDatos.php'>Añadir</a></li>";
+									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
 								}
 							?>
 						</ul>
@@ -78,7 +79,7 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a class='iniciosesion btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
 							}
 							else
 							{
@@ -97,10 +98,10 @@
 		<div class="container">
 			<div class="col-md-2">
 				<div class="list-group secciones" id="secciones">
-					<form action='lista.php' method='post'>
+					<form action='index.php' method='post'>
 						<?php
 							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo");
-							echo "<div>Categorias";
+							echo "<div>Categorias&nbsp;";
 								foreach ($categorias as $fila){
 									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
 								}
@@ -129,7 +130,7 @@
 								<span class='col-md-8 col-md-offset-2'>
 									<input type='text' class='form-control' name='search'>
 								</span>
-								<button class='col-md-2 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
+								<button class='col-md-2 btn btn-primary' type='submit'><i class='glyphicon glyphicon-search'></i> Buscar</button>
 							</span>
 						</form>
 					</div>
@@ -140,7 +141,7 @@
 								$tipo = $conex->sacarTipo($array[0]);
 								echo '<div class="col-md-2  objeto">';
 								echo '<form action="'.$tipo.'_plantilla.php" method="post" id="items">';
-								echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
+								echo '<button type="submit" name="item" value="'.$array[0].'" class="boton-item btn btn-link hvr-grow">';
 								echo "<p class='item'>";
 								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'>";
 								echo "<span class='texto-articulo bold'>".$array[1]."</span>";

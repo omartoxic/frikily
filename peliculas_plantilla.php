@@ -35,6 +35,8 @@
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
+		<script type="text/javascript" src="visto.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -92,30 +94,11 @@
 		</div>
 		<div class="container">
 			<div class="navbar navbar-default arriba"></div>
-				<pre class="col-xs-12">
+				<div class="col-xs-10 col-xs-offset-1">
 					<div class="objeto row">
+						<h1 class="col-xs-12"><?php echo $general[1] ?></h1>
 						<span class="imagen col-xs-3">
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
-						</span>
-						<span class="datos col-xs-9">
-							<span class="col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
-							<span class="col-xs-10">Director: <?php echo $director[1].' '.$director[2]; ?></span>
-							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
-							<span class="col-xs-5">Año: <?php echo $general[6] ?></span>
-							<span class="col-xs-5">Duración: <?php echo $peliculas[1] ?></span>
-							<span class="col-xs-5">Productora: <?php echo $peliculas[2] ?></span>
-							<?php
-							if(!(empty($actores))){
-								echo "<span class='col-xs-10'>Actores: <br>";
-								echo "<div class='col xs-6'>";
-									foreach ($actores as $actor){
-										echo ''.$actor[1].' '.$actor[2].'<br>';
-									}
-								echo "</div>";
-								echo "</span>";
-							}
-							?>
 							<div class="row">
 								<?php
 									if(isset($_SESSION['usuario']))
@@ -142,14 +125,28 @@
 									}
 								?>
 							</div>
-							<div class="sinopsis row"><?php echo $general[2] ?></div>
+						</span>
+						<span class="datos col-xs-9">
+							<span class="col-xs-10">Nota: <?php echo $general[3] ?></span>
+							<span class="col-xs-10">Director: <?php echo $director[1].' '.$director[2]; ?></span>
+							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
+							<span class="col-xs-10">Año: <?php echo $general[6] ?></span>
+							<span class="col-xs-10">Duración: <?php echo $peliculas[1] ?></span>
+							<span class="col-xs-10">Productora: <?php echo $peliculas[2] ?></span>
 							<?php
-
-								echo "<br>";
-								echo "<br>";
-								echo "<br>";
-								echo "<br>";
-								echo "Comentarios:";
+							if(!(empty($actores))){
+								echo "<span class='col-xs-10'>Actores: <br>";
+								echo "<div class='col xs-6'>";
+									foreach ($actores as $actor){
+										echo ''.$actor[1].' '.$actor[2].'<br>';
+									}
+								echo "</div>";
+								echo "</span>";
+							}
+							?>
+							<div class="sinopsis col-md-12"><?php echo $general[2] ?></div>
+							<?php
+								echo "<div class='col-md-12' >Comentarios:";
 
 								if (isset($_SESSION['usuario'])){
 									echo "<form method='post' action = ''>";
@@ -168,11 +165,11 @@
 									$time = strtotime($key[4]);
 									$myFormatForView = date("d-n-Y H:i ", $time);
 									$nombre = $conex->consult("SELECT Nombre FROM usuarios WHERE CodUsuario = '". $key[2]."'");
-								
+
 
 									echo "<div class = 'comentario'>";
 									echo $nombre[0][0];
-									echo "<img src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
+									echo "<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
 									echo "<br>";
 									echo $key[3];
 									echo "<br>";
@@ -186,7 +183,7 @@
 						</span>
 					</div>
 
-				</pre>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

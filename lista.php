@@ -39,6 +39,7 @@
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
 		<script type="text/javascript" src="texto-articulo.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -130,7 +131,7 @@
 								<span class='col-md-8 col-md-offset-2'>
 									<input type='text' class='form-control' name='search'>
 								</span>
-								<button class='col-md-2 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
+								<button class='col-md-2 btn btn-info' type='submit'><i class='glyphicon glyphicon-search'></i> Buscar</button>
 							</span>
 						</form>
 					</div>

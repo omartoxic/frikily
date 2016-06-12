@@ -1,3 +1,7 @@
+body
+{
+  font-family: 'Varela Round', sans-serif;
+}
 #cerrarSesion
 {
   margin-top:-20px;
@@ -49,6 +53,44 @@
 .navbar,.navbar-nav>li
 {
   max-height:70px;
+}
+.navbar
+{
+  background-color:#337AB7;
+  font-size:120%;
+}
+.navbar-default .navbar-nav>li>a:hover
+{
+  text-decoration: underline;
+}
+button.list-group-item
+{
+  background-color:CornflowerBlue;
+  color:white;
+}
+button.list-group-item:hover,button.list-group-item:focus
+{
+  background-color:Blue;
+  color:white;
+}
+p.item:hover,p.item:focus
+{
+  background-color:#6E6E6E;
+  color:white;
+}
+#paginacion
+{
+  margin-left:5.4%;
+}
+.boton-item:focus,.boton-item:active
+{
+  outline:0px;
+  -moz-outline-style: none
+}
+.navbar-default .navbar-nav>li>a,.navbar-default .btn-link,.navbar-default .btn-link:hover,.navbar-default .navbar-nav>li>a:hover
+{
+  color:white;
+  font-size:100%;
 }
 .imagen-usu
 {
@@ -107,6 +149,7 @@ p.item
   white-space:pre-wrap;
   overflow-y:hidden;
   width:160px;
+  background-color:#D8D8D8;
 }
 pre
 {
@@ -131,7 +174,7 @@ pre
 }
 .barra
 {
-  margin-top:-10px;
+  margin-top:10px;
 }
 .iniciosesion
 {

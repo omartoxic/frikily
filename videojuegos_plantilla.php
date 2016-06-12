@@ -12,7 +12,7 @@
 		$_SESSION['cod'] = $codigo;
 		header("location: videojuegos_plantilla.php");
 	}
-	
+
 	$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
 	$general = $list[0];
 	$list1=$conex->consult("SELECT * FROM videojuegos WHERE codigo =".$codigo);
@@ -32,6 +32,7 @@
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -233,11 +234,11 @@
 							$time = strtotime($key[4]);
 							$myFormatForView = date("d-n-Y H:i ", $time);
 							$nombre = $conex->consult("SELECT Nombre FROM usuarios WHERE CodUsuario = '". $key[2]."'");
-						
+
 
 							echo "<div class = 'comentario'>";
 							echo $nombre[0][0];
-							echo "<img src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
+							echo "<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
 							echo "<br>";
 							echo $key[3];
 							echo "<br>";
