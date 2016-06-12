@@ -99,8 +99,15 @@ class Conexion{
 				$consulta = $consulta." ORDER BY g.codigo Desc";
 			}
 		}
-
-		echo $consulta;
+		
+		return $consulta;
+	}
+	
+	public function notificaciones(){
+		$now = new DateTime();
+		$now = $now->format('Y-m-d'); 
+		
+		$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.imagen,g.nota,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e, episodios p WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo";
 		return $consulta;
 	}
 
