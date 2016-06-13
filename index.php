@@ -26,7 +26,6 @@
 			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen,g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%' AND g.aprobado=1");
 		}
 	}
-
 	$notifi = $conex->notificaciones();
 ?>
 <html>
@@ -95,7 +94,7 @@
 								if($notifi!=0){
 									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
 								}
-								echo "<li class='usuario'><a href='modificarDatos.php'>";
+								echo "<li class='usuario'>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
 								echo '<li><div class="dropdown">';

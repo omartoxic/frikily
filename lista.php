@@ -1,11 +1,11 @@
 ﻿<?php
+
 	session_start();
 	if(!(isset($_POST['categoria']))) {$_POST['categoria']="";}
 	if(!(isset($_POST['pref']))){ $_POST['pref']="";}
 	include "basedatos.php";
 	$conex=new Conexion("root","","frikily");
 	$conex->connect();
-
 	if(!isset($_POST['categoria']))
 	{
 		$_POST['categoria'] = "";
@@ -24,8 +24,6 @@
 		}
 	}
 	$notifi = $conex->notificaciones();
-	$notifi = $conex->consult($notifi);
-	$notifi= count($notifi);
 ?>
 <html>
 	<head>
@@ -86,7 +84,9 @@
 							}
 							else
 							{
-								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
+								if($notifi!=0){
+									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
+								}
 								echo "<li class='usuario'>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
