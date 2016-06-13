@@ -79,7 +79,7 @@ class Conexion{
 	}
 
 	public function consultaDinamica($seccion, $categoria, $preferencia){
-		$consulta = "SELECT  DISTINCT g.codigo,g.nombre,g.nota,g.imagen,g.nota FROM general g, ".$seccion." t, visto v WHERE g.codigo = t.codigo";
+		$consulta = "SELECT  DISTINCT g.codigo,g.nombre,g.nota,g.imagen,g.nota, g.aprobado FROM general g, ".$seccion." t, visto v WHERE g.codigo = t.codigo AND g.aprobado=1";
 
 		if($categoria!=""){
 			$consulta = $consulta." AND g.genero LIKE '".$categoria."'";
@@ -107,8 +107,9 @@ class Conexion{
 		$now = new DateTime();
 		$now = $now->format('Y-m-d'); 
 		
-		$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.imagen,g.nota,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e, episodios p WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo";
-		return $consulta;
+		$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.imagen,g.nota,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e, episodios p WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo AND u.codusuario=".$_SESSION['codigo'];
+		$lista = $this->consult($consulta);
+		return count($lista);
 	}
 
 	public function sacarTipo($codigo)
