@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	session_start();
 	if(isset($_POST['action'])){
 		if($_POST['action'] == 'Cerrar sesión'){
@@ -8,30 +8,15 @@
 	include "basedatos.php";
 	$conex=new Conexion("root","","frikily");
 	$conex->connect();
-	$_POST['ver'] = 'general';
-	if(!isset($_POST['categoria']))
-	{
-		$_POST['categoria'] = "";
-	}
-	if(!isset($_POST['pref']))
-	{
-		$_POST['pref'] = "";
-	}
-	$consulta = $conex->consultaDinamica($_POST['ver'],$_POST['categoria'],$_POST['pref']);
-
-	$list=$conex->consult($consulta);
-
-	if(isset($_POST['search'])){
-		if ($_POST['search'] != null){
-			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
-		}
-	}
+	
+	$list=$conex->consult("SELECT codigo,nombre,nota,imagen,aprobado FROM general WHERE aprobado=0");
+	print_r($list);
 
 	$notifi = $conex->notificaciones();
 ?>
 <html>
 	<head>
-		<meta charset="UTF-8">
+
 		<title>Página principal</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link href="css/font-awesome.css" rel="stylesheet">
@@ -109,60 +94,50 @@
 		<div class="container">
 			<div class="col-md-2">
 				<div class="list-group secciones" id="secciones">
-					<form action='index.php' method='post'>
-						<?php
-							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo ORDER BY g.genero");
-							echo "<div>Categorias";
-								foreach ($categorias as $fila){
-									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
-								}
-							echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-
-							echo "</div><div class='preferencias'>";
-							echo "Preferencias";
-							echo '<button type="submit" name="pref" value="valorado" class="list-group-item">Más valorados</button>';
-							if(isset($_SESSION['codigo'])){
-								echo '<button type="submit" name="pref" value="lista" class="list-group-item">Mi Lista</button>';
-							}
-							echo '<button type="submit" name="pref" value="recientes" class="list-group-item">Más recientes</button>';
-							echo "</div>";
-						?>
+					<form action='administrarDatos.php' method='post'>
+					
+					<button type="submit" name="seccion" value="videojuegos" class="list-group-item">Videojuegos</button>
+					<button type="submit" name="seccion" value="anime" class="list-group-item">Anime</button>
+					<button type="submit" name="seccion" value="manga" class="list-group-item">Manga</button>
+					<button type="submit" name="seccion" value="comics" class="list-group-item">Cómics</button>
+					<button type="submit" name="seccion" value="libros" class="list-group-item">Libros</button>
+					<button type="submit" name="seccion" value="peliculas" class="list-group-item">Peliculas</button>
+					<button type="submit" name="seccion" value="series" class="list-group-item">Series</button>
+					
 					</form>
 				</div>
 			</div>
 			<div class='col-md-10'>
 				<div class='articulos container'>
 					<div class='row'>
-						<form action='index.php' method='post'>
-							<?php
-								echo "<input type='hidden' name='ver' value='".$_POST['ver']."'>";
-							?>
+						<form action='notificaciones.php' method='post'>
 							<span class='col-md-10'>
 								<span class='col-md-8 col-md-offset-2'>
 									<input type='text' class='form-control' name='search'>
 								</span>
-								<button class='col-md-2 btn btn-primary' type='submit'><i class='glyphicon glyphicon-search'></i> Buscar</button>
+								<button class='col-md-2 btn btn-success' type='submit'><i class='glyphicon glyphicon-search'></i>Buscar</button>
 							</span>
 						</form>
 					</div>
-					<div class='row objetos'>
-						<?php
-							foreach($list as $array)
-							{
-								$tipo = $conex->sacarTipo($array[0]);
-								echo '<div class="col-md-2  objeto">';
-								echo '<form action="'.$tipo.'_plantilla.php" method="post" id="items">';
+					<div class='row objetosbis'>
+					<?php
+						foreach($list as $array)
+						{
+							$tipo = $conex->sacarTipo($array[0]);
+							echo '<div class="col-md-2  objeto">';
+							echo '<form action="administrarDatos.php" method="post" id="items">';
 								echo '<button type="submit" name="item" value="'.$array[0].'" class="boton-item btn btn-link hvr-grow">';
 								echo "<p class='item'>";
 								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'></img>";
 								echo "<span class='texto-articulo bold'>".$array[1]."</span>";
 								echo "</p>";
 								echo "</button>";
-								echo "</form>";
-								echo '</div>';
-							}
-							$conex->close();
-						?>
+							echo "<input type='hidden' name='tipo' value='".$tipo."'>";
+							echo "</form>";
+							echo '</div>';								
+						}
+						$conex->close();
+					?>
 					</div>
 				</div>
 			</div>

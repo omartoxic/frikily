@@ -4,22 +4,22 @@
 	$conex=new Conexion("root","","frikily");
 	$conex->connect();
 	
-	$consulta= "SELECT DISTINCT g.codigo,g.nombre,g.nota,g.imagen,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e";
+	$consulta= "SELECT DISTINCT g.codigo,g.nombre,g.nota,g.imagen,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e, episodios p";
 
 	$now = new DateTime();
 	$now = $now->format('Y-m-d'); 
 		
 		if(isset($_POST['seccion'])){
-			$seccion=", ".$_POST['seccion']." t WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo and e.codigo = g.codigo AND e.fecha >= '".$now."' AND t.codigo = g.codigo ";
+			$seccion=", ".$_POST['seccion']." t WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo and e.codigo = g.codigo AND e.fecha >= '".$now."' AND t.codigo = g.codigo AND u.codusuario=".$_SESSION['codigo'];
 			$consulta= $consulta.$seccion;	
 		}
 		else{
-			$consulta=$consulta." WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo";
+			$consulta=$consulta." WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo AND u.codusuario=".$_SESSION['codigo'];
 		}
 		
 		if(isset($_POST['search'])){
 			if ($_POST['search'] != null){
-				$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.nota,g.imagen,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e WHERE  v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo and e.fecha >= $now and g.nombre LIKE '%".$_POST['search']."%'";
+				$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.nota,g.imagen,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e WHERE  v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo and e.fecha >= $now and g.nombre LIKE '%".$_POST['search']."%' AND u.codusuario=".$_SESSION['codigo'];
 			}
 		}
 		echo $consulta;
@@ -125,17 +125,17 @@
 						foreach($list as $array)
 						{
 							echo '<div class="col-md-2  objeto">';
-								echo '<div id="items">';
+								
 								echo "<div class='estreno'>";
 								echo "Estreno: ".$array[4];
 								echo "</div>";
 								
 								echo "<p class='item'>";
-								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[2].".jpg'></img>";
+								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'></img>";
 								echo "<span class='texto-articulo bold'>".$array[1]."</span>";
 								echo "</p>";
 								
-								echo "</div>";
+								
 							echo '</div>';
 							
 							
