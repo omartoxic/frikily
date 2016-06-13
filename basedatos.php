@@ -79,7 +79,7 @@ class Conexion{
 	}
 
 	public function consultaDinamica($seccion, $categoria, $preferencia){
-		$consulta = "SELECT  DISTINCT g.codigo,g.nombre,g.nota,g.imagen,g.nota FROM general g, ".$seccion." t, visto v WHERE g.codigo = t.codigo";
+		$consulta = "SELECT  DISTINCT g.codigo,g.nombre,g.nota,g.imagen,g.nota, g.aprobado FROM general g, ".$seccion." t, visto v WHERE g.codigo = t.codigo AND g.aprobado=1";
 
 		if($categoria!=""){
 			$consulta = $consulta." AND g.genero LIKE '".$categoria."'";

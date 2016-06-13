@@ -20,7 +20,7 @@
 
 	if(isset($_POST['search'])){
 		if ($_POST['search'] != null){
-			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
+			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen,g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%' AND g.aprobado=1");
 		}
 	}
 ?>
@@ -101,7 +101,7 @@
 				<div class="list-group secciones" id="secciones">
 					<form action='lista.php' method='post'>
 						<?php
-							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo ORDER BY g.genero");
+							$categorias=$conex->consult("SELECT DISTINCT g.genero, g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.aprobado=1 ORDER BY g.genero");
 							echo "<div>Categorias";
 								foreach ($categorias as $fila){
 									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
