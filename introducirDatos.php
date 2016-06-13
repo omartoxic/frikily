@@ -13,11 +13,7 @@
 		<script type="text/javascript" src="estilojq.js"></script>
 		<script type="text/javascript" src="modificardatos.js"></script>
 	</head>
-	<?php
-		include "basedatos.php";
-		$conex=new Conexion("root","","frikily");
-		$conex->connect();
-	?>
+	
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -46,12 +42,9 @@
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						<?php
-							if(!isset($_SESSION['usuario']))
-							{
+							if(!isset($_SESSION['usuario'])){
 								echo "<li><a href='inicioSesion.php'>iniciar sesión</a></li>";
-							}
-							else
-							{
+							}else{
 								echo "<li>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario']."</li>";
@@ -61,41 +54,166 @@
 				</div>
 			</div>
 		</div>
-		<div class="navbar navbar-default arriba"></div>
+				<div class="navbar navbar-default arriba"></div>
 		<div class="container">
 			<div class="row">
 				<div class="list-group secciones" id="secciones">
+		<?php
+		include "basedatos.php";
+		$conex=new Conexion("root","","frikily");
+		$conex->connect();
+
+		if(isset($_POST["tipo"])){
+			$nombre = $_POST["nombre"];
+			$sinopsis = $_POST["sinopsis"];
+			$genero = $_POST["genero"];
+			$annio = $_POST["annio"];
+			$tipo = $_POST["tipo"];
+			$codigo = 0;
+			$fallido = false;
+
+
+			$imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
+          	$ruta = "./imagenes/img";//ruta carpeta donde queremos copiar las imágenes
+
+          	if (isset($_FILES['imagenProducto'])){
+			   if ($_FILES['imagenProducto']["name"] != "" ){
+                    $size = ($_FILES['imagenProducto']['size']);
+                    if($size <= 7000000 && $size > 0){ //por si supera el tamaño permitido
+                      $nombreImagen = $_FILES["imagenProducto"]["name"];
+                      $extension = end(explode('.', $nombreImagen));
+ 
+                      if ($extension == 'jpg' || $extension == 'png'){
+                      
+                        $archivo_temporal = $_FILES['imagenProducto']['tmp_name']; 
+                        $codigo = $conex->consult("SELECT MAX(codigo) from general");
+                   		$codigo = $codigo[0][0] + 1;
+                        $archivo_nombre = $ruta.$codigo.".jpg"; 
+                        $tamanio = getimagesize($archivo_temporal);
+
+                          if ($tamanio){
+                            if(in_array($tamanio['mime'], $imagenes_permitidas)){
+                                if (is_uploaded_file($archivo_temporal)){ 
+                                  if ($_FILES['imagenProducto']['size'] < 7000000){
+                                    move_uploaded_file($archivo_temporal,$archivo_nombre); 
+                                  }else{
+                                    $fallido = true;
+                                    echo "<div>El tamaño excede el permitido.</div>";
+                                  }
+                                }else{ 
+                                  $fallido = true;
+                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
+                                } 
+                            }else{
+                              $fallido = true;
+                              echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
+                            }
+                          }
+                      }else{
+                        $fallido = true;
+                        echo "<div>Formato no válido.</div>";
+                      }
+                    }else{
+                      $fallido = true;
+                      echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</div>";
+                    }
+                  }
+              }
+
+
+              if (!$fallido){
+              	$img = "img".$codigo;
+              	$consulta = "INSERT INTO general (Nombre,Sinopsis,Nota,Genero,Imagen,Annio,Aprobado) VALUES ('$nombre', '$sinopsis','0','$genero','$img',$annio,'false')";
+              	$conex->refresh($consulta);
+
+				switch(tipo){
+				      case "Serie":
+				        $annioFin = $_POST["annioFin"];
+				        $temporadas = $_POST["temporadas"];
+				        $capitulos = $_POST["capitulos"];
+				        $actor1 = $_POST["actor1"];
+				        $actor2 = $_POST["actor2"];
+				        $autor = $_POST["autor"];
+				        $canal = $_POST["canal"];
+				        
+				        $conex->refresh($consulta2);
+				      break;
+				      case "Manga":
+				      	$annioFin = $_POST["annioFin"];
+				      	$capitulos = $_POST["capitulos"];
+				      	$autor = $_POST["autor"];
+				      	$revista = $_POST["revista"];
+				      	$tomo = $_POST["tomo"];
+				      break;
+				      case "Videojuego":
+				    	$autor = $_POST["autor"];
+				    	$desarrolladora = $_POST["desarrolladora"];
+				    	$jugadores = $_POST["jugadores"];
+				    	$online = $_POST["online"];
+				      break;
+				      case "Pelicula":
+				     	$actor1 = $_POST["actor1"];
+				        $actor2 = $_POST["actor2"];
+				        $director = $_POST["director"];
+				        $duracion = $_POST["duracion"];
+				        $productora = $_POST["productora"];
+				      break;
+				      case "Anime":
+				      	$annioFin = $_POST["annioFin"];
+				      	$temporadas = $_POST["temporadas"];
+				      	$capitulos = $_POST["capitulos"];
+				      	$estudio = $_POST["estudio"];
+				      	$actor1 = $_POST["actor1"];
+				        $actor2 = $_POST["actor2"];
+				      break;
+				      case "Comic":
+				        $autor = $_POST["autor"];
+				        $numeros = $_POST["numeros"];
+				        $editorial = $_POST["editorial"];
+				        $editorialOriginal = $_POST["editorialOriginal"];
+				      break;
+				      case "Libro":
+				  		$autor = $_POST["autor"];
+				  		$editorial = $_POST["editorial"];
+				  		$paginas = $_POST["paginas"];
+				  		$isbn = $_POST["isbn"];
+				      break;
+	            }
+		}
+	?>
+
 					<form action="introducirDatos.php" method="POST" id="datos" enctype="multipart/form-data">
 
 				  		<div id = 'nombre'>
 				            <label>Nombre:</label>
-				            <input type = 'text' name='nombre' id='id_nombre'/>
+				            <input type = 'text' name='nombre' id='id_nombre' required/>
 				        </div>
 
 				        <div id = 'sinopsis'>
 				            <label>Sinopsis:</label>
-				            <input type = 'text' name='sinopsis' id='id_sinopsis'/>
+				            <input type = 'text' name='sinopsis' id='id_sinopsis' required/>
 				        </div>
 
 				        <div id = 'genero'>
 				            <label>Género:</label>
-				            <input type = 'text' name='genero' id='id_genero'/>
+				            <input type = 'text' name='genero' id='id_genero' required/>
 				        </div>
 
 				        <div id = 'imagen'>
 				            <label for="imagen">Subir imagen:</label>
 				            <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-				            <input type="file" name="imagen_usuario" id="imagen" />
+				            <input type="file" name="imagenProducto" id="imagenP" required />
 				        </div>
 
 				        <div id = 'annio'>
 				            <label>Año:</label>
-				            <input type = 'number' name='annio' id='id_annio' max = '2099' />
+				            <input type = 'number' name='annio' id='id_annio' max = '2099' required />
 				        </div>
 
 				        <div id = 'tipo'>
 				            <label>Tipo:</label>
-				            <select name="tipo" select = 'Seleciona'>
+				            <select name="tipo" select = 'Seleciona' required>
+				            <option disabled selected value> -- Selecciona una categoría -- </option>
 							  <option value="Anime">Anime</option>
 							  <option value="Comic">Comics</option>
 							  <option value="Libro">Libro</option>
@@ -106,12 +224,12 @@
 							</select>
 				        </div>
 
-				        <div id = 'annioFin' class = "anime manga serie">
+				        <div id = 'annioFin' class = "anime manga serie" required>
 				            <label>Año de finalización (0 si no ha acabado):</label>
 				            <input type = 'number' name='annioFin' id='id_annioFin' max = '2099' value= '0' />
 				        </div>
 
-				         <div id = 'temporadas' class = "anime serie">
+				        <div id = 'temporadas' class = "anime serie">
 				            <label>Temporadas:</label>
 				            <input type = 'number' name='temporadas' id='id_temporadas' min = '1' max = '100' value= '1' />
 				        </div>
