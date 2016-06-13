@@ -23,13 +23,11 @@
 
 	if(isset($_POST['search'])){
 		if ($_POST['search'] != null){
-			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%'");
+			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen,g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%' AND g.aprobado=1");
 		}
 	}
 
 	$notifi = $conex->notificaciones();
-	$notifi = $conex->consult($notifi);
-	$notifi= count($notifi);
 ?>
 <html>
 	<head>
@@ -72,7 +70,14 @@
 								if(isset($_SESSION['usuario']))
 								{
 									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
 								}
+
+
 							?>
 						</ul>
 					</form>
@@ -87,8 +92,10 @@
 							}
 							else
 							{
-								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
-								echo "<li class='usuario'>";
+								if($notifi!=0){
+									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
+								}
+								echo "<li class='usuario'><a href='modificarDatos.php'>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
 								echo '<li><div class="dropdown">';
@@ -112,7 +119,7 @@
 				<div class="list-group secciones" id="secciones">
 					<form action='index.php' method='post'>
 						<?php
-							$categorias=$conex->consult("SELECT DISTINCT g.genero FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo ORDER BY g.genero");
+							$categorias=$conex->consult("SELECT DISTINCT g.genero,g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.aprobado=1 ORDER BY g.genero");
 							echo "<div>Categorias";
 								foreach ($categorias as $fila){
 									echo '<button type="submit" name="categoria" value="'.$fila[0].'" class="list-group-item">'.$fila[0].'</button>';
