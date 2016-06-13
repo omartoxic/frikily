@@ -33,6 +33,7 @@
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
+		<script type="text/javascript" src="visto.js"></script>
 		<link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 	</head>
 	<body>

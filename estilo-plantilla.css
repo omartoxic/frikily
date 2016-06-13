@@ -4,12 +4,10 @@ body
 }
 #cerrarSesion
 {
-  margin-top:-20px;
-  margin-left:35px;
+  width:100%;
 }
 .usuario
 {
-  margin-top:-5px;
 }
 .visto
 {
@@ -174,7 +172,7 @@ pre
 }
 .barra
 {
-  margin-top:10px;
+  margin-top:8px;
 }
 .iniciosesion
 {
