@@ -226,7 +226,7 @@
 
 							echo "<div class = 'comentario col-md-12'>";
 							echo $nombre[0][0];
-							echo "<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
+							echo "&nbsp;&nbsp;&nbsp;<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
 							echo "<br>";
 							echo $key[3];
 							echo "<br>";
