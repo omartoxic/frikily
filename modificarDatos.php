@@ -114,7 +114,8 @@
                     $size = ($_FILES['imagen_usuario']['size']);
                     if($size <= 2000000 && $size > 0){ //por si supera el tamaño permitido
                       $nombre = $_FILES["imagen_usuario"]["name"];
-                      $extension = end(explode('.', $nombre));
+                      $extensionExplode = explode('.', $nombre);
+                      $extension = end($extensionExplode);
 
                       if ($extension == 'jpg' || $extension == 'png'){
 
