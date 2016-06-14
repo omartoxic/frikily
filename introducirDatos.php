@@ -87,9 +87,8 @@
 	                    $size = ($_FILES['imagenProducto']['size']);
 	                    if($size <= 7000000 && $size > 0){ //por si supera el tamaño permitido
 	                      $nombreImagen = $_FILES["imagenProducto"]["name"];
-												$nombreEXtension = explode('.', $nombreImagen);
+	                      $nombreEXtension = explode('.', $nombreImagen);
 	                      $extension = end($nombreEXtension);
-
 	                      	if ($extension == 'jpg' || $extension == 'png'){
 
 		                        $archivo_temporal = $_FILES['imagenProducto']['tmp_name'];
@@ -152,22 +151,26 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreActor1','$apellidoActor1')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreActor1' and Apellido = '$apellidoActor1'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Actor')";
 					        	$conex->refresh($consulta4);
-					        }
 
 					        if($conex->comprobarPersona($nombreActor2,$apellidoActor2) == 0){
 					        	$consulta5 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreActor2','$apellidoActor2')";
 					        	$conex->refresh($consulta5);
 					        	$codigoPersona2 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona2 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreActor2' and Apellido = '$apellidoActor2'");
+					        }
 	              	 			$codigoPersona2 = $codigoPersona2[0][0];
 					        	$consulta6 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona2','$codigo','Actor')";
 					        	$conex->refresh($consulta6);
-					        }
-
 
 					      break;
+
 					      case "Manga":
 					      	$annioFin = $_POST["annioFin"];
 					      	$nombreAutor = $_POST["nombreAutor"];
@@ -182,10 +185,12 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreAutor','$apellidoAutor')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreAutor' and Apellido = '$apellidoAutor'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Autor')";
 					        	$conex->refresh($consulta4);
-					        }
 
 					      break;
 					      case "Videojuego":
@@ -203,10 +208,12 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreAutor','$apellidoAutor')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreAutor' and Apellido = '$apellidoAutor'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Autor')";
 					        	$conex->refresh($consulta4);
-					        }
 
 					        foreach ($plataformas as $plataforma) {
 					        	$consultaP = "INSERT INTO plataformas (Codigo,Plataforma) VALUES ('$codigo','$plataforma')";
@@ -231,28 +238,34 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreActor1','$apellidoActor1')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreActor1' and Apellido = '$apellidoActor1'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Actor')";
 					        	$conex->refresh($consulta4);
-					        }
 
 					        if($conex->comprobarPersona($nombreActor2,$apellidoActor2) == 0){
 					        	$consulta5 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreActor2','$apellidoActor2')";
 					        	$conex->refresh($consulta5);
 					        	$codigoPersona2 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona2 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreActor2' and Apellido = '$apellidoActor2'");
+					        }
 	              	 			$codigoPersona2 = $codigoPersona2[0][0];
 					        	$consulta6 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona2','$codigo','Actor')";
 					        	$conex->refresh($consulta6);
-					        }
 
 					        if($conex->comprobarPersona($nombreDirector,$apellidoDirector) == 0){
 					        	$consulta7 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreDirector','$apellidoDirector')";
 					        	$conex->refresh($consulta7);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreDirector' and Apellido = '$apellidoDirector'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta8 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Director')";
 					        	$conex->refresh($consulta8);
-					        }
 
 					      break;
 					      case "Anime":
@@ -272,19 +285,23 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreActor1','$apellidoActor1')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreActor1' and Apellido = '$apellidoActor1'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Actor')";
 					        	$conex->refresh($consulta4);
-					        }
 
 					        if($conex->comprobarPersona($nombreActor2,$apellidoActor2) == 0){
 					        	$consulta5 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreActor2','$apellidoActor2')";
 					        	$conex->refresh($consulta5);
 					        	$codigoPersona2 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona2 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreActor2' and Apellido = '$apellidoActor2'");
+					        }
 	              	 			$codigoPersona2 = $codigoPersona2[0][0];
 					        	$consulta6 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona2','$codigo','Actor')";
 					        	$conex->refresh($consulta6);
-					        }
 
 					      break;
 					      case "Comic":
@@ -301,10 +318,13 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreAutor','$apellidoAutor')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreAutor' and Apellido = '$apellidoAutor'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Autor')";
 					        	$conex->refresh($consulta4);
-					        }
+
 					      break;
 					      case "Libro":
 					      	$nombreAutor = $_POST["nombreAutor"];
@@ -320,13 +340,17 @@
 					        	$consulta3 = "INSERT INTO personas (Nombre,Apellido) VALUES ('$nombreAutor','$apellidoAutor')";
 					        	$conex->refresh($consulta3);
 					        	$codigoPersona1 = $conex->consult("SELECT MAX(CodigoPersona) from personas");
+					        }else{
+					        	$codigoPersona1 = $conex->consult("SELECT CodigoPersona from personas where Nombre = '$nombreAutor' and Apellido = '$apellidoAutor'");
+					        }
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Autor')";
 					        	$conex->refresh($consulta4);
-					        }
 
 					      break;
 		            }
+
+		            echo "<div>La introducción de datos ha sido correcta. Espera a que un administrador la apruebe para visualizarla</div>";
 				}
 			}
 	?>
