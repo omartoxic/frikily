@@ -19,10 +19,57 @@
 		$conex->connect();	
 		if(isset($_POST['accion'])){
 			
-			if($_POST['accion']=="Aprobar"){
+			if($_POST['accion']=="Aprobar"){			
 				$update_general= "UPDATE general g SET nombre = '".$_POST['nombre']."', sinopsis = '".$_POST['sinopsis']."', genero = '".$_POST['genero']."', annio = '".$_POST['annio']."', aprobado = 1 WHERE g.codigo =".$_POST['item'];
 				
 				$list=$conex->consult($update_general);
+				
+				
+				// $imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
+	          	// $ruta = "./imagenes/img";//ruta carpeta donde queremos copiar las imágenes
+				
+				// if (isset($_FILES['imagen_subir'])){
+                  // if ($_FILES["imagen_subir"]["name"] != "" ){
+                    // $size = ($_FILES['imagen_subir']['size']);
+                    // if($size <= 7000000 && $size > 0){ //por si supera el tamaño permitido
+                      // $nombre = $_FILES["imagen_subir"]["name"];
+                      // $extension = end(explode('.', $nombre));
+
+                      // if ($extension == 'jpg' || $extension == 'png'){
+
+                        // $archivo_temporal = $_FILES['imagen_subir']['tmp_name'];
+                        // $archivo_nombre = $ruta.$_POST['item'].".jpg"; 
+
+                        // $tamanio = getimagesize($archivo_temporal);
+
+                            // if(in_array($tamanio['mime'], $imagenes_permitidas)){
+                                // if (is_uploaded_file($archivo_temporal)){
+                                  // if ($_FILES['imagen_subir']['size'] < 7000000){
+                                    // move_uploaded_file($archivo_temporal,$archivo_nombre);
+                                  // }else{
+                                    // $fallido = true;
+                                    // echo "<div>El tamaño excede el permitido.</div>";
+                                  // }
+                                // }else{
+                                  // $fallido = true;
+                                  // echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+                                // }
+                            // }else{
+                              // $fallido = true;
+                              // echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
+                            // }
+                          
+                      // }else{
+                        // $fallido = true;
+                        // echo "<div>Formato no válido.</div>";
+                      // }
+                    // }else{
+                      // $fallido = true;
+                      // echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</div>";
+                    // }
+                  // }
+                // }
+				
 				
 				echo $_POST['tipo'];
 				
@@ -33,7 +80,7 @@
 				
 				//COMICS
 				if($_POST['tipo']=="comics"){
-					$update_especifica="UPDATE ".$_POST['tipo']." t SET numeros = '".$_POST['numeros']."', editorial = '".$_POST['editorial']."', editorialoriginal = '".$_POST['editorialOriginal']."' WHERE v.codigo =".$_POST['item'];
+					$update_especifica="UPDATE ".$_POST['tipo']." t SET numeros = '".$_POST['numeros']."', editorial = '".$_POST['editorial']."', editorialoriginal = '".$_POST['editorialOriginal']."' WHERE t.codigo =".$_POST['item'];
 				}	
 				
 				//LIBROS
@@ -61,6 +108,26 @@
 					$update_especifica="UPDATE ".$_POST['tipo']." t SET desarrolladora = '".$_POST['desarrolladora']."', numjugadores = '".$_POST['jugadores']."', online = '".$_POST['selectOnline']."' WHERE t.codigo =".$_POST['item'];
 				}
 				
+				//ACTOR 1
+				if($_POST['actor1nom']){
+					$list=$conex->consult("UPDATE personas p SET nombre = '".$_POST['actor1nom']."', apellido = '".$_POST['actor1ape']."' WHERE CodigoPersona = ".$_POST['idactor1']);
+				}
+				
+				//ACTOR 2
+				if($_POST['actor2nom']){
+					$list=$conex->consult("UPDATE personas p SET nombre = '".$_POST['actor2nom']."', apellido = '".$_POST['actor2ape']."' WHERE CodigoPersona = ".$_POST['idactor2']);
+				}
+				
+				//DIRECTOR
+				if($_POST['directornom']){
+					$list=$conex->consult("UPDATE personas p SET nombre = '".$_POST['directornom']."', apellido = '".$_POST['directorape']."' WHERE CodigoPersona = ".$_POST['iddirector']);
+				}
+				
+				//AUTOR
+				if($_POST['autornom']){
+					$list=$conex->consult("UPDATE personas p SET nombre = '".$_POST['autornom']."', apellido = '".$_POST['autorape']."' WHERE CodigoPersona = ".$_POST['idautor']);
+				}
+				
 				$list=$conex->consult($update_especifica);
 			}
 			if($_POST['accion']=="Eliminar"){
@@ -74,11 +141,15 @@
 			$list=$conex->consult("SELECT * FROM general g,".$_POST['tipo']." t WHERE g.codigo =".$_POST['item']." AND g.codigo=t.codigo");
 			$general = $list[0];
 			
-			$list2=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$_POST['item']);
-			$personas = $list2[0];
+			$list2=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol NOT LIKE 'Director'");
+			$personas = $list2;
 			
-			print_r($general);
-			print_r($personas);	
+			$list3=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol LIKE 'Director'");
+			$director = $list3[0];
+			
+			$list4=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol LIKE 'Autor'");
+			$autor = $list4[0];
+			
 		}		
 	?>
 	<body>
@@ -139,31 +210,23 @@
 				            <input type = 'text' name='nombre' id='id_nombre' value='<?php echo $general[1]?>'/>
 				        </div>
 
-				        <div id = 'sinopsis'>
+						
+						<div id = 'sinopsis'>
 				            <label>Sinopsis:</label>
-				            <input type = 'text' name='sinopsis' id='id_sinopsis' value='<?php echo $general[2]?>'/>
+				            <textarea name='sinopsis' rows='10' class='form-control' cols='40' maxlength = '600'name='sinopsis' id='id_sinopsis'><?php echo $general[2]?></textarea>
 				        </div>
-
+						
 				        <div id = 'genero'>
 				            <label>Género:</label>
 				            <input type = 'text' name='genero' id='id_genero' value='<?php echo $general[4]?>'/>
 				        </div>
-
-						<!--
-						<div id = 'imagen_subida'>
-							<label>Imagen subida:</label>
-							<br>
-							<img src="imagenes/<?php echo $general[5] ?>.jpg" style='width:180px;'>
-						</div>
 						
 				        <div id = 'imagen'>
 				            <label for="imagen">Subir otra imagen:</label>
 				            <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-				            <input type="file" name="imagen_usuario" id="imagen" />
+				            <input type="file" name="imagen_subir" id="imagen" />
 				        </div>
 						
-						-->
-
 				        <div id = 'annio'>
 				            <label>Año:</label>
 				            <input type = 'number' name='annio' id='id_annio' max = '2099' value='<?php echo $general[6]?>'/>
@@ -214,41 +277,45 @@
 							echo "</div>";
 						}
 						
-						// if($_POST['tipo'] == 'anime' || $_POST['tipo'] == 'peliculas' || $_POST['tipo'] == 'series'){
-							// echo "<div id = 'actor1'>";
-								// echo "<label>Nombre del primer actor:</label>";
-								// echo "<input type = 'text' name='actor1' id='id_actor1'/>";
-								// echo "<label>Apellido del primer actor:</label>";
-								// echo "<input type = 'text' name='actor1' id='id_actor1'/>";
-							// echo "</div>";
-						// }
+						if($_POST['tipo'] == 'anime' || $_POST['tipo'] == 'peliculas' || $_POST['tipo'] == 'series'){
+							echo "<div id = 'actor1'>";
+								echo "<label>Nombre del primer actor:</label>";
+								echo "<input type = 'text' name='actor1nom' id='id_actor1' value= '".$personas[0][0]."' />";
+								echo "<label>Apellido del primer actor:</label>";
+								echo "<input type = 'text' name='actor1ape' id='id_actor1' value= '".$personas[0][1]."' />";
+								echo "<input type='hidden' name='idactor1' value='".$personas[0][2]."'>";
+							echo "</div>";
+						}
 						
-						// if($_POST['tipo'] == 'anime' || $_POST['tipo'] == 'peliculas' || $_POST['tipo'] == 'series'){
-							// echo "<div id = 'actor2'>";
-								// echo "<label>Nombre del segundo actor:</label>";
-								// echo "<input type = 'text' name='actor2' id='id_actor2'/>";
-								// echo "<label>Apellido del segundo actor:</label>";
-								// echo "<input type = 'text' name='actor2' id='id_actor2'/>";
-							// echo "</div>";
-						// }
+						if($_POST['tipo'] == 'anime' || $_POST['tipo'] == 'peliculas' || $_POST['tipo'] == 'series'){
+							echo "<div id = 'actor2'>";
+								echo "<label>Nombre del segundo actor:</label>";
+								echo "<input type = 'text' name='actor2nom' id='id_actor2' value= '".$personas[1][0]."' />";
+								echo "<label>Apellido del segundo actor:</label>";
+								echo "<input type = 'text' name='actor2ape' id='id_actor2' value= '".$personas[1][1]."' />";
+								echo "<input type='hidden' name='idactor2' value='".$personas[1][2]."'>";
+							echo "</div>";
+						}
 						
-						// if($_POST['tipo'] == 'peliculas'){
-							// echo "<div id = 'director'>";
-								// echo "<label>Nombre del director:</label>";
-								// echo "<input type = 'text' name='director' id='id_director'/>";
-								// echo "<label>Apellido del director:</label>";
-								// echo "<input type = 'text' name='director' id='id_director'/>";
-							// echo "</div>";
-						// }
+						if($_POST['tipo'] == 'peliculas'){
+							echo "<div id = 'director'>";
+								echo "<label>Nombre del director:</label>";
+								echo "<input type = 'text' name='directornom' id='id_director' value= '".$director[0]."' />";
+								echo "<label>Apellido del director:</label>";
+								echo "<input type = 'text' name='directorape' id='id_director' value= '".$director[1]."' />";
+								echo "<input type='hidden' name='iddirector' value='".$director[2]."'>";
+							echo "</div>";
+						}
 						
-						// if($_POST['tipo'] == 'manga' || $_POST['tipo'] == 'libros' || $_POST['tipo'] == 'videojuegos' || $_POST['tipo'] == 'comics'){
-							// echo "<div id = 'autor'";
-								// echo "<label>Nombre del autor:</label>";
-								// echo "<input type = 'text' name='autor' id='id_autor' value= '$personas[1]'/>";
-								// echo "<label>Apellido del autor:</label>";
-								// echo "<input type = 'text' name='autor' id='id_autor  value= '$personas[2]'/>";
-							// echo "</div>";
-						// }
+						if($_POST['tipo'] == 'manga' || $_POST['tipo'] == 'libros' || $_POST['tipo'] == 'videojuegos' || $_POST['tipo'] == 'comics'){
+							echo "<div id = 'autor'";
+								echo "<label>Nombre del autor:</label>";
+								echo "<input type = 'text' name='autornom' id='id_autor' value= '".$autor[0]."' />";
+								echo "<label>Apellido del autor:</label>";
+								echo "<input type = 'text' name='autorape' id='id_autor' value= '".$autor[1]."' />";
+								echo "<input type='hidden' name='idautor' value='".$autor[2]."'>";
+							echo "</div>";
+						}
 
 						if($_POST['tipo'] == 'comics'){
 							echo "<div id = 'numeros'>";
