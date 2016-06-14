@@ -126,10 +126,10 @@ class Conexion{
 		return $tipoObjeto;
 	}
 
-	public function sacarCodigo(){
-		$consulta = "SELECT MAX(codigo) from general";
-		print_r($consulta);
-		return $consulta;
+	public function comprobarPersona($nombre,$apellido){
+		$consulta = "SELECT * from personas where nombre = '$nombre' and apellido = '$apellido'";
+		$lista = $this->consult($consulta);
+		return count($lista);
 	}
 
 

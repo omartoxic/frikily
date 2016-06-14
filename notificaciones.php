@@ -22,7 +22,6 @@
 				$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.nota,g.imagen,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e WHERE  v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo and e.fecha >= $now and g.nombre LIKE '%".$_POST['search']."%' AND u.codusuario=".$_SESSION['codigo'];
 			}
 		}
-		echo $consulta;
 		
 		$list=$conex->consult($consulta);
 	
