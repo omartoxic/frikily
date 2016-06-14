@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2016 a las 20:45:21
+-- Tiempo de generación: 14-06-2016 a las 16:56:16
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `general` (
   `Imagen` varchar(10) NOT NULL,
   `Annio` int(4) NOT NULL,
   `Aprobado` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
 
 --
 -- Volcado de datos para la tabla `general`
@@ -234,6 +234,19 @@ INSERT INTO `manga` (`Codigo`, `AnnioFin`, `Revista`, `Tomos`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notas`
+--
+
+CREATE TABLE IF NOT EXISTS `notas` (
+`CodNota` int(4) NOT NULL,
+  `Codigo` int(4) NOT NULL,
+  `CodigoUsuario` int(4) NOT NULL,
+  `Nota` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `peliculas`
 --
 
@@ -261,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `personas` (
 `CodigoPersona` int(3) NOT NULL,
   `Nombre` varchar(30) NOT NULL,
   `Apellido` varchar(60) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Volcado de datos para la tabla `personas`
@@ -293,7 +306,8 @@ INSERT INTO `personas` (`CodigoPersona`, `Nombre`, `Apellido`) VALUES
 (24, 'Jason', 'Bateman'),
 (25, 'Michael', 'Cera'),
 (26, 'Leonardo', 'DiCaprio'),
-(27, 'Ellen', 'Page');
+(27, 'Ellen', 'Page'),
+(43, 'Raoul', 'Barbet');
 
 -- --------------------------------------------------------
 
@@ -305,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `plataformas` (
 `CodigoPlataforma` int(4) NOT NULL,
   `Codigo` int(4) NOT NULL,
   `Plataforma` varchar(20) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `plataformas`
@@ -318,7 +332,10 @@ INSERT INTO `plataformas` (`CodigoPlataforma`, `Codigo`, `Plataforma`) VALUES
 (4, 4, 'Xbox 360'),
 (5, 4, 'Xbox One'),
 (6, 4, 'Steam'),
-(7, 14, 'PSX');
+(7, 14, 'PSX'),
+(11, 56, 'SNES'),
+(12, 56, 'PS4'),
+(13, 56, 'Steam');
 
 -- --------------------------------------------------------
 
@@ -327,42 +344,44 @@ INSERT INTO `plataformas` (`CodigoPlataforma`, `Codigo`, `Plataforma`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `rol` (
+`CodigoRol` int(4) NOT NULL,
   `CodigoPersona` int(4) NOT NULL,
   `Codigo` int(4) NOT NULL,
   `Rol` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `rol` (`CodigoPersona`, `Codigo`, `Rol`) VALUES
-(1, 6, 'Actor'),
-(2, 5, 'Actor'),
-(3, 6, 'Actor'),
-(4, 5, 'Actor'),
-(5, 7, 'Autor'),
-(6, 7, 'Autor'),
-(7, 2, 'Autor'),
-(8, 3, 'Autor'),
-(9, 1, 'Director'),
-(10, 1, 'Actor'),
-(11, 1, 'Actor'),
-(12, 12, 'Autor'),
-(13, 10, 'Actor'),
-(14, 9, 'Autor'),
-(15, 11, 'Autor'),
-(16, 11, 'Autor'),
-(17, 11, 'Autor'),
-(18, 13, 'Actor'),
-(19, 13, 'Actor'),
-(20, 13, 'Actor'),
-(22, 8, 'Autor'),
-(23, 14, 'Autor'),
-(24, 15, 'Actor'),
-(25, 15, 'Actor'),
-(26, 16, 'Actor'),
-(27, 16, 'Actor');
+INSERT INTO `rol` (`CodigoRol`, `CodigoPersona`, `Codigo`, `Rol`) VALUES
+(1, 1, 6, 'Actor'),
+(2, 2, 5, 'Actor'),
+(3, 3, 6, 'Actor'),
+(4, 4, 5, 'Actor'),
+(5, 5, 7, 'Autor'),
+(6, 6, 7, 'Autor'),
+(7, 7, 2, 'Autor'),
+(8, 8, 3, 'Autor'),
+(9, 9, 1, 'Director'),
+(10, 10, 1, 'Actor'),
+(11, 11, 1, 'Actor'),
+(12, 12, 12, 'Autor'),
+(13, 13, 10, 'Actor'),
+(14, 14, 9, 'Autor'),
+(15, 15, 11, 'Autor'),
+(16, 16, 11, 'Autor'),
+(17, 17, 11, 'Autor'),
+(18, 18, 13, 'Actor'),
+(19, 19, 13, 'Actor'),
+(20, 20, 13, 'Actor'),
+(21, 22, 8, 'Autor'),
+(22, 23, 14, 'Autor'),
+(23, 24, 15, 'Actor'),
+(24, 25, 15, 'Actor'),
+(25, 26, 16, 'Actor'),
+(26, 27, 16, 'Actor'),
+(27, 43, 4, 'Autor');
 
 -- --------------------------------------------------------
 
@@ -410,7 +429,7 @@ INSERT INTO `usuarios` (`CodUsuario`, `Nombre`, `Pass`, `Imagen`, `Mail`, `Tipo`
 (1, 'omar', 'a16656a039d8b23731b3e933914f8bd7', 'omar', 'omar', 'usu'),
 (2, 'ivan', '81dc9bdb52d04dc20036dbd8313ed055', 'ivan', 'ivan', 'usu'),
 (3, 'pipo', '0cc175b9c0f1b6a831c399e269772661', 'pipo', 'a', 'usu'),
-(13, 'u', '7b774effe4a349c6dd82ad4f4f21d34c', 'u.jpg', 'jio', 'usu');
+(13, 'u', '7b774effe4a349c6dd82ad4f4f21d34c', 'u.jpg', 'jio', 'admn');
 
 -- --------------------------------------------------------
 
@@ -514,6 +533,12 @@ ALTER TABLE `manga`
  ADD PRIMARY KEY (`Codigo`);
 
 --
+-- Indices de la tabla `notas`
+--
+ALTER TABLE `notas`
+ ADD PRIMARY KEY (`CodNota`);
+
+--
 -- Indices de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
@@ -535,7 +560,7 @@ ALTER TABLE `plataformas`
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
- ADD PRIMARY KEY (`CodigoPersona`);
+ ADD PRIMARY KEY (`CodigoRol`), ADD KEY `rol_ibfk_1` (`CodigoPersona`);
 
 --
 -- Indices de la tabla `series`
@@ -584,17 +609,27 @@ MODIFY `CodEstreno` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT de la tabla `general`
 --
 ALTER TABLE `general`
-MODIFY `Codigo` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `Codigo` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=62;
+--
+-- AUTO_INCREMENT de la tabla `notas`
+--
+ALTER TABLE `notas`
+MODIFY `CodNota` int(4) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-MODIFY `CodigoPersona` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+MODIFY `CodigoPersona` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT de la tabla `plataformas`
 --
 ALTER TABLE `plataformas`
-MODIFY `CodigoPlataforma` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `CodigoPlataforma` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+MODIFY `CodigoRol` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
