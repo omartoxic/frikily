@@ -6,38 +6,8 @@ $(document).ready(function(){
   var tipos = [];
   $("select[name=tipo]").change(function(){
     var tipo = $('select[name=tipo]').val();
-    console.log(tipo);
-
-    switch(tipo){
-      case "Serie":
-        ocultar();
-        mostrar("serie");
-      break;
-      case "Manga":
-        ocultar();
-        mostrar("manga");
-      break;
-      case "Videojuego":
-        ocultar();
-        mostrar("videojuego");
-      break;
-      case "Pelicula":
-        ocultar();
-        mostrar("pelicula");
-      break;
-      case "Anime":
-        ocultar();
-        mostrar("anime");
-      break;
-      case "Comic":
-        ocultar();
-        mostrar("comic");
-      break;
-      case "Libro":
-        ocultar();
-        mostrar("libro");
-      break;
-    }
+    ocultar();
+    mostrar(tipo);
   });
 });
 
