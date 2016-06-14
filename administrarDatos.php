@@ -70,9 +70,6 @@
                   // }
                 // }
 
-
-				echo $_POST['tipo'];
-
 				//ANIME
 				if($_POST['tipo']=="anime"){
 					$update_especifica="UPDATE ".$_POST['tipo']." t SET anniofin = '".$_POST['annioFin']."', temporadas = '".$_POST['temporadas']."', capitulos = '".$_POST['capitulos']."', estudio = '".$_POST['estudio']."' WHERE t.codigo =".$_POST['item'];
@@ -143,12 +140,21 @@
 
 			$list2=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol NOT LIKE 'Director'");
 			$personas = $list2;
-
+			
 			$list3=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol LIKE 'Director'");
-			$director = $list3[0];
-
+			if (empty($list3)) {
+				$director[0] = "";
+				$director[1] = "";
+				$director[2] = "";
+			}
 			$list4=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol LIKE 'Autor'");
-			$autor = $list4[0];
+			if (empty($list4)) {
+				$autor[0]  = "";
+				$autor[1]  = "";
+				$autor[2]  = "";
+			}
+			
+			
 
 		}
 	?>
