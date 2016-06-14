@@ -23,9 +23,40 @@
 	$libros = $list1[0];
 	$list2=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
 	$actores = $list2;
+	$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
 	if(isset($_SESSION['usuario']))
 	{
 		$notifi = $conex->notificaciones();
+	}
+	if(isset($_POST['nota']))
+	{
+		$nota = $_POST['nota'];
+		if($haPuestoNota)
+		{
+			$conex->refresh('UPDATE `notas` SET `Nota`='.$nota.' WHERE Codigo = '.$general[0].' AND CodigoUsuario = '.$_SESSION['codigo']);
+		}
+		else
+		{
+			$conex->refresh('INSERT INTO `notas`(`Codigo`, `CodigoUsuario`, `Nota`) VALUES ('.$general[0].','.$_SESSION['codigo'].','.$nota.')');
+		}
+		$listaNotas = $conex->consult("SELECT * FROM 	notas WHERE Codigo = ".$general[0]);
+		$notasEnTotal = count($listaNotas)+1;
+		$notaFinal = 0;
+		if($notasEnTotal > 1)
+		{
+			foreach($listaNotas as $notaPuesta)
+			{
+				$notaFinal = $notaFinal + $notaPuesta[3];
+			}
+		}
+		else
+		{
+			$notaFinal = $nota;
+		}
+		$notaFinal = $notaFinal / $notasEnTotal;
+		$conex->refresh('UPDATE `general` SET `Nota`='.$notaFinal.' WHERE Codigo = '.$general[0]);
+		$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
+		$general = $list[0];
 	}
 ?>
 <html>
@@ -146,7 +177,22 @@
 									?>
 								</span>
 								<span class="datos col-xs-9">
-									<span class="col-xs-12"><div class="bold">Nota: </div><?php echo $general[3] ?></span>
+									<div class="col-xs-10">
+										<div class="bold">Nota: </div>
+										<?php
+											echo $general[3];
+											if (isset($_SESSION['usuario']))
+											{
+												echo '<form method="post" action="">';
+												echo "<input type='hidden' name='item' value=".$codigo.">";
+												echo "<div class='col-md-2'>";
+												echo "<input class='form-control' type='number' min='0' max='10' name='nota'>";
+												echo "</div>";
+												echo "<input class='btn btn-primary' type='submit' value='Puntuar'>";
+												echo "</form>";
+											}
+										?>
+									</div>
 									<span class="col-xs-12"><div class="bold">Género: </div><?php echo $general[4] ?></span>
 									<span class="col-xs-12"><div class="bold">Año: </div><?php echo $general[6] ?></span>
 									<span class="col-xs-12"><div class="bold">Páginas: </div><?php echo $libros[1] ?></span>
