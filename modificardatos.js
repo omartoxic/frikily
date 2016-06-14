@@ -1,6 +1,6 @@
- window.onload=function(){
-        ocultar();
-       }
+window.onload=function(){
+  ocultar();
+}
 
 $(document).ready(function(){
   var tipos = [];
@@ -37,13 +37,12 @@ $(document).ready(function(){
         ocultar();
         mostrar("libro");
       break;
-}
+    }
   });
 });
 
 
  function mostrar(tipo){
-  console.log('tipo' + tipo);
    $('.' + tipo).show();
    $('.' + tipo).prop('required',true);
  }

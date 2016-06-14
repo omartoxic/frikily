@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2016 a las 20:45:21
+-- Tiempo de generación: 14-06-2016 a las 15:02:18
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `general` (
   `Imagen` varchar(10) NOT NULL,
   `Annio` int(4) NOT NULL,
   `Aprobado` tinyint(1) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
 
 --
 -- Volcado de datos para la tabla `general`
@@ -177,18 +177,18 @@ INSERT INTO `general` (`Codigo`, `Nombre`, `Sinopsis`, `Nota`, `Genero`, `Imagen
 (2, 'Frankenstein', 'Victor Von Frankenstein ha creado vida de lo muerto. Pero su creación piensa por si misma y busca su camino.', 9.4, 'Ciencia Ficcion', 'img2', 1818, 1),
 (3, 'Jojo''s Bizarre Adventure', 'Los Jojos son muy machos', 9.9, 'Fantasía ', 'img3', 1987, 1),
 (4, 'Life is Strange', 'Max X Chloe ', 10, 'Aventura gráfica', 'img4', 2015, 1),
-(5, 'Code Geass', 'Lelouch debe liberar a Japón de Britannia.', 9.7, 'Seinen', 'img5', 2005, 1),
-(6, 'Doctor Who', 'El Doctor es lo mejor que le ha pasado al universo.', 10, 'Ciencia Ficcion', 'img6', 1963, 1),
-(7, 'El Asombroso Spiderman', 'Peter Parker fue mordido por una araña que le convirtió en el Asombroso Spiderman.', 9.8, 'Superhéroes', 'img7', 1962, 1),
-(8, 'Mother 2', 'Ness debe derrotar a Gyigas.', 10, 'Rol', 'img8', 1994, 1),
-(9, 'The Seven Deadly Sins', 'Todos saben que los Siete Pecados Capitales fueron unos rebeldes legendarios que conspiraron contra el reino, y por ello los Caballeros Sagrados aún los buscan tenazmente. Sin embargo hay una joven que intenta encontrarlos para que salven su reino… ', 8, 'Shonen', 'img9', 2012, 1),
-(10, 'Twin Peaks', 'Puto amo el agente Cooper', 9.9, 'Thriller', 'img10', 1990, 1),
-(11, 'Ms. Marvel', 'Kamala Khan es una chica como otra cualquiera que vive en Nueva Jersey... Hasta que un buen día recibe un don asombroso. Pero... ¿quién es realmente Ms. Marvel? ¿Una adolescente? ¿Una musulmana? ¿Una inhumana? ¿Todo lo anterior?', 9, 'Superhéroes', 'img11', 2015, 1),
-(12, 'Superlopez', 'Antonio Alcántara con poderes', 9, 'Superhéroes', 'img12', 1973, 1),
-(13, 'Space Dandy', 'Dandy es un cazarecompensas que busca aliens que nadie ha encontrado antes sirviéndose de su robot acompañante QT y un gato alienígena llamado Meow.', 8, 'Seinen', 'img13', 2014, 1),
-(14, 'Metal Gear Solid', 'Metal Gear Solid sigue a Solid Snake, un soldado que se infiltra en una instalación de armas nucleares para neutralizar la amenaza terrorista de FOXHOUND, una unidad genéticamente mejorada de fuerzas especiales.10 11 Snake debe liberar a dos importantes rehenes, confrontar a los terroristas y evitar el lanzamiento de un ataque nuclear.', 9.9, 'Infiltración', 'img14', 1998, 1),
-(15, 'Arrested Development', 'Esta es la historia de los Bluth, una familia desestructurada de clase alta que tiene que hacer frente a la pobreza cuando el padre ingresa en prisión acusado de fraude. En ese momento llega al rescate Michael, el único honrado de toda la familia que tiene que luchar por defender lo indefendible, un padre culpable a más no poder,e intentar, sin conseguirlo, que el resto asuma la nueva situación.', 9.9, 'Comedia', 'img15', 2003, 1),
-(16, 'Origen', 'Dom Cobb es un experto en el arte de apropiarse, durante el sueño, de los secretos del subconsciente ajeno. Su extraña habilidad le ha convertido en un hombre muy cotizado en el mundo del espionaje, pero también lo ha condenado a ser un fugitivo y, por consiguiente, a renunciar a llevar una vida normal. Su única oportunidad para cambiar de vida será hacer lo contrario de lo que ha hecho siempre: la incepción, que consiste en implantar una idea en el subconsciente en lugar de sustraerla. Sin embargo, su plan se complica debido a la intervención de alguien que parece predecir sus movimientos', 9, 'Thriller', 'img16', 2010, 1);
+(5, 'Code Geass', 'Lelouch debe liberar a Japón de Britannia.', 9.7, 'Seinen', 'img29', 2005, 1),
+(6, 'Doctor Who', 'El Doctor es lo mejor que le ha pasado al universo.', 10, 'Ciencia Ficcion', 'img29', 1963, 1),
+(7, 'El Asombroso Spiderman', 'Peter Parker fue mordido por una araña que le convirtió en el Asombroso Spiderman.', 9.8, 'Superhéroes', 'img29', 1962, 1),
+(8, 'Mother 2', 'Ness debe derrotar a Gyigas.', 10, 'Rol', 'img29', 1994, 1),
+(9, 'The Seven Deadly Sins', 'Todos saben que los Siete Pecados Capitales fueron unos rebeldes legendarios que conspiraron contra el reino, y por ello los Caballeros Sagrados aún los buscan tenazmente. Sin embargo hay una joven que intenta encontrarlos para que salven su reino… ', 8, 'Shonen', 'img29', 2012, 1),
+(10, 'Twin Peaks', 'Puto amo el agente Cooper', 9.9, 'Thriller', 'img29', 1990, 1),
+(11, 'Ms. Marvel', 'Kamala Khan es una chica como otra cualquiera que vive en Nueva Jersey... Hasta que un buen día recibe un don asombroso. Pero... ¿quién es realmente Ms. Marvel? ¿Una adolescente? ¿Una musulmana? ¿Una inhumana? ¿Todo lo anterior?', 9, 'Superhéroes', 'img29', 2015, 1),
+(12, 'Superlopez', 'Antonio Alcántara con poderes', 9, 'Superhéroes', 'img29', 1973, 1),
+(13, 'Space Dandy', 'Dandy es un cazarecompensas que busca aliens que nadie ha encontrado antes sirviéndose de su robot acompañante QT y un gato alienígena llamado Meow.', 8, 'Seinen', 'img29', 2014, 1),
+(14, 'Metal Gear Solid', 'Metal Gear Solid sigue a Solid Snake, un soldado que se infiltra en una instalación de armas nucleares para neutralizar la amenaza terrorista de FOXHOUND, una unidad genéticamente mejorada de fuerzas especiales.10 11 Snake debe liberar a dos importantes rehenes, confrontar a los terroristas y evitar el lanzamiento de un ataque nuclear.', 9.9, 'Infiltración', 'img29', 1998, 1),
+(15, 'Arrested Development', 'Esta es la historia de los Bluth, una familia desestructurada de clase alta que tiene que hacer frente a la pobreza cuando el padre ingresa en prisión acusado de fraude. En ese momento llega al rescate Michael, el único honrado de toda la familia que tiene que luchar por defender lo indefendible, un padre culpable a más no poder,e intentar, sin conseguirlo, que el resto asuma la nueva situación.', 9.9, 'Comedia', 'img29', 2003, 1),
+(16, 'Origen', 'Dom Cobb es un experto en el arte de apropiarse, durante el sueño, de los secretos del subconsciente ajeno. Su extraña habilidad le ha convertido en un hombre muy cotizado en el mundo del espionaje, pero también lo ha condenado a ser un fugitivo y, por consiguiente, a renunciar a llevar una vida normal. Su única oportunidad para cambiar de vida será hacer lo contrario de lo que ha hecho siempre: la incepción, que consiste en implantar una idea en el subconsciente en lugar de sustraerla. Sin embargo, su plan se complica debido a la intervención de alguien que parece predecir sus movimientos', 9, 'Thriller', 'img29', 2010, 1);
 
 -- --------------------------------------------------------
 
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `personas` (
 `CodigoPersona` int(3) NOT NULL,
   `Nombre` varchar(30) NOT NULL,
   `Apellido` varchar(60) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 --
 -- Volcado de datos para la tabla `personas`
@@ -293,7 +293,8 @@ INSERT INTO `personas` (`CodigoPersona`, `Nombre`, `Apellido`) VALUES
 (24, 'Jason', 'Bateman'),
 (25, 'Michael', 'Cera'),
 (26, 'Leonardo', 'DiCaprio'),
-(27, 'Ellen', 'Page');
+(27, 'Ellen', 'Page'),
+(43, 'Raoul', 'Barbet');
 
 -- --------------------------------------------------------
 
@@ -305,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `plataformas` (
 `CodigoPlataforma` int(4) NOT NULL,
   `Codigo` int(4) NOT NULL,
   `Plataforma` varchar(20) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Volcado de datos para la tabla `plataformas`
@@ -318,7 +319,10 @@ INSERT INTO `plataformas` (`CodigoPlataforma`, `Codigo`, `Plataforma`) VALUES
 (4, 4, 'Xbox 360'),
 (5, 4, 'Xbox One'),
 (6, 4, 'Steam'),
-(7, 14, 'PSX');
+(7, 14, 'PSX'),
+(11, 56, 'SNES'),
+(12, 56, 'PS4'),
+(13, 56, 'Steam');
 
 -- --------------------------------------------------------
 
@@ -362,7 +366,8 @@ INSERT INTO `rol` (`CodigoPersona`, `Codigo`, `Rol`) VALUES
 (24, 15, 'Actor'),
 (25, 15, 'Actor'),
 (26, 16, 'Actor'),
-(27, 16, 'Actor');
+(27, 16, 'Actor'),
+(43, 4, 'Autor');
 
 -- --------------------------------------------------------
 
@@ -410,7 +415,7 @@ INSERT INTO `usuarios` (`CodUsuario`, `Nombre`, `Pass`, `Imagen`, `Mail`, `Tipo`
 (1, 'omar', 'a16656a039d8b23731b3e933914f8bd7', 'omar', 'omar', 'usu'),
 (2, 'ivan', '81dc9bdb52d04dc20036dbd8313ed055', 'ivan', 'ivan', 'usu'),
 (3, 'pipo', '0cc175b9c0f1b6a831c399e269772661', 'pipo', 'a', 'usu'),
-(13, 'u', '7b774effe4a349c6dd82ad4f4f21d34c', 'u.jpg', 'jio', 'usu');
+(13, 'u', '7b774effe4a349c6dd82ad4f4f21d34c', 'u.jpg', 'jio', 'admn');
 
 -- --------------------------------------------------------
 
@@ -584,17 +589,17 @@ MODIFY `CodEstreno` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT de la tabla `general`
 --
 ALTER TABLE `general`
-MODIFY `Codigo` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+MODIFY `Codigo` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-MODIFY `CodigoPersona` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+MODIFY `CodigoPersona` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT de la tabla `plataformas`
 --
 ALTER TABLE `plataformas`
-MODIFY `CodigoPlataforma` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `CodigoPlataforma` int(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --

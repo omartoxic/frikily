@@ -13,11 +13,6 @@
 		<script type="text/javascript" src="estilojq.js"></script>
 		<script type="text/javascript" src="modificardatos.js"></script>
 	</head>
-	<?php
-		include "basedatos.php";
-		$conex=new Conexion("root","","frikily");
-		$conex->connect();
-	?>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -65,7 +60,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="list-group secciones" id="secciones">
-<<<<<<< HEAD
 		<?php
 			include "basedatos.php";
 			$conex=new Conexion("root","","frikily");
@@ -199,6 +193,7 @@
 					    	$desarrolladora = $_POST["desarrolladora"];
 					    	$jugadores = $_POST["jugadores"];
 					    	$online = $_POST["selectOnline"];
+					    	$plataformas = $_POST["plataformas"];
 
 					  		$consulta2 = "INSERT INTO videojuegos (Codigo,Desarrolladora,NumJugadores,Online) VALUES ('$codigo','$desarrolladora','$jugadores','$online')";
 					        $conex->refresh($consulta2);
@@ -210,6 +205,11 @@
 	              	 			$codigoPersona1 = $codigoPersona1[0][0];
 					        	$consulta4 = "INSERT INTO rol (CodigoPersona,Codigo,Rol) VALUES ('$codigoPersona1','$codigo','Autor')";
 					        	$conex->refresh($consulta4);
+					        }
+
+					        foreach ($plataformas as $plataforma) {
+					        	$consultaP = "INSERT INTO plataformas (Codigo,Plataforma) VALUES ('$codigo','$plataforma')";
+					        	$conex->refresh($consultaP);
 					        }
 
 					      break;
@@ -330,39 +330,38 @@
 			}
 	?>
 
-=======
->>>>>>> ee3748b085863de34930ab469574537ef8529f9b
 					<form action="introducirDatos.php" method="POST" id="datos" enctype="multipart/form-data">
 
 				  		<div id = 'nombre'>
 				            <label>Nombre:</label>
-				            <input type = 'text' name='nombre' id='id_nombre'/>
+				            <input type = 'text' name='nombre' id='id_nombre' required/>
 				        </div>
 
 				        <div id = 'sinopsis'>
 				            <label>Sinopsis:</label>
-				            <input type = 'text' name='sinopsis' id='id_sinopsis'/>
+				            <input type = 'text' name='sinopsis' id='id_sinopsis' required/>
 				        </div>
 
 				        <div id = 'genero'>
 				            <label>Género:</label>
-				            <input type = 'text' name='genero' id='id_genero'/>
+				            <input type = 'text' name='genero' id='id_genero' required/>
 				        </div>
 
 				        <div id = 'imagen'>
 				            <label for="imagen">Subir imagen:</label>
 				            <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-				            <input type="file" name="imagen_usuario" id="imagen" />
+				            <input type="file" name="imagenProducto" id="imagen" required/>
 				        </div>
 
 				        <div id = 'annio'>
 				            <label>Año:</label>
-				            <input type = 'number' name='annio' id='id_annio' max = '2099' />
+				            <input type = 'number' name='annio' id='id_annio' max = '2099' required/>
 				        </div>
 
 				        <div id = 'tipo'>
 				            <label>Tipo:</label>
-				            <select name="tipo" select = 'Seleciona'>
+				            <select name="tipo" select = 'Seleciona' required>
+				              <option disabled selected value> -- Selecciona una categoría -- </option>
 							  <option value="Anime">Anime</option>
 							  <option value="Comic">Comics</option>
 							  <option value="Libro">Libro</option>
@@ -444,6 +443,35 @@
 				        <div id = 'isbn' class = "libro">
 				            <label>ISBN:</label>
 				            <input type = 'number' name='isbn' id='id_isbn' min = '111111111111' max = '999999999999' class = "libro"/>
+				        </div>
+
+				        <div id = 'plataformas' class = "videojuego">
+				            <label>Elige tus plataformas:</label>
+				          	<input type="checkbox" name="plataformas[]" value="NES" >NES
+				            <input type="checkbox" name="plataformas[]" value="SNES" >SNES
+						    <input type="checkbox" name="plataformas[]" value="Nintendo64" >Nintendo64
+						    <input type="checkbox" name="plataformas[]" value="GameCube" >GameCube
+						    <input type="checkbox" name="plataformas[]" value="Wii" >Wii
+						    <input type="checkbox" name="plataformas[]" value="WiiU" >WiiU
+						    <input type="checkbox" name="plataformas[]" value="GameBoy" >GameBoy
+						    <input type="checkbox" name="plataformas[]" value="GameBoy Color" >GameBoy Color
+						    <input type="checkbox" name="plataformas[]" value="GameBoy Advanced" >GameBoy Advanced
+						    <input type="checkbox" name="plataformas[]" value="DS" >DS
+						    <input type="checkbox" name="plataformas[]" value="3DS" >3DS
+						    <input type="checkbox" name="plataformas[]" value="Xbox" >XBOX
+						    <input type="checkbox" name="plataformas[]" value="Xbox 360" >XBOX 360
+						    <input type="checkbox" name="plataformas[]" value="Xbox One" >XBOX One
+						    <input type="checkbox" name="plataformas[]" value="PSX" >PSX
+						    <input type="checkbox" name="plataformas[]" value="PS2" >PS2
+						    <input type="checkbox" name="plataformas[]" value="PS3" >PS3
+						    <input type="checkbox" name="plataformas[]" value="PS4" >PS4
+						    <input type="checkbox" name="plataformas[]" value="PSP" >PSP
+						    <input type="checkbox" name="plataformas[]" value="MasterSystem" >MasterSystem
+						    <input type="checkbox" name="plataformas[]" value="Megadrive" >Megadrive
+						    <input type="checkbox" name="plataformas[]" value="Saturn" >Saturn
+						    <input type="checkbox" name="plataformas[]" value="Dreamcast" >Dreamcast
+						    <input type="checkbox" name="plataformas[]" value="Gamegear" >Gamegear
+						    <input type="checkbox" name="plataformas[]" value="Steam" >Steam
 				        </div>
 
 				        <div id = 'revista' class = "manga">
