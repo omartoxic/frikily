@@ -3,6 +3,7 @@
 	include "basedatos.php";
 	$conex=new Conexion("root","","frikily");
 	$conex->connect();
+
 	if (isset($_POST['item'])){
 		$codigo= $_POST['item'];
 	}else{
@@ -28,6 +29,29 @@
 	{
 		$notifi = $conex->notificaciones();
 	}
+	if(isset($_POST['nota']))
+	{
+		$nota = $_POST['nota'];
+		$listaNotas = $conex->consult("SELECT * FROM 	notas WHERE Codigo = ".$general[0]);
+		$notasEnTotal = count($listaNotas)+1;
+		if($notasEnTotal > 1)
+		{
+			foreach($listaNotas as $notaPuesta)
+			{
+				$notaFinal = $nota + $notaPuesta[3];
+			}
+		}
+		else
+		{
+			$notaFinal = $nota;
+		}
+		$notaFinal = $notaFinal / $notasEnTotal;
+		$conex->refresh('UPDATE `general` SET `Nota`='.$notaFinal.' WHERE Codigo = '.$general[0]);
+		$conex->refresh('INSERT INTO `notas`(`Codigo`, `CodigoUsuario`, `Nota`) VALUES ('.$general[0].','.$_SESSION['codigo'].','.$nota.')');
+		$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
+		$general = $list[0];
+	}
+	$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
 ?>
 <html>
 	<head>
@@ -149,7 +173,20 @@
 						</span>
 						<span class="datos col-xs-9">
 							<div class="row">
-								<div class="col-xs-10"><div class="bold">Nota: </div><?php echo $general[3] ?></div>
+								<div class="col-xs-10">
+									<div class="bold">Nota: </div>
+									<?php
+										echo $general[3];
+										if (isset($_SESSION['usuario']) && !$haPuestoNota)
+										{
+											echo '<form method="post" action="">';
+											echo "<input type='hidden' name='item' value=".$codigo.">";
+											echo "<input type='number' min='0' max='10' name='nota'>";
+											echo "<input type='submit' value='Puntuar'>";
+											echo "</form>";
+										}
+									?>
+								</div>
 								<div class="col-xs-10"><div class="bold">Director: </div><?php echo $director[1].' '.$director[2]; ?></div>
 								<div class="col-xs-10"><div class="bold">Género: </div><?php echo $general[4] ?></div>
 								<div class="col-xs-10"><div class="bold">Año: </div><?php echo $general[6] ?></div>
@@ -194,7 +231,7 @@
 
 										echo "<div class = 'comentario col-md-12'>";
 										echo $nombre[0][0];
-										echo "<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
+										echo "&nbsp;&nbsp;&nbsp;<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
 										echo "<br>";
 										echo $key[3];
 										echo "<br>";

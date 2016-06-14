@@ -27,6 +27,29 @@
 	{
 		$notifi = $conex->notificaciones();
 	}
+	if(isset($_POST['nota']))
+	{
+		$nota = $_POST['nota'];
+		$listaNotas = $conex->consult("SELECT * FROM 	notas WHERE Codigo = ".$general[0]);
+		$notasEnTotal = count($listaNotas)+1;
+		if($notasEnTotal > 1)
+		{
+			foreach($listaNotas as $notaPuesta)
+			{
+				$notaFinal = $nota + $notaPuesta[3];
+			}
+		}
+		else
+		{
+			$notaFinal = $nota;
+		}
+		$notaFinal = $notaFinal / $notasEnTotal;
+		$conex->refresh('UPDATE `general` SET `Nota`='.$notaFinal.' WHERE Codigo = '.$general[0]);
+		$conex->refresh('INSERT INTO `notas`(`Codigo`, `CodigoUsuario`, `Nota`) VALUES ('.$general[0].','.$_SESSION['codigo'].','.$nota.')');
+		$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
+		$general = $list[0];
+	}
+	$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
 ?>
 <html>
 	<head>
@@ -146,7 +169,20 @@
 									?>
 								</span>
 								<span class="datos col-xs-9">
-									<span class="col-xs-12"><div class="bold">Nota: </div><?php echo $general[3] ?></span>
+									<div class="col-xs-10">
+										<div class="bold">Nota: </div>
+										<?php
+											echo $general[3];
+											if (isset($_SESSION['usuario']) && !$haPuestoNota)
+											{
+												echo '<form method="post" action="">';
+												echo "<input type='hidden' name='item' value=".$codigo.">";
+												echo "<input type='number' min='0' max='10' name='nota'>";
+												echo "<input type='submit' value='Puntuar'>";
+												echo "</form>";
+											}
+										?>
+									</div>
 									<span class="col-xs-12"><div class="bold">Género: </div><?php echo $general[4] ?></span>
 									<span class="col-xs-12"><div class="bold">Año: </div><?php echo $general[6] ?></span>
 									<span class="col-xs-12"><div class="bold">Páginas: </div><?php echo $libros[1] ?></span>
