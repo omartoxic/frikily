@@ -212,6 +212,10 @@ pre
 {
   text-align: center;
 }
+.nombre-usuario
+{
+  color:white;
+}
 form .row
 {
   margin-bottom: 5px;
