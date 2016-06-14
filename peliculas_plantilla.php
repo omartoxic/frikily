@@ -25,6 +25,7 @@
 	$actores = $list2;
 	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo." AND rol.rol LIKE 'Director'");
 	$director = $list3[0];
+	$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
 	if(isset($_SESSION['usuario']))
 	{
 		$notifi = $conex->notificaciones();
@@ -32,13 +33,22 @@
 	if(isset($_POST['nota']))
 	{
 		$nota = $_POST['nota'];
+		if($haPuestoNota)
+		{
+			$conex->refresh('UPDATE `notas` SET `Nota`='.$nota.' WHERE Codigo = '.$general[0].' AND CodigoUsuario = '.$_SESSION['codigo']);
+		}
+		else
+		{
+			$conex->refresh('INSERT INTO `notas`(`Codigo`, `CodigoUsuario`, `Nota`) VALUES ('.$general[0].','.$_SESSION['codigo'].','.$nota.')');
+		}
 		$listaNotas = $conex->consult("SELECT * FROM 	notas WHERE Codigo = ".$general[0]);
 		$notasEnTotal = count($listaNotas)+1;
+		$notaFinal = 0;
 		if($notasEnTotal > 1)
 		{
 			foreach($listaNotas as $notaPuesta)
 			{
-				$notaFinal = $nota + $notaPuesta[3];
+				$notaFinal = $notaFinal + $notaPuesta[3];
 			}
 		}
 		else
@@ -47,11 +57,9 @@
 		}
 		$notaFinal = $notaFinal / $notasEnTotal;
 		$conex->refresh('UPDATE `general` SET `Nota`='.$notaFinal.' WHERE Codigo = '.$general[0]);
-		$conex->refresh('INSERT INTO `notas`(`Codigo`, `CodigoUsuario`, `Nota`) VALUES ('.$general[0].','.$_SESSION['codigo'].','.$nota.')');
 		$list=$conex->consult("SELECT * FROM general WHERE codigo =".$codigo);
 		$general = $list[0];
 	}
-	$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
 ?>
 <html>
 	<head>
@@ -177,12 +185,14 @@
 									<div class="bold">Nota: </div>
 									<?php
 										echo $general[3];
-										if (isset($_SESSION['usuario']) && !$haPuestoNota)
+										if (isset($_SESSION['usuario']))
 										{
 											echo '<form method="post" action="">';
 											echo "<input type='hidden' name='item' value=".$codigo.">";
-											echo "<input type='number' min='0' max='10' name='nota'>";
-											echo "<input type='submit' value='Puntuar'>";
+											echo "<div class='col-md-2'>";
+											echo "<input class='form-control' type='number' min='0' max='10' name='nota'>";
+											echo "</div>";
+											echo "<input class='btn btn-primary' type='submit' value='Puntuar'>";
 											echo "</form>";
 										}
 									?>
