@@ -23,7 +23,10 @@
 	$libros = $list1[0];
 	$list2=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
 	$actores = $list2;
-	$notifi = $conex->notificaciones();
+	if(isset($_SESSION['usuario']))
+	{
+		$notifi = $conex->notificaciones();
+	}
 ?>
 <html>
 	<head>

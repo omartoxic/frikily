@@ -23,7 +23,10 @@
 			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen,g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%' AND g.aprobado=1");
 		}
 	}
-	$notifi = $conex->notificaciones();
+	if(isset($_SESSION['usuario']))
+	{
+		$notifi = $conex->notificaciones();
+	}
 ?>
 <html>
 	<head>
@@ -154,22 +157,22 @@
 						</form>
 					</div>
 					<div class='row objetosbis'>
-					<?php
-						foreach($list as $array)
-						{
-							echo '<div class="col-md-2 objeto">';
-							echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
-							echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2 hvr-grow">';
-							echo "<p class='item'>";
-							echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
-							echo "<span class='texto-articulo bold'>".$array[1]."</span>";
-							echo "</p>";
-							echo "</button>";
-							echo "</form>";
-							echo "</div>";
-						}
-						$conex->close();
-					?>
+						<?php
+							foreach($list as $array)
+							{
+								echo '<div class="col-md-2  objeto">';
+								echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items">';
+								echo '<button type="submit" name="item" value="'.$array[0].'" class="boton-item btn btn-link hvr-grow">';
+								echo "<p class='item'>";
+								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'></img>";
+								echo "<span class='texto-articulo bold'>".$array[1]."</span>";
+								echo "</p>";
+								echo "</button>";
+								echo "</form>";
+								echo '</div>';
+							}
+							$conex->close();
+						?>
 
 				</div>
 			</div>

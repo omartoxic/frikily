@@ -87,29 +87,30 @@
 	                    $size = ($_FILES['imagenProducto']['size']);
 	                    if($size <= 7000000 && $size > 0){ //por si supera el tamaño permitido
 	                      $nombreImagen = $_FILES["imagenProducto"]["name"];
-	                      $extension = end(explode('.', $nombreImagen));
-	 
+												$nombreEXtension = explode('.', $nombreImagen);
+	                      $extension = end($nombreEXtension);
+
 	                      	if ($extension == 'jpg' || $extension == 'png'){
-	                      
-		                        $archivo_temporal = $_FILES['imagenProducto']['tmp_name']; 
-		            
-		                   		
-		                        $archivo_nombre = $ruta.$codigo.".jpg"; 
+
+		                        $archivo_temporal = $_FILES['imagenProducto']['tmp_name'];
+
+
+		                        $archivo_nombre = $ruta.$codigo.".jpg";
 		                        $tamanio = getimagesize($archivo_temporal);
 
 		                        if ($tamanio){
 		                            if(in_array($tamanio['mime'], $imagenes_permitidas)){
-		                                if (is_uploaded_file($archivo_temporal)){ 
+		                                if (is_uploaded_file($archivo_temporal)){
 		                                  	if ($_FILES['imagenProducto']['size'] < 7000000){
-		                                    	move_uploaded_file($archivo_temporal,$archivo_nombre); 
+		                                    	move_uploaded_file($archivo_temporal,$archivo_nombre);
 		                                  	}else{
 		                                    	$fallido = true;
 		                                    	echo "<div>El tamaño excede el permitido.</div>";
 		                                  	}
 		                                }else{
 		                                  $fallido = true;
-		                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
-		                                } 
+		                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+		                                }
 		                            }else{
 		                              $fallido = true;
 		                              echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";

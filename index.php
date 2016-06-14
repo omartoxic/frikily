@@ -26,7 +26,10 @@
 			$list=$conex->consult("SELECT g.codigo,g.nombre,g.nota,g.imagen,g.aprobado FROM general g, ".$_POST['ver']." t WHERE g.codigo = t.codigo AND g.nombre LIKE '%".$_POST['search']."%' AND g.aprobado=1");
 		}
 	}
-	$notifi = $conex->notificaciones();
+	if(isset($_SESSION['usuario']))
+	{
+		$notifi = $conex->notificaciones();
+	}
 ?>
 <html>
 	<head>

@@ -23,21 +23,33 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand">Friki.ly</span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
+								}
+
+
+							?>
 						</ul>
 					</form>
 				</div>
@@ -92,7 +104,7 @@
 				</div>
 				<div class="row">
 					<label class="col-xs-offset-2">
-						<input class="btn btn-success" name='action' type="submit" value="Entrar">
+						<input class="btn btn-primary" name='action' type="submit" value="Entrar">
 					</label>
 					<a class="col-xs-offset-5" href="registrar.php">No estoy registrado</a>
 				</div>

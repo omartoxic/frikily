@@ -23,7 +23,10 @@
 	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
 	$actores = $list3;
 	$temporadas=$conex->consult("SELECT DISTINCT contenedor FROM episodios WHERE codigo =".$codigo." ORDER BY contenedor");
-	$notifi = $conex->notificaciones();
+	if(isset($_SESSION['usuario']))
+	{
+		$notifi = $conex->notificaciones();
+	}
 ?>
 <html>
 	<head>
@@ -166,15 +169,15 @@
 					</div>
 					<div class="sinopsis row"><div class="bold">Sinopsis:</div><?php echo $general[2] ?></div>
 					<div class="episodios row">
-						<div class="bold">Episodios:</div>
+						<div class="bold">Tomos:</div>
 						<?php
 						foreach ($temporadas as $temporada)
 						{
-							echo '<span class="col-xs-10"><span class="bold-extra">Temporada: </span>'.$temporada[0].'</span>';
+							echo '<span class="col-xs-10"><span class="bold-extra">Tomo: </span>'.$temporada[0].'</span>';
 							$capitulos=$conex->consult("SELECT * FROM episodios WHERE codigo =".$codigo." AND contenedor=".$temporada[0]);
 
 							foreach($capitulos as $capitulo){
-								echo '<span class="col-xs-5"><span class="bold-extra">Capitulo: </span>'.$capitulo[2].' : '.$capitulo[4];
+								echo '<span class="col-xs-5"><span class="bold-extra">Número: </span>'.$capitulo[2].' : '.$capitulo[4];
 								if(isset($_SESSION['usuario']))
 								{
 									$vistos = $conex->consult('SELECT * FROM visto');

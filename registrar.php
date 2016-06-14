@@ -20,21 +20,33 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand">Friki.ly</span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
+								}
+
+
+							?>
 						</ul>
 					</form>
 				</div>
@@ -73,16 +85,16 @@
                         $imagen = $usuario.".jpg";
                         $conex->insertar($usuario,$passM,$mail,$imagen);
                       }else{
-                        echo "<div>El tamaño excede el permitido.</div>";
+                        echo "<h3 class='titulo'>El tamaño excede el permitido.</h3>";
                       }
                     }else{
-                      echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+                      echo "<h3 class='titulo'>Error en la subida. Inténtalo de nuevo.</h3>";
                     }
                   }else{
-                    echo "<div>La dimensión excede el permitido (500x500 px).</div>";
+                    echo "<h3 class='titulo'>La dimensión excede el permitido (500x500 px).</h3>";
                   }
                 }else{
-                  echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
+                  echo "<h3 class='titulo'>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</h3>";
                 }
               }
             }
@@ -120,7 +132,7 @@
             </div>
 
             <div class='row'>
-              <input class='col-md-offset-2 btn btn-success' type = 'submit' value = 'Registrar' id = "boton"/>
+              <input class='col-md-offset-2 btn btn-primary' type = 'submit' value = 'Registrar' id = "boton"/>
               <a class='col-md-offset-5' href="index.php">Volver al inicio</a>
           </div>
 </form>

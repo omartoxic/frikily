@@ -55,6 +55,7 @@ function enviarDatos()
         }
         $('#'+id).addClass('visto');
       }
+      comprobarSerieVista();
     },
     error:function(respuesta)
     {
@@ -66,49 +67,65 @@ function enviarDatos()
 
 function serieVista()
 {
-  var tipo = $('#tipo').val();
   $('.ver').click();
-  console.log('serieVista')
-  if($('#vistos').hasClass('visto'))
+  console.log('serieVista');
+  comprobarSerieVista();
+}
+
+function comprobarSerieVista()
+{
+  var codigo = $('#cod').val();
+  var usuario = $('#cod-usu').val();
+  var tipo = $('#tipo').val();
+  $.ajax(
   {
-    if(tipo == 'serie')
+    data:{'codigo':codigo,'usuario':usuario},
+    url:'contarCapitulos.php',
+    type:'post',
+    success:function(respuesta)
     {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar serie como vista");
+      if(respuesta == "1")
+      {
+        if(tipo == 'serie')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Serie vista");
+        }
+        else if(tipo == 'manga')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Manga leido");
+        }
+        else if(tipo == 'anime')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Anime visto");
+        }
+        else if(tipo == 'comic')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Cómic leido");
+        }
+        $('#vistos').addClass('visto');
+      }
+      else
+      {
+        if(tipo == 'serie')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar serie como vista");
+        }
+        else if(tipo == 'manga')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar manga como leido");
+        }
+        else if(tipo == 'anime')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar anime como visto");
+        }
+        else if(tipo == 'comic')
+        {
+          $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar cómic como leido");
+        }
+        $('#vistos').removeClass('visto');
+      }
     }
-    else if(tipo == 'manga')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar manga como leido");
-    }
-    else if(tipo == 'anime')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar anime como visto");
-    }
-    else if(tipo == 'comic')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar cómic como leido");
-    }
-    $('#vistos').removeClass('visto');
-  }
-  else
-  {
-    if(tipo == 'serie')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Serie vista");
-    }
-    else if(tipo == 'manga')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Manga leido");
-    }
-    else if(tipo == 'anime')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Anime visto");
-    }
-    else if(tipo == 'comic')
-    {
-      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Cómic leido");
-    }
-    $('#vistos').addClass('visto');
-  }
+  });
 }
 
 $(document).ready(function()
