@@ -21,6 +21,7 @@
 	$plataformas = $list2;
 	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
 	$actores = $list3;
+	$notifi = $conex->notificaciones();
 ?>
 <html>
 	<head>
@@ -44,7 +45,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand"><a href='index.php'>Friki.ly</a></span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
@@ -80,7 +81,7 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a class='btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>Iniciar sesión</a></li>";
 							}
 							else
 							{
@@ -107,19 +108,44 @@
 		</div>
 		<div class="container">
 			<div class="navbar navbar-default arriba"></div>
-				<pre class="col-xs-12">
+				<div class="col-xs-12">
 					<div class="objeto row">
+						<h1 class="col-xs-12"><?php echo $general[1] ?></h1>
 						<span class="imagen col-xs-3">
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									$vistos = $conex->consult('SELECT * FROM visto');
+									$visto = false;
+									foreach($vistos as $dato)
+									{
+										if($dato[1] == $_SESSION['codigo'] && $dato[2] == $general[0] && $dato[3] == 0)
+										{
+											$visto = true;
+										}
+									}
+									if($visto)
+									{
+										echo "<button id='visto' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i>Videojuego jugado</button>";
+									}
+									else
+									{
+										echo "<button id='visto' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i>Marcar el videojuego como jugado</button>";
+									}
+									echo "<input type='hidden' id='tipo' value='videojuego'>";
+									echo "<input type='hidden' id='cod' value='".$general[0]."'>";
+									echo "<input type='hidden' id='cod-usu' value='".$_SESSION['codigo']."'>";
+								}
+							?>
 						</span>
 						<span class="datos col-xs-9">
-							<span class="col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
-							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
-							<span class="col-xs-5">Año de lanzamiento: <?php echo $general[6] ?></span>
-							<span class="col-xs-5">Desarrolladora: <?php echo $videojuegos[1] ?></span>
-							<span class="col-xs-5">Número de jugadores: <?php echo $videojuegos[2] ?></span>
-							<span class="col-xs-5">Online: <?php
+							<span class="col-xs-12"><div class="bold">Nota: </div><?php echo $general[3] ?></span>
+							<span class="col-xs-12"><div class="bold">Género: </div><?php echo $general[4] ?></span>
+							<span class="col-xs-12"><div class="bold">Año de lanzamiento: </div><?php echo $general[6] ?></span>
+							<span class="col-xs-12"><div class="bold">Desarrolladora: </div><?php echo $videojuegos[1] ?></span>
+							<span class="col-xs-12"><div class="bold">Número de jugadores: </div><?php echo $videojuegos[2] ?></span>
+							<span class="col-xs-12"><div class="bold">Online: </div><?php
 							if($videojuegos[3]==1){
 								echo "Si";
 							}
@@ -127,70 +153,56 @@
 								echo "No";
 							}
 							?></span>
-							<span class="col-xs-5">Plataformas: <?php
+							<div class="col-xs-5"><div class="bold">Plataformas: </div><?php
+								$longitud = count($plataformas);
+								$contador = 1;
 								foreach ($plataformas as $plataforma)
 								{
-									echo $plataforma[2].' ';
+									echo $plataforma[2];
+									if($contador < $longitud)
+									{
+										echo ",";
+									}
+									echo " ";
+									$contador++;
 								}
 							?>
-							</span>
+						</div>
 							<?php
 							if(!(empty($actores))){
-								echo "<span class='col-xs-10'>Creadores y Dobladores: <br>";
-								echo "<div class='col xs-6'>";
+								$longitud = count($actores);
+								$contador = 1;
+								echo "<div class='col-xs-5'><div class='bold'>Creadores y Dobladores: </div>";
 									foreach ($actores as $actor){
-										echo ''.$actor[1].' '.$actor[2].' | '.$actor[4].'<br>';
+										echo ''.$actor[1].' '.$actor[2];
+										if($contador < $longitud)
+										{
+											echo ",";
+										}
+										echo " ";
+										$contador++;
 									}
 								echo "</div>";
-								echo "</span>";
 							}
 							?>
 						</span>
 					</div>
 					<div class="row">
-						<?php
-							if(isset($_SESSION['usuario']))
-							{
-								$vistos = $conex->consult('SELECT * FROM visto');
-								$visto = false;
-								foreach($vistos as $dato)
-								{
-									if($dato[1] == $_SESSION['codigo'] && $dato[2] == $general[0] && $dato[3] == 0)
-									{
-										$visto = true;
-									}
-								}
-								if($visto)
-								{
-									echo "<button id='visto' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i></button>";
-								}
-								else
-								{
-									echo "<button id='visto' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i></button>";
-								}
-								echo "<input type='hidden' id='cod' value='".$general[0]."'>";
-								echo "<input type='hidden' id='cod-usu' value='".$_SESSION['codigo']."'>";
-							}
-						?>
-					</div>
-					<div class="sinopsis row"><?php echo $general[2] ?></div>
-					<?php
 
-						echo "<br>";
-						echo "<br>";
-						echo "<br>";
-						echo "<br>";
-						echo "Comentarios:";
+					</div>
+					<div class="sinopsis col-md-12"><div class="bold">Sinopsis:</div><?php echo $general[2] ?></div>
+					<?php
+						echo "<div class='col-md-12 comentarios' ><span class='bold'>Comentarios:</span>";
 
 						if (isset($_SESSION['usuario'])){
 							echo "<form method='post' action = ''>";
-							echo "<textarea name='comentario' rows='10' cols='40'>Escribe aquí tus comentarios</textarea>";
+							echo "<textarea name='comentario' rows='10' class='form-control' cols='40'>Escribe aquí tus comentarios</textarea>";
 							echo "<br>";
-							echo "<button type='submit' name='item' value='".$codigo."'>Guardar comentario</button>";
+							echo "<button type='submit' class='btn btn-primary' name='item' value='".$codigo."'>Guardar comentario</button>";
 							echo "</form>";
 						}
 
-						echo "<br>";
+						echo "</div>";
 						echo "<br>";
 
 						$listaComentarios=$conex->consult("SELECT * FROM comentarios WHERE codigo ='". $codigo."'");
@@ -201,7 +213,7 @@
 							$nombre = $conex->consult("SELECT Nombre FROM usuarios WHERE CodUsuario = '". $key[2]."'");
 
 
-							echo "<div class = 'comentario'>";
+							echo "<div class = 'comentario col-md-12'>";
 							echo $nombre[0][0];
 							echo "<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
 							echo "<br>";
@@ -211,8 +223,9 @@
 							echo "</div>";
 							echo "<br>";
 						}
+
 					?>
-				</pre>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

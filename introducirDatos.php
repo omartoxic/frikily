@@ -13,7 +13,11 @@
 		<script type="text/javascript" src="estilojq.js"></script>
 		<script type="text/javascript" src="modificardatos.js"></script>
 	</head>
-	
+	<?php
+		include "basedatos.php";
+		$conex=new Conexion("root","","frikily");
+		$conex->connect();
+	?>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -42,9 +46,12 @@
 					</form>
 					<ul class="nav navbar-nav navbar-right">
 						<?php
-							if(!isset($_SESSION['usuario'])){
+							if(!isset($_SESSION['usuario']))
+							{
 								echo "<li><a href='inicioSesion.php'>iniciar sesión</a></li>";
-							}else{
+							}
+							else
+							{
 								echo "<li>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario']."</li>";
@@ -54,10 +61,11 @@
 				</div>
 			</div>
 		</div>
-				<div class="navbar navbar-default arriba"></div>
+		<div class="navbar navbar-default arriba"></div>
 		<div class="container">
 			<div class="row">
 				<div class="list-group secciones" id="secciones">
+<<<<<<< HEAD
 		<?php
 			include "basedatos.php";
 			$conex=new Conexion("root","","frikily");
@@ -322,38 +330,39 @@
 			}
 	?>
 
+=======
+>>>>>>> ee3748b085863de34930ab469574537ef8529f9b
 					<form action="introducirDatos.php" method="POST" id="datos" enctype="multipart/form-data">
 
 				  		<div id = 'nombre'>
 				            <label>Nombre:</label>
-				            <input type = 'text' name='nombre' id='id_nombre' required/>
+				            <input type = 'text' name='nombre' id='id_nombre'/>
 				        </div>
 
 				        <div id = 'sinopsis'>
 				            <label>Sinopsis:</label>
-				            <input type = 'text' name='sinopsis' id='id_sinopsis' required/>
+				            <input type = 'text' name='sinopsis' id='id_sinopsis'/>
 				        </div>
 
 				        <div id = 'genero'>
 				            <label>Género:</label>
-				            <input type = 'text' name='genero' id='id_genero' required/>
+				            <input type = 'text' name='genero' id='id_genero'/>
 				        </div>
 
 				        <div id = 'imagen'>
 				            <label for="imagen">Subir imagen:</label>
 				            <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-				            <input type="file" name="imagenProducto" id="imagenP" required />
+				            <input type="file" name="imagen_usuario" id="imagen" />
 				        </div>
 
 				        <div id = 'annio'>
 				            <label>Año:</label>
-				            <input type = 'number' name='annio' id='id_annio' max = '2099' required />
+				            <input type = 'number' name='annio' id='id_annio' max = '2099' />
 				        </div>
 
 				        <div id = 'tipo'>
 				            <label>Tipo:</label>
-				            <select name="tipo" select = 'Seleciona' required>
-				            <option disabled selected value> -- Selecciona una categoría -- </option>
+				            <select name="tipo" select = 'Seleciona'>
 							  <option value="Anime">Anime</option>
 							  <option value="Comic">Comics</option>
 							  <option value="Libro">Libro</option>
@@ -364,12 +373,12 @@
 							</select>
 				        </div>
 
-				        <div id = 'annioFin' class = "anime manga serie" >
+				        <div id = 'annioFin' class = "anime manga serie">
 				            <label>Año de finalización (0 si no ha acabado):</label>
 				            <input type = 'number' name='annioFin' id='id_annioFin' max = '2099' value= '0' class = "anime manga serie" />
 				        </div>
 
-				        <div id = 'temporadas' class = "anime serie" >
+				         <div id = 'temporadas' class = "anime serie">
 				            <label>Temporadas:</label>
 				            <input type = 'number' name='temporadas' id='id_temporadas' min = '1' max = '100' value= '1' class = "anime serie"/>
 				        </div>

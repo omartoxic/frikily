@@ -1,6 +1,7 @@
 function enviarDatos()
 {
   console.log('estamos dentro');
+  var tipo = $('#tipo').val();
   var codigo = $('#cod').val();
   var usuario = $('#cod-usu').val();
   var capitulo = null;
@@ -24,10 +25,34 @@ function enviarDatos()
       console.log('Todo correcto '+respuesta);
       if($('#'+id).hasClass('visto'))
       {
+        if(tipo == 'pelicula')
+        {
+          $('#'+id).html("<i class='glyphicon glyphicon-ok'></i>Marcar película vista");
+        }
+        else if(tipo == 'videojuego')
+        {
+          $('#'+id).html("<i class='glyphicon glyphicon-ok'></i>Marcar el videojuego como jugado");
+        }
+        else if(tipo == 'libro')
+        {
+          $('#'+id).html("<i class='glyphicon glyphicon-ok'></i>Marcar libro como leido");
+        }
         $('#'+id).removeClass('visto');
       }
       else
       {
+        if(tipo == 'pelicula')
+        {
+          $('#'+id).html("<i class='glyphicon glyphicon-ok'></i>Película vista");
+        }
+        else if(tipo == 'videojuego')
+        {
+          $('#'+id).html("<i class='glyphicon glyphicon-ok'></i>Videojuego jugado");
+        }
+        else if(tipo == 'libro')
+        {
+          $('#'+id).html("<i class='glyphicon glyphicon-ok'></i>Libro leido");
+        }
         $('#'+id).addClass('visto');
       }
     },
@@ -41,14 +66,47 @@ function enviarDatos()
 
 function serieVista()
 {
+  var tipo = $('#tipo').val();
   $('.ver').click();
   console.log('serieVista')
   if($('#vistos').hasClass('visto'))
   {
+    if(tipo == 'serie')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar serie como vista");
+    }
+    else if(tipo == 'manga')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar manga como leido");
+    }
+    else if(tipo == 'anime')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar anime como visto");
+    }
+    else if(tipo == 'comic')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Marcar cómic como leido");
+    }
     $('#vistos').removeClass('visto');
   }
   else
   {
+    if(tipo == 'serie')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Serie vista");
+    }
+    else if(tipo == 'manga')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Manga leido");
+    }
+    else if(tipo == 'anime')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Anime visto");
+    }
+    else if(tipo == 'comic')
+    {
+      $('#vistos').html("<i class='glyphicon glyphicon-ok'></i>Cómic leido");
+    }
     $('#vistos').addClass('visto');
   }
 }

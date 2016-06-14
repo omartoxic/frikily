@@ -126,18 +126,16 @@ class Conexion{
 		return $tipoObjeto;
 	}
 
+
 	public function comprobarPersona($nombre,$apellido){
 		$consulta = "SELECT * from personas where nombre = '$nombre' and apellido = '$apellido'";
 		$lista = $this->consult($consulta);
 		return count($lista);
 	}
 
-
 	public function close()
 	{
 		mysqli_close($this->conection);
 	}
-
-
 }
 ?>

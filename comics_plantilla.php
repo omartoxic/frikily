@@ -22,6 +22,7 @@
 	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
 	$actores = $list3;
 	$temporadas=$conex->consult("SELECT DISTINCT contenedor FROM episodios WHERE codigo =".$codigo." ORDER BY contenedor");
+	$notifi = $conex->notificaciones();
 ?>
 <html>
 	<head>
@@ -45,26 +46,32 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand">Friki.ly</span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
 
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a class='barra btn btn-link' href="index.php">Página principal</a></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
 							<?php
 								if(isset($_SESSION['usuario']))
 								{
-									echo "<li><a class='barra btn btn-link' href='introducirDatos.php'>Añadir</a></li>";
+									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
 								}
+
+
 							?>
 						</ul>
 					</form>
@@ -75,15 +82,25 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a class='iniciosesion btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>Iniciar sesión</a></li>";
 							}
 							else
 							{
-								echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'></i></a></li>";
-								echo "<li class='usuario'><a href='modificarDatos.php'>";
+								if($notifi!=0){
+									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
+								}
+								echo "<li class='usuario'>";
 								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
 								echo $_SESSION['usuario'];
-								echo "<form action='index.php' method='post'><input type='submit' id='cerrarSesion' class='btn btn-link' name='action' value='Cerrar sesión'></form></a></li>";
+								echo '<li><div class="dropdown">';
+								echo '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+								echo '<i class="glyphicon glyphicon-option-vertical"></i>';
+								echo '</button>';
+							  echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
+								echo '<li><form action="index.php" method="post"><button type="submit" id="cerrarSesion" class="btn btn-default" name="action" value="Cerrar sesión">Cerrar sesión</button></form></li>';
+								echo '<li><a class="btn btn-default" href="modificarDatos.php">ModificarDatos</a></li>';
+								echo '</ul>';
+								echo '</div></li>';
 							}
 						?>
 					</ul>
@@ -92,25 +109,44 @@
 		</div>
 		<div class="container">
 			<div class="navbar navbar-default arriba"></div>
-				<pre class="col-xs-12">
+				<div class="col-xs-12">
 					<div class="objeto row">
+						<h1 class="col-xs-12"><?php echo $general[1] ?></h1>
 						<span class="imagen col-xs-3">
 							<img src="imagenes/<?php echo $general[5] ?>.jpg" class='img-responsive'>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									$vistos = count($conex->consult("SELECT * FROM visto WHERE CodigoUsuario = '".$_SESSION['codigo']."' AND Codigo = '".$general[0]."'"));
+									$episodios = count($conex->consult("SELECT * FROM episodios WHERE codigo =".$codigo));
+									$visto = $episodios == $vistos;
+									if($visto)
+									{
+										echo "<button id='vistos' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i>Cómic leido</button>";
+									}
+									else
+									{
+										echo "<button id='vistos' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i>Marcar cómic como leido</button>";
+									}
+									echo "<input type='hidden' id='tipo' value='comic'>";
+									echo "<input type='hidden' id='cod' value='".$general[0]."'>";
+									echo "<input type='hidden' id='cod-usu' value='".$_SESSION['codigo']."'>";
+								}
+							?>
 						</span>
 						<span class="datos col-xs-9">
-							<span class="col-xs-9"><?php echo $general[1] ?></span>
-							<span class="col-xs-2">Nota: <?php echo $general[3] ?></span>
-							<span class="col-xs-10">Género: <?php echo $general[4] ?></span>
-							<span class="col-xs-5">Año de comienzo: <?php echo $general[6] ?></span>
-							<span class="col-xs-5">Numeros: <?php echo $comics[1] ?></span>
-							<span class="col-xs-5">Editorial: <?php echo $comics[2] ?></span>
-							<span class="col-xs-5">Editorial original: <?php echo $comics[3] ?></span>
+							<span class="col-xs-12"><div class="bold">Nota: </div><?php echo $general[3] ?></span>
+							<span class="col-xs-12"><div class="bold">Género: </div><?php echo $general[4] ?></span>
+							<span class="col-xs-12"><div class="bold">Año de comienzo:</div> <?php echo $general[6] ?></span>
+							<span class="col-xs-12"><div class="bold">Numeros: </div><?php echo $comics[1] ?></span>
+							<span class="col-xs-12"><div class="bold">Editorial: </div><?php echo $comics[2] ?></span>
+							<span class="col-xs-12"><div class="bold">Editorial original: </div><?php echo $comics[3] ?></span>
 							<?php
 							if(!(empty($actores))){
-								echo "<span class='col-xs-10'>Creadores y Dibujantes: <br>";
+								echo "<span class='col-xs-10'><div class='bold'>Creadores: </div>";
 								echo "<div class='col xs-6'>";
 									foreach ($actores as $actor){
-										echo ''.$actor[1].' '.$actor[2].' | '.$actor[4].'<br>';
+										echo ''.$actor[1].' '.$actor[2].'<br>';
 									}
 								echo "</div>";
 								echo "</span>";
@@ -120,36 +156,19 @@
 						</span>
 					</div>
 					<div class="row">
-						<?php
-							if(isset($_SESSION['usuario']))
-							{
-								$vistos = count($conex->consult("SELECT * FROM visto WHERE CodigoUsuario = '".$_SESSION['codigo']."' AND Codigo = '".$general[0]."'"));
-								$episodios = count($conex->consult("SELECT * FROM episodios WHERE codigo =".$codigo));
-								$visto = $episodios == $vistos;
-								if($visto)
-								{
-									echo "<button id='vistos' class='btn btn-link visto'><i class='glyphicon glyphicon-ok'></i></button>";
-								}
-								else
-								{
-									echo "<button id='vistos' class='btn btn-link'><i class='glyphicon glyphicon-ok'></i></button>";
-								}
-								echo "<input type='hidden' id='cod' value='".$general[0]."'>";
-								echo "<input type='hidden' id='cod-usu' value='".$_SESSION['codigo']."'>";
-							}
-						?>
+
 					</div>
-					<div class="sinopsis row"><?php echo $general[2] ?></div>
+					<div class="sinopsis row"><div class="bold">Sinopsis:</div><?php echo $general[2] ?></div>
 					<div class="episodios row">
-						Epidodios:<br>
+						<div class="bold">Epidodios:</div>
 						<?php
 						foreach ($temporadas as $temporada)
 						{
-							echo '<span class="col-xs-10">Temporada: '.$temporada[0].'</span>';
+							echo '<span class="col-xs-10"><span class="bold-extra">Temporada: </span>'.$temporada[0].'</span>';
 							$capitulos=$conex->consult("SELECT * FROM episodios WHERE codigo =".$codigo." AND contenedor=".$temporada[0]);
 
 							foreach($capitulos as $capitulo){
-								echo '<span class="col-xs-5">Capitulo: '.$capitulo[2].' : '.$capitulo[4];
+								echo '<span class="col-xs-12"><span class="bold-extra">Capitulo: </span>'.$capitulo[2].' : '.$capitulo[4];
 								if(isset($_SESSION['usuario']))
 								{
 									$vistos = $conex->consult('SELECT * FROM visto');
@@ -175,21 +194,18 @@
 						}
 
 
-						echo "<br>";
-						echo "<br>";
-						echo "<br>";
-						echo "<br>";
-						echo "Comentarios:";
+						echo "</div>";
+						echo "<div class='row col-md-12 comentarios-series' ><span class='bold'>Comentarios:</span>";
 
 						if (isset($_SESSION['usuario'])){
 							echo "<form method='post' action = ''>";
-							echo "<textarea name='comentario' rows='10' cols='40'>Escribe aquí tus comentarios</textarea>";
+							echo "<textarea name='comentario' rows='10' class='form-control' cols='40'>Escribe aquí tus comentarios</textarea>";
 							echo "<br>";
-							echo "<button type='submit' name='item' value='".$codigo."'>Guardar comentario</button>";
+							echo "<button type='submit' class='btn btn-primary' name='item' value='".$codigo."'>Guardar comentario</button>";
 							echo "</form>";
 						}
 
-						echo "<br>";
+						echo "</div>";
 						echo "<br>";
 
 						$listaComentarios=$conex->consult("SELECT * FROM comentarios WHERE codigo ='". $codigo."'");
@@ -200,7 +216,7 @@
 							$nombre = $conex->consult("SELECT Nombre FROM usuarios WHERE CodUsuario = '". $key[2]."'");
 
 
-							echo "<div class = 'comentario'>";
+							echo "<div class = 'comentario col-md-12'>";
 							echo $nombre[0][0];
 							echo "<img class='imagen-usu img-rounded' src = 'imagenesusuarios/".$nombre[0][0].".jpg'/>";
 							echo "<br>";
@@ -212,7 +228,7 @@
 						}
 						?>
 					</div>
-				</pre>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
