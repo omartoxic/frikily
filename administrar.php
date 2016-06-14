@@ -10,7 +10,6 @@
 	$conex->connect();
 
 	$list=$conex->consult("SELECT codigo,nombre,nota,imagen,aprobado FROM general WHERE aprobado=0");
-	print_r($list);
 
 	$notifi = $conex->notificaciones();
 ?>
