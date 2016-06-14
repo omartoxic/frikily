@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
-		<script type="text/javascript" src="modificardatos.js"></script>
+		<script type="text/javascript" src="introducirdatos.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">

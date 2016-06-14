@@ -175,7 +175,7 @@
 							if(!(empty($actores))){
 								$longitud = count($actores);
 								$contador = 1;
-								echo "<div class='col-xs-5'><div class='bold'>Creadores y Dobladores: </div>";
+								echo "<div class='col-xs-5'><div class='bold'>Creadores: </div>";
 									foreach ($actores as $actor){
 										echo ''.$actor[1].' '.$actor[2];
 										if($contador < $longitud)
