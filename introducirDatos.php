@@ -364,7 +364,7 @@
 
 				        <div id = 'sinopsis'>
 				            <label>Sinopsis:</label>
-				            <input type = 'text' name='sinopsis' id='id_sinopsis' required/>
+				            <textarea name='sinopsis' rows='10' class='form-control' cols='40'maxlength = '600' required>Sinopsis</textarea>
 				        </div>
 
 				        <div id = 'genero'>
