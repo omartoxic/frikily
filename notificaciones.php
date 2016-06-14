@@ -33,8 +33,11 @@
 		<link href="css/font-awesome.css" rel="stylesheet">
 		<link href="css/font-awesome-animation.css" rel="stylesheet">
 		<link rel="stylesheet" href="estilo-plantilla.css">
+		<link rel="stylesheet" href="hover.css">
+		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
+		<script type="text/javascript" src="texto-articulo.js"></script>
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -123,36 +126,21 @@
 					<?php
 						foreach($list as $array)
 						{
+							$tipo = $conex->sacarTipo($array[0]);
+							
 							echo '<div class="col-md-2  objeto">';
-								
+								echo '<form action="'.$tipo.'_plantilla.php" method="post" id="items">';
 								echo "<div class='estreno'>";
 								echo "Estreno: ".$array[4];
 								echo "</div>";
-								
+								echo '<button type="submit" name="item" value="'.$array[0].'" class="boton-item btn btn-link hvr-grow">';
 								echo "<p class='item'>";
 								echo "<img class='img-responsive imagen-articulo img-rounded' src='imagenes/".$array[3].".jpg'></img>";
 								echo "<span class='texto-articulo bold'>".$array[1]."</span>";
 								echo "</p>";
-								
-								
-							echo '</div>';
-							
-							
-							// echo '<div class="col-md-2  objeto">';
-								// echo '<div id="items" class="row">';
-									// echo "<div class='estreno'>";
-									// echo "Estreno: ".$array[4];
-									// echo "</div>";
-										// echo "<p class='item'>";
-											// echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[2].".jpg'>";
-											// echo "<span class='bold'>".$array[1]."</span>";
-										// echo "</p>";
-									// echo "</div>";
-								// echo "</div>";
-							// echo "</div>";
-							// echo '<div class="col-md-10">';
-							// echo '<div id="items" class="row">';
-								
+								echo "</button>";
+								echo "</form>";								
+							echo '</div>';						
 						}
 						$conex->close();
 					?>
