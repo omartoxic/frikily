@@ -1,5 +1,8 @@
 <?php
   session_start();
+	include "basedatos.php";
+  $conex=new Conexion("root","","frikily");
+	$conex->connect();
 ?>
 
 <HTML>
@@ -21,24 +24,48 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand">Friki.ly</span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
+
 					<form action="lista.php" method="post">
 						<ul id="paginacion" class="nav navbar-nav">
-							<li><a href="index.php">Página principal</a></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
-							<li><button class="btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="videojuegos">Videojuegos</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="anime">Anime</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="manga">Manga</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="comics">Cómics</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
+							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
+								}
+
+
+							?>
 						</ul>
 					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+
+						</li>
+						<?php
+							echo "<li class='usuario'>";
+							echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
+							echo $_SESSION['usuario'];
+						?>
+					</ul>
 				</div>
 			</div>
+		</div>
 		</div>
 		<div class="navbar navbar-default arriba"></div>
 		<div class="container">
@@ -46,19 +73,16 @@
   	<div class="registro">
   	<h1 class='titulo'>Modificar datos de usuario</h1>
 
-      
+
       <?php
-          include "basedatos.php";
-          $conex=new Conexion("root","","frikily");
-          $conex->connect();
           $sql = "UPDATE usuarios SET ";
           $campos = [];
           $codigo = $_SESSION['codigo'];
           $fallido = false;
           $usuario = $_SESSION['usuario'];
           $imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
-          $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes 
-          
+          $ruta = "./imagenesusuarios/";//ruta carpeta donde queremos copiar las imágenes
+
 
           if(isset($_POST["pass"])){
             $passGuardada = $conex->consult("SELECT Pass FROM usuarios WHERE CodUsuario =".$codigo);
@@ -91,11 +115,11 @@
                     if($size <= 2000000 && $size > 0){ //por si supera el tamaño permitido
                       $nombre = $_FILES["imagen_usuario"]["name"];
                       $extension = end(explode('.', $nombre));
- 
+
                       if ($extension == 'jpg' || $extension == 'png'){
-                      
-                        $archivo_temporal = $_FILES['imagen_usuario']['tmp_name']; 
-                        $archivo_nombre = $ruta.$usuario.".jpg"; 
+
+                        $archivo_temporal = $_FILES['imagen_usuario']['tmp_name'];
+                        $archivo_nombre = $ruta.$usuario.".jpg";
 
                         $tamanio = getimagesize($archivo_temporal);
                         list($ancho, $alto) = $tamanio;
@@ -103,21 +127,21 @@
                           if ($tamanio){
                             if(in_array($tamanio['mime'], $imagenes_permitidas)){
                               if ($ancho < 500 && $alto < 500){
-                                if (is_uploaded_file($archivo_temporal)){ 
+                                if (is_uploaded_file($archivo_temporal)){
                                   if ($_FILES['imagen_usuario']['size'] < 2000000){
-                                    move_uploaded_file($archivo_temporal,$archivo_nombre); 
+                                    move_uploaded_file($archivo_temporal,$archivo_nombre);
                                     $imagen = $usuario.".jpg";
                                     array_push($campos, "Imagen = '".$imagen."' ");
                                     $_SESSION['imgusu'] = $imagen;
-                                  
+
                                   }else{
                                     $fallido = true;
                                     echo "<div>El tamaño excede el permitido.</div>";
                                   }
-                                }else{ 
+                                }else{
                                   $fallido = true;
-                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>"; 
-                                } 
+                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+                                }
                               }else{
                                 $fallido = true;
                                 echo "<div>La dimensión excede el permitido (500x500 px).</div>";
@@ -137,7 +161,7 @@
                     }
                   }
                 }
-           
+
             if (!$fallido){
               $separado_por_comas = implode(",", $campos);
 
@@ -151,9 +175,9 @@
 
             }else{
               echo "<div>La contraseña no coincide con la guardada. Inténtelo de nuevo.</div>";
-            }  
+            }
           }
-      ?> 
+      ?>
   		<form action="modificarDatos.php" method="POST" class='container' id="usuario" enctype="multipart/form-data">
 
             <div class='row'>
@@ -192,7 +216,7 @@
               </div>
             </div>
             <div class='row'>
-              <input class='col-md-offset-2 btn btn-success' type = 'submit' value = 'Modificar' id = "boton"/>
+              <input class='col-md-offset-2 btn btn-primary' type = 'submit' value = 'Modificar' id = "boton"/>
               <a class='col-md-offset-5' href="index.php">Volver al inicio</a>
             </div>
       </form>

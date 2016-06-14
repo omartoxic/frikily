@@ -6,8 +6,22 @@ body
 {
   width:100%;
 }
-.usuario
+.sinopsis
 {
+  margin-top:5%;
+  margin-bottom:5%;
+}
+.actores
+{
+  margin-bottom:0;
+}
+.enlace-principal,.enlace-principal:focus,.enlace-principal:active,.enlace-principal:hover
+{
+  color:white;
+}
+.boton-usuario
+{
+  width:5px;
 }
 .visto
 {
@@ -104,10 +118,22 @@ p.item:hover,p.item:focus
 {
   font-weight: bold;
 }
+.bold-extra
+{
+  font-weight: bold;
+}
+.episodios
+{
+  margin-bottom:5%;
+}
 span.bold
 {
   height:50px;
   overflow:hidden;
+}
+.comentario
+{
+  margin-top:5%;
 }
 .texto-articulo
 {

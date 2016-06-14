@@ -51,7 +51,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand"><a href='index.php'>Friki.ly</a></span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
@@ -87,7 +87,7 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a class='btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>Iniciar sesión</a></li>";
 							}
 							else
 							{

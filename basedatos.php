@@ -126,18 +126,10 @@ class Conexion{
 		return $tipoObjeto;
 	}
 
-	public function sacarCodigo(){
-		$consulta = "SELECT MAX(codigo) from general";
-		print_r($consulta);
-		return $consulta;
-	}
-
 
 	public function close()
 	{
 		mysqli_close($this->conection);
 	}
-
-
 }
 ?>

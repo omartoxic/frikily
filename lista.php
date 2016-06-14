@@ -38,6 +38,7 @@
 		<link href="css/font-awesome-animation.css" rel="stylesheet">
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" href="hover.css">
 		<script type="text/javascript" src="estilojq.js"></script>
 		<script type="text/javascript" src="texto-articulo.js"></script>
 		<link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
@@ -51,7 +52,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<span class="navbar-brand"><a href='index.php'>Friki.ly</a></span>
+					<span class="navbar-brand"><a class='enlace-principal' href='index.php'>Friki.ly</a></span>
 				</div>
 				<div class="navbar-collapse collapse navbar-ex1-collapse">
 
@@ -69,7 +70,14 @@
 								if(isset($_SESSION['usuario']))
 								{
 									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
 								}
+
+
 							?>
 						</ul>
 					</form>
@@ -80,7 +88,7 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a class='btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>Iniciar sesión</a></li>";
 							}
 							else
 							{
@@ -149,9 +157,9 @@
 					<?php
 						foreach($list as $array)
 						{
-							echo '<div class="col-md-2  objeto">';
+							echo '<div class="col-md-2 objeto">';
 							echo '<form action="'.$_POST['ver'].'_plantilla.php" method="post" id="items" class="row">';
-							echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2">';
+							echo '<button type="submit" name="item" value="'.$array[0].'" class="btn btn-link col-xs-2 hvr-grow">';
 							echo "<p class='item'>";
 							echo "<img class='imagen-articulo img-responsive img-rounded' src='imagenes/".$array[3].".jpg'>";
 							echo "<span class='texto-articulo bold'>".$array[1]."</span>";
