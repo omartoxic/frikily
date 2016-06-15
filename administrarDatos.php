@@ -23,52 +23,54 @@
 				$update_general= "UPDATE general g SET nombre = '".$_POST['nombre']."', sinopsis = '".$_POST['sinopsis']."', genero = '".$_POST['genero']."', annio = '".$_POST['annio']."', aprobado = 1 WHERE g.codigo =".$_POST['item'];
 
 				$list=$conex->consult($update_general);
+				$fallido = false;
+				$ruta = "./imagenes/img";
+				$imagenes_permitidas = Array('image/jpeg','image/png');
 
+				if ($_FILES['imagenProducto']["name"] != "" ){
+	                    $size = ($_FILES['imagenProducto']['size']);
+	                    if($size <= 7000000 && $size > 0){ //por si supera el tamaño permitido
+	                      $nombreImagen = $_FILES["imagenProducto"]["name"];
+	                      $nombreEXtension = explode('.', $nombreImagen);
+	                      $extension = end($nombreEXtension);
+	                      	if ($extension == 'jpg' || $extension == 'png'){
 
-				// $imagenes_permitidas = Array('image/jpeg','image/png'); //tipos mime permitidos
-	          	// $ruta = "./imagenes/img";//ruta carpeta donde queremos copiar las imágenes
+		                        $archivo_temporal = $_FILES['imagenProducto']['tmp_name'];
 
-				// if (isset($_FILES['imagen_subir'])){
-                  // if ($_FILES["imagen_subir"]["name"] != "" ){
-                    // $size = ($_FILES['imagen_subir']['size']);
-                    // if($size <= 7000000 && $size > 0){ //por si supera el tamaño permitido
-                      // $nombre = $_FILES["imagen_subir"]["name"];
-                      // $extension = end(explode('.', $nombre));
+		                        $archivo_nombre = $ruta.$_POST['item'].".jpg";
+		                        $tamanio = getimagesize($archivo_temporal);
 
-                      // if ($extension == 'jpg' || $extension == 'png'){
-
-                        // $archivo_temporal = $_FILES['imagen_subir']['tmp_name'];
-                        // $archivo_nombre = $ruta.$_POST['item'].".jpg";
-
-                        // $tamanio = getimagesize($archivo_temporal);
-
-                            // if(in_array($tamanio['mime'], $imagenes_permitidas)){
-                                // if (is_uploaded_file($archivo_temporal)){
-                                  // if ($_FILES['imagen_subir']['size'] < 7000000){
-                                    // move_uploaded_file($archivo_temporal,$archivo_nombre);
-                                  // }else{
-                                    // $fallido = true;
-                                    // echo "<div>El tamaño excede el permitido.</div>";
-                                  // }
-                                // }else{
-                                  // $fallido = true;
-                                  // echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
-                                // }
-                            // }else{
-                              // $fallido = true;
-                              // echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
-                            // }
-
-                      // }else{
-                        // $fallido = true;
-                        // echo "<div>Formato no válido.</div>";
-                      // }
-                    // }else{
-                      // $fallido = true;
-                      // echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</div>";
-                    // }
-                  // }
-                // }
+		                        if ($tamanio){
+		                            if(in_array($tamanio['mime'], $imagenes_permitidas)){
+		                                if (is_uploaded_file($archivo_temporal)){
+		                                  	if ($_FILES['imagenProducto']['size'] < 7000000){
+		                                    	move_uploaded_file($archivo_temporal,$archivo_nombre);
+		                                  	}else{
+		                                    	$fallido = true;
+		                                    	echo "<div>El tamaño excede el permitido.</div>";
+		                                  	}
+		                                }else{
+		                                  $fallido = true;
+		                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+		                                }
+		                            }else{
+		                              $fallido = true;
+		                              echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
+		                            }
+		                        }else{
+									$fallido = true;
+			                        echo "<div>Formato no válido.</div>";
+		                        }
+		                    }else{
+			                    $fallido = true;
+			                    echo "<div>Formato no válido.</div>";
+			                }
+		                }else{
+		                    $fallido = true;
+		                    echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</div>";
+		                }
+	                }
+	            
 
 
 				echo $_POST['tipo'];
@@ -244,8 +246,8 @@
 									Subir otra imagen:
 								</label>
 				        <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-								<div class="col-xs-6">
-				        	<input type="file" name="imagen_subir" id="imagen" />
+								
+				        	<input type="file" name="imagenProducto" id="imagen" />
 								</div>
 			      </div>
 	        	<div class="row" id = 'annio'>
