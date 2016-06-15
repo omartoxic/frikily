@@ -416,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 `CodUsuario` int(4) NOT NULL,
   `Nombre` varchar(10) NOT NULL,
   `Pass` varchar(32) NOT NULL,
-  `Imagen` varchar(5) NOT NULL,
+  `Imagen` varchar(14) NOT NULL,
   `Mail` varchar(20) NOT NULL,
   `Tipo` varchar(5) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
