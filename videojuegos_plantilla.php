@@ -21,7 +21,11 @@
 	$plataformas = $list2;
 	$list3=$conex->consult("SELECT * FROM personas, rol WHERE rol.CodigoPersona = personas.CodigoPersona AND rol.Codigo =".$codigo);
 	$actores = $list3;
-	$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
+
+	if(isset($_SESSION['codigo']))
+	{
+		$haPuestoNota = count($conex->consult("SELECT * FROM 	notas WHERE CodigoUsuario = ".$_SESSION['codigo']." AND Codigo = ".$general[0])) > 0;
+	}
 	if(isset($_SESSION['usuario']))
 	{
 		$notifi = $conex->notificaciones();
