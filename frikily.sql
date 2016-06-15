@@ -60,23 +60,6 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
 -- Volcado de datos para la tabla `comentarios`
 --
 
-INSERT INTO `comentarios` (`CodigoComentario`, `Codigo`, `CodUsuario`, `Comentario`, `Fecha`) VALUES
-(1, 5, 13, 'Escribe aquí tus comentarios', '2016-05-29 17:28:00'),
-(2, 5, 13, 'Escribe aquí tus comentarios', '2016-05-29 17:28:00'),
-(3, 5, 13, 'a', '2016-05-29 17:36:00'),
-(10, 13, 1, 'Escribe aquí tus comentarios', '2016-05-29 18:01:00'),
-(12, 14, 13, 'Escribe aquí tus comentarios', '2016-06-03 21:41:00'),
-(14, 5, 1, 'aaa', '2016-06-15 13:00:00'),
-(15, 13, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:21:00'),
-(16, 11, 13, 'Es mora\r\n', '2016-06-10 21:27:00'),
-(17, 2, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:28:00'),
-(18, 5, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:29:00'),
-(19, 5, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:32:00'),
-(20, 3, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:32:00'),
-(21, 2, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:34:00'),
-(22, 1, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:34:00'),
-(23, 6, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:34:00'),
-(24, 4, 13, 'Escribe aquí tus comentarios', '2016-06-10 21:35:00');
 
 -- --------------------------------------------------------
 
