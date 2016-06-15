@@ -1,5 +1,12 @@
 ﻿<?php
 	session_start();
+	include "basedatos.php";
+	$conex=new Conexion("root","","frikily");
+	$conex->connect();
+	if(isset($_SESSION['usuario']))
+	{
+		$notifi = $conex->notificaciones();
+	}
 ?>
 <html>
 	<head>
@@ -14,9 +21,6 @@
 
 	</head>
 	<?php
-		include "basedatos.php";
-		$conex=new Conexion("root","","frikily");
-		$conex->connect();
 		if(isset($_POST['accion'])){
 
 			if($_POST['accion']=="Aprobar"){
@@ -70,7 +74,7 @@
 		                    echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</div>";
 		                }
 	                }
-	            
+
 
 				//ANIME
 				if($_POST['tipo']=="anime"){
@@ -142,7 +146,7 @@
 
 			$list2=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol NOT LIKE 'Director'");
 			$personas = $list2;
-			
+
 			$list3=$conex->consult("SELECT p.nombre, p.apellido, r.codigopersona FROM personas p, rol r WHERE r.CodigoPersona = p.CodigoPersona AND r.Codigo =".$_POST['item']." AND r.rol LIKE 'Director'");
 			if (empty($list3)) {
 				$director[0] = "";
@@ -155,8 +159,8 @@
 				$autor[1]  = "";
 				$autor[2]  = "";
 			}
-			
-			
+
+
 
 		}
 	?>
@@ -183,6 +187,19 @@
 							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
+							<?php
+								if(isset($_SESSION['usuario']))
+								{
+									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
+
+									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
+									if($admn[0][0]=="admn"){
+										echo "<li><a href='administrar.php'>Administrar</a></li>";
+									}
+								}
+
+
+							?>
 						</ul>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
@@ -196,16 +213,19 @@
 							}
 							else
 							{
+								if($notifi!=0){
+									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
+								}
 								echo "<li class='usuario'>";
-								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
-								echo $_SESSION['usuario'];
+								echo "<span class='nombre-usuario'>".$_SESSION['usuario']."&nbsp;&nbsp;</span>";
+								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>&nbsp;";
 								echo '<li><div class="dropdown">';
 								echo '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 								echo '<i class="glyphicon glyphicon-option-vertical"></i>';
 								echo '</button>';
 							  echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
 								echo '<li><form action="index.php" method="post"><button type="submit" id="cerrarSesion" class="btn btn-default" name="action" value="Cerrar sesión">Cerrar sesión</button></form></li>';
-								echo '<li><a class="btn btn-default" href="modificarDatos.php">ModificarDatos</a></li>';
+								echo '<li><a class="btn btn-default" href="modificarDatos.php">Modificar datos</a></li>';
 								echo '</ul>';
 								echo '</div></li>';
 							}
@@ -252,7 +272,7 @@
 									Subir otra imagen:
 								</label>
 				        <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-								
+
 				        	<input type="file" name="imagenProducto" id="imagen" />
 								</div>
 			      </div>

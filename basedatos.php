@@ -61,13 +61,13 @@ class Conexion{
 		$resultadoComprobacion = mysqli_query($this->conection,$comprobacion);
 
 		if ($resultadoComprobacion != null){
-			echo "<div>Problema al registrar usuario por tener un usuario registrado con el mismo nombre, intentelo de nuevo.</div>";
+			echo "<h3 class='titulo'>Problema al registrar usuario por tener un usuario registrado con el mismo nombre, intentelo de nuevo.</h3>";
 		}else{
 			 $consulta = "Insert into usuarios (Nombre,Pass,Imagen,Mail,Tipo) values ('$nombre','$pass','$imagen','$mail','usu');";
-	    	 $resultado=mysqli_query($this->conection,$consulta) or die("Error al insertar el usuario. Inténtelo de nuevo.");
+	    	 $resultado=mysqli_query($this->conection,$consulta) or die("<h3 class='titulo'>Error al insertar el usuario. Inténtelo de nuevo.</h3>");
 
 	        if ($resultado != null){
-	            echo "<div>Usuario registrado correctamente.</div>";
+	            echo "<h3 class='titulo'>Usuario registrado correctamente.</h3>";
 	        }
 		}
 	}
@@ -99,14 +99,14 @@ class Conexion{
 				$consulta = $consulta." ORDER BY g.codigo Desc";
 			}
 		}
-		
+
 		return $consulta;
 	}
-	
+
 	public function notificaciones(){
 		$now = new DateTime();
-		$now = $now->format('Y-m-d'); 
-		
+		$now = $now->format('Y-m-d');
+
 		$consulta = "SELECT DISTINCT g.codigo,g.nombre,g.imagen,g.nota,e.fecha,g.sinopsis FROM general g, visto v, usuarios u, estrenos e, episodios p WHERE v.codigousuario = u.codusuario AND g.codigo = v.codigo AND e.codigo = g.codigo AND e.fecha >= '".$now."' AND e.codcapitulo = p.codigocapitulo AND u.codusuario=".$_SESSION['codigo'];
 		$lista = $this->consult($consulta);
 		return count($lista);

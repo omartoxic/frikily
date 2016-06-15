@@ -72,7 +72,7 @@
 						<?php
 							if(!isset($_SESSION['usuario']))
 							{
-								echo "<li><a class='btn btn-link' href='inicioSesion.php'>iniciar sesión</a></li>";
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>Iniciar sesión</a></li>";
 							}
 							else
 							{
@@ -80,15 +80,15 @@
 									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
 								}
 								echo "<li class='usuario'>";
-								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
-								echo $_SESSION['usuario'];
+								echo "<span class='nombre-usuario'>".$_SESSION['usuario']."&nbsp;&nbsp;</span>";
+								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>&nbsp;";
 								echo '<li><div class="dropdown">';
 								echo '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
 								echo '<i class="glyphicon glyphicon-option-vertical"></i>';
 								echo '</button>';
 							  echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
 								echo '<li><form action="index.php" method="post"><button type="submit" id="cerrarSesion" class="btn btn-default" name="action" value="Cerrar sesión">Cerrar sesión</button></form></li>';
-								echo '<li><a class="btn btn-default" href="modificarDatos.php">ModificarDatos</a></li>';
+								echo '<li><a class="btn btn-default" href="modificarDatos.php">Modificar datos</a></li>';
 								echo '</ul>';
 								echo '</div></li>';
 							}

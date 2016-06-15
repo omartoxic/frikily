@@ -34,19 +34,6 @@
 							<li><button class="barra btn btn-link" type="submit" name="ver" value="libros">Libros</button></li>
 							<li><button class="barra btn btn-link" type="submit" name="ver" value="peliculas">Películas</button></li>
 							<li><button class="barra btn btn-link" type="submit" name="ver" value="series">Series</button></li>
-							<?php
-								if(isset($_SESSION['usuario']))
-								{
-									echo "<li><a href='introducirDatos.php'>Añadir</a></li>";
-
-									$admn=$conex->consult("SELECT tipo from usuarios where codusuario=".$_SESSION['codigo']);
-									if($admn[0][0]=="admn"){
-										echo "<li><a href='administrar.php'>Administrar</a></li>";
-									}
-								}
-
-
-							?>
 						</ul>
 					</form>
 				</div>

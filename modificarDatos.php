@@ -3,6 +3,10 @@
 	include "basedatos.php";
   $conex=new Conexion("root","","frikily");
 	$conex->connect();
+	if(isset($_SESSION['usuario']))
+	{
+		$notifi = $conex->notificaciones();
+	}
 ?>
 
 <HTML>
@@ -10,7 +14,9 @@
 		<meta charset="UTF-8">
 		<title>Modificar usuario</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome.css" rel="stylesheet">
+		<link href="css/font-awesome-animation.css" rel="stylesheet">
+		<link rel="stylesheet" href="estilo-plantilla.css">
 		<link rel="stylesheet" href="estilo-plantilla.css">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript" src="estilojq.js"></script>
@@ -58,14 +64,32 @@
 
 						</li>
 						<?php
-							echo "<li class='usuario'>";
-							echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>";
-							echo $_SESSION['usuario'];
+							if(!isset($_SESSION['usuario']))
+							{
+								echo "<li><a class='btn btn-link' href='inicioSesion.php'>Iniciar sesión</a></li>";
+							}
+							else
+							{
+								if($notifi!=0){
+									echo "<li><a href='notificaciones.php'><i class='fa fa-envelope fa-2x faa-flash animated faa-slow' style='color:#58ACFA'> ".$notifi."</i></a></li>";
+								}
+								echo "<li class='usuario'>";
+								echo "<span class='nombre-usuario'>".$_SESSION['usuario']."&nbsp;&nbsp;</span>";
+								echo "<img class='imagen-usu img-rounded' src='imagenesusuarios/".$_SESSION['imgusu']."?comodin=".rand(1,1000)."'>&nbsp;";
+								echo '<li><div class="dropdown">';
+								echo '<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+								echo '<i class="glyphicon glyphicon-option-vertical"></i>';
+								echo '</button>';
+							  echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
+								echo '<li><form action="index.php" method="post"><button type="submit" id="cerrarSesion" class="btn btn-default" name="action" value="Cerrar sesión">Cerrar sesión</button></form></li>';
+								echo '<li><a class="btn btn-default" href="modificarDatos.php">Modificar datos</a></li>';
+								echo '</ul>';
+								echo '</div></li>';
+							}
 						?>
 					</ul>
 				</div>
 			</div>
-		</div>
 		</div>
 		<div class="navbar navbar-default arriba"></div>
 		<div class="container">
@@ -105,7 +129,7 @@
                 }
 
               }else{
-                echo "<div>Las nuevas contraseñas no coinciden. Inténtalo de nuevo</div>";
+                echo "<h3 class='titulo'>Las nuevas contraseñas no coinciden. Inténtalo de nuevo</h3>";
                 $fallido = true;
                }
 
@@ -137,28 +161,28 @@
 
                                   }else{
                                     $fallido = true;
-                                    echo "<div>El tamaño excede el permitido.</div>";
+                                    echo "<h3 class='titulo'>El tamaño excede el permitido.</h3>";
                                   }
                                 }else{
                                   $fallido = true;
-                                  echo "<div>Error en la subida. Inténtalo de nuevo.</div>";
+                                  echo "<h3 class='titulo'>Error en la subida. Inténtalo de nuevo.</h3>";
                                 }
                               }else{
                                 $fallido = true;
-                                echo "<div>La dimensión excede el permitido (500x500 px).</div>";
+                                echo "<h3 class='titulo'>La dimensión excede el permitido (500x500 px).</h3>";
                               }
                             }else{
                               $fallido = true;
-                              echo "<div>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</div>";
+                              echo "<h3 class='titulo'>Formato de imagen no válido. Solo están permitidas en formato jpg y png.</h3>";
                             }
                           }
                       }else{
                         $fallido = true;
-                        echo "<div>Formato no válido.</div>";
+                        echo "<h3 class='titulo'>Formato no válido.</h3>";
                       }
                     }else{
                       $fallido = true;
-                      echo "<div>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</div>";
+                      echo "<h3 class='titulo'>Error con la subida. Puede que el formato no sea reconodible o el tamaño muy grande. Inténtalo de nuevo o con otra imagen en formato jpg o png</h3>";
                     }
                   }
                 }
@@ -171,11 +195,11 @@
               $sql .= " WHERE CodUsuario = '" . $codigo . "'";
 
               $conex->refresh($sql);
-              echo "<div>Usuario Modifcado</div>";
+              echo "<h3 class='titulo'>Usuario Modifcado</h3>";
             }
 
             }else{
-              echo "<div>La contraseña no coincide con la guardada. Inténtelo de nuevo.</div>";
+              echo "<h3 class='titulo'>La contraseña no coincide con la guardada. Inténtelo de nuevo.</h3>";
             }
           }
       ?>

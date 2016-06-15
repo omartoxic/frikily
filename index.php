@@ -106,7 +106,7 @@
 								echo '</button>';
 							  echo '<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">';
 								echo '<li><form action="index.php" method="post"><button type="submit" id="cerrarSesion" class="btn btn-default" name="action" value="Cerrar sesión">Cerrar sesión</button></form></li>';
-								echo '<li><a class="btn btn-default" href="modificarDatos.php">ModificarDatos</a></li>';
+								echo '<li><a class="btn btn-default" href="modificarDatos.php">Modificar datos</a></li>';
 								echo '</ul>';
 								echo '</div></li>';
 							}
