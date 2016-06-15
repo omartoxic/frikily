@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `libros` (
 --
 
 INSERT INTO `libros` (`Codigo`, `Paginas`, `ISBN`, `Editorial`) VALUES
-(2, 368, 9788478445158, 'Miscojones');
+(2, 368, 9788478445158, '‎Lackington');
 
 -- --------------------------------------------------------
 
